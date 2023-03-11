@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>io.featurehub.sdk</groupId>
+  <artifactId>swift-client-api</artifactId>
+  <version>1.1-SNAPSHOT</version>
+  <name>swift-client-api</name>
+
+  <description>
+    The generated Edge API.
+  </description>
+
+  <url>https://featurehub.io</url>
+  <developers>
+    <developer>
+      <email>irina@featurehub.io</email>
+      <id>isouthwell</id>
+      <name>Irina Southwell</name>
+      <organization>Anyways Labs Ltd</organization>
+    </developer>
+
+    <developer>
+      <email>richard@featurehub.io</email>
+      <id>rvowles</id>
+      <name>Richard Vowles</name>
+      <organization>Anyways Labs Ltd</organization>
+    </developer>
+  </developers>
+
+  <licenses>
+    <license>
+      <name>MIT</name>
+      <url>https://opensource.org/licenses/MIT</url>
+      <comments>This code resides in the customer's codebase and therefore has an MIT license.</comments>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:git:git@github.com:featurehub-io/featurehub-swift-sdk.git</connection>
+    <developerConnection>scm:git:git@github.com:featurehub-io/featurehub-swift-sdk.git</developerConnection>
+    <url>git@github.com:featurehub-io/featurehub-swift-sdk.git</url>
+    <tag>HEAD</tag>
+  </scm>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.openapitools</groupId>
+        <artifactId>openapi-generator-maven-plugin</artifactId>
+        <version>6.4.0</version>
+        <executions>
+          <execution>
+            <id>featurehub-api</id>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <phase>generate-sources</phase>
+            <configuration>
+              <output>${project.basedir}/swift-api</output>
+              <inputSpec>http://api.dev.featurehub.io/edge/1.1.4.yaml</inputSpec>
+              <generatorName>swift5</generatorName>
+              <generateApis>true</generateApis>
+              <generateDocs>false</generateDocs>
+              <generateApiDocumentation>false</generateApiDocumentation>
+              <generateModelDocumentation>false</generateModelDocumentation>
+              <additionalProperties>
+                <additionalProperty>swiftPackagePath=apis</additionalProperty>
+                <additionalProperty>nonPublicApi=false</additionalProperty>
+                <additionalProperty>responseAs=AsyncAwait</additionalProperty>
+                <additionalProperty>podAuthors=Irina Southwell, Richard Vowles</additionalProperty>
+              </additionalProperties>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
