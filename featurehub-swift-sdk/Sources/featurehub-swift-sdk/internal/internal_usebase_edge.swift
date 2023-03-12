@@ -78,7 +78,7 @@ internal class UseBasedEdge: EdgeService {
     _callActive = true
 
     print("Starting REST request for \(self._config.featuresUrl) - contextSha is \(self._contextSha)")
-    logger.trace("Starting REST request for \(self._config.featuresUrl, privacy: .public) - contextSha is \(self._contextSha, privacy: .public)")
+    logger.trace("Starting REST request for \(self._config.featuresUrl) - contextSha is \(self._contextSha)")
 
     if let response = await _requestor.getFeatureStates(apiKeys: _config.apiKeys, contextSha: _contextSha) {
       process(response)
@@ -89,7 +89,7 @@ internal class UseBasedEdge: EdgeService {
 
   private func process(_ val: Response<[FeatureEnvironmentCollection]>) {
     print("result is \(val)")
-    logger.trace("Result \(val.statusCode, privacy: .public)")
+    logger.trace("Result \(val.statusCode)")
     if (val.statusCode == 200) || (val.statusCode == 236) {
       processResult(val.body)
 

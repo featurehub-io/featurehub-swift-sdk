@@ -1,3 +1,3 @@
-import OSLog
+import Logging
 
-let logger = Logger(subsystem: "FeatureHub", category: "SwiftSDK")
+var logger = Logger(label: "io.featurehub")

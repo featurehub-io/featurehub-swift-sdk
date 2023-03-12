@@ -91,7 +91,7 @@ internal class Repository: InternalFeatureRepository {
   }
 
   func updateFeatures(_ features: [FeatureState]) {
-    logger.trace("received features \(features, privacy: .public)")
+    logger.trace("received features \(features)")
 
     for feature in features {
       updateFeature(feature)

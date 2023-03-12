@@ -7,9 +7,15 @@ import Foundation
 import Quick
 import Nimble
 import Cuckoo
+import Logging
 
 final class ClientContextTests: QuickSpec {
   override func spec() {
+    beforeSuite {
+      LoggingSystem.bootstrap(StreamLogHandler.standardError)
+      logger.logLevel = .trace
+    }
+
     describe("client contexts should") {
       var repo: MockFeatureRepository!
       var ctx: ClientContext!

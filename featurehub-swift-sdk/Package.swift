@@ -20,7 +20,8 @@ let package = Package(
             .package(url: "https://github.com/Flight-School/AnyCodable", .upToNextMajor(from: "0.6.7")),
             .package(url: "https://github.com/Quick/Nimble", .upToNextMajor(from: "11.2.1")),
             .package(url: "https://github.com/Brightify/Cuckoo.git", .upToNextMajor(from: "1.9.1")),
-            .package(url: "https://github.com/Quick/Quick", .upToNextMajor(from: "6.1.0"))
+            .package(url: "https://github.com/Quick/Quick", .upToNextMajor(from: "6.1.0")),
+            .package(url: "https://github.com/apple/swift-log.git", .upToNextMajor(from: "1.5.2"))
         ],
 
         targets: [
@@ -28,7 +29,7 @@ let package = Package(
             // Targets can depend on other targets in this package, and on products in packages which this package depends on.
             .target(
                     name: "featurehub-swift-sdk",
-                    dependencies: ["AnyCodable", ],
+                    dependencies: ["AnyCodable", .product(name: "Logging", package: "swift-log") ],
                     exclude: ["pom.xml", "swift-api/Cartfile", "swift-api/README.md"]
             ),
             .testTarget(

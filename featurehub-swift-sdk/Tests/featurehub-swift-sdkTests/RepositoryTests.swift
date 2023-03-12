@@ -7,10 +7,16 @@ import Foundation
 import Quick
 import Nimble
 import Cuckoo
+import Logging
 
 final class RepositoryTests: QuickSpec {
   override func spec() {
     var repo: Repository!
+
+//    beforeSuite {
+//      LoggingSystem.bootstrap(StreamLogHandler.standardError)
+//      logger.logLevel = .trace
+//    }
 
     beforeEach {
       repo = Repository()
