@@ -1,4 +1,4 @@
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/featurehub_swift_sdk.swift at 2023-03-11 01:54:33 +0000
+// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/featurehub_swift_sdk.swift at 2023-03-12 05:53:41 +0000
 
 
 import Cuckoo
@@ -326,11 +326,11 @@ public class MockFeatureRepository: FeatureRepository, Cuckoo.ProtocolMock {
     
     
     
-    public func feature(_ key: String) -> RepositoryFeatureState? {
+    public func feature(_ key: String) -> RepositoryFeatureState {
         
     return cuckoo_manager.call(
     """
-    feature(_: String) -> RepositoryFeatureState?
+    feature(_: String) -> RepositoryFeatureState
     """,
             parameters: (key),
             escapingParameters: (key),
@@ -381,11 +381,11 @@ public class MockFeatureRepository: FeatureRepository, Cuckoo.ProtocolMock {
         
         
         
-        func feature<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ProtocolStubFunction<(String), RepositoryFeatureState?> where M1.MatchedType == String {
+        func feature<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ProtocolStubFunction<(String), RepositoryFeatureState> where M1.MatchedType == String {
             let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
             return .init(stub: cuckoo_manager.createStub(for: MockFeatureRepository.self, method:
     """
-    feature(_: String) -> RepositoryFeatureState?
+    feature(_: String) -> RepositoryFeatureState
     """, parameterMatchers: matchers))
         }
         
@@ -427,11 +427,11 @@ public class MockFeatureRepository: FeatureRepository, Cuckoo.ProtocolMock {
         
         
         @discardableResult
-        func feature<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), RepositoryFeatureState?> where M1.MatchedType == String {
+        func feature<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), RepositoryFeatureState> where M1.MatchedType == String {
             let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
             return cuckoo_manager.verify(
     """
-    feature(_: String) -> RepositoryFeatureState?
+    feature(_: String) -> RepositoryFeatureState
     """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
         }
         
@@ -472,8 +472,8 @@ public class FeatureRepositoryStub: FeatureRepository {
     
     
     
-    public func feature(_ key: String) -> RepositoryFeatureState?  {
-        return DefaultValueRegistry.defaultValue(for: (RepositoryFeatureState?).self)
+    public func feature(_ key: String) -> RepositoryFeatureState  {
+        return DefaultValueRegistry.defaultValue(for: (RepositoryFeatureState).self)
     }
     
     
@@ -491,7 +491,7 @@ public class FeatureRepositoryStub: FeatureRepository {
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/features.swift at 2023-03-11 01:54:33 +0000
+// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/features.swift at 2023-03-12 05:53:41 +0000
 
 
 import Cuckoo
@@ -622,7 +622,7 @@ public class MockRepositoryFeatureState: RepositoryFeatureState, Cuckoo.Protocol
     
     
     
-    public var number: Float? {
+    public var number: Double? {
         get {
             return cuckoo_manager.getter("number",
                 superclassCall:
@@ -755,7 +755,7 @@ public class MockRepositoryFeatureState: RepositoryFeatureState, Cuckoo.Protocol
         
         
         
-        var number: Cuckoo.ProtocolToBeStubbedReadOnlyProperty<MockRepositoryFeatureState, Float?> {
+        var number: Cuckoo.ProtocolToBeStubbedReadOnlyProperty<MockRepositoryFeatureState, Double?> {
             return .init(manager: cuckoo_manager, name: "number")
         }
         
@@ -847,7 +847,7 @@ public class MockRepositoryFeatureState: RepositoryFeatureState, Cuckoo.Protocol
         
         
         
-        var number: Cuckoo.VerifyReadOnlyProperty<Float?> {
+        var number: Cuckoo.VerifyReadOnlyProperty<Double?> {
             return .init(manager: cuckoo_manager, name: "number", callMatcher: callMatcher, sourceLocation: sourceLocation)
         }
         
@@ -957,9 +957,9 @@ public class RepositoryFeatureStateStub: RepositoryFeatureState {
     
     
     
-    public var number: Float? {
+    public var number: Double? {
         get {
-            return DefaultValueRegistry.defaultValue(for: (Float?).self)
+            return DefaultValueRegistry.defaultValue(for: (Double?).self)
         }
         
     }

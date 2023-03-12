@@ -19,7 +19,8 @@ let package = Package(
             // Dependencies declare other packages that this package depends on.
             .package(url: "https://github.com/Flight-School/AnyCodable", .upToNextMajor(from: "0.6.7")),
             .package(url: "https://github.com/Quick/Nimble", .upToNextMajor(from: "11.2.1")),
-            .package(url: "https://github.com/Brightify/Cuckoo.git", .upToNextMajor(from: "1.9.1"))
+            .package(url: "https://github.com/Brightify/Cuckoo.git", .upToNextMajor(from: "1.9.1")),
+            .package(url: "https://github.com/Quick/Quick", .upToNextMajor(from: "6.1.0"))
         ],
 
         targets: [
@@ -32,6 +33,6 @@ let package = Package(
             ),
             .testTarget(
                     name: "featurehub-swift-sdkTests",
-                    dependencies: ["featurehub-swift-sdk", "Nimble", "Cuckoo"]),
+                    dependencies: ["featurehub-swift-sdk", "Nimble", "Cuckoo", "Quick"]),
         ]
 )

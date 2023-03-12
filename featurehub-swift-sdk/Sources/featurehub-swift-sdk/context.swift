@@ -1,109 +1,114 @@
-
 import Foundation
 
-enum ContextKeys {
-    case userKey, session, country, platform, device, version
-}
 
 public class ClientContext {
-    let repo: FeatureRepository
-    var attributes: [String: [String]] = [:]
+  let repo: FeatureRepository
+  var attributes: [String: [String]] = [:]
 
-    public init(_ repo: FeatureRepository) {
-        self.repo = repo
+  public init(_ repo: FeatureRepository) {
+    self.repo = repo
+  }
+
+  @discardableResult
+  func user(_ value: String) -> ClientContext {
+    attributes[ContextKeys.userKey.rawValue] = [value]
+    return self
+  }
+
+  @discardableResult
+  func session(_ value: String) -> ClientContext {
+    attributes[ContextKeys.session.rawValue] = [value]
+    return self
+  }
+
+  @discardableResult
+  func country(_ value: StrategyAttributeCountryName) -> ClientContext {
+    attributes[ContextKeys.country.rawValue] = [value.rawValue]
+    return self
+  }
+
+  @discardableResult
+  func device(_ value: StrategyAttributeDeviceName) -> ClientContext {
+    attributes[ContextKeys.device.rawValue] = [value.rawValue]
+    return self
+  }
+
+  @discardableResult
+  func platform(_ value: StrategyAttributePlatformName) -> ClientContext {
+    attributes[ContextKeys.platform.rawValue] = [value.rawValue]
+    return self
+  }
+
+  @discardableResult
+  func version(_ value: String) -> ClientContext {
+    attributes[ContextKeys.version.rawValue] = [value]
+    return self
+  }
+
+  @discardableResult
+  func clear() -> ClientContext {
+    attributes.removeAll()
+    return self
+  }
+
+  subscript(_ key: String) -> [String]? {
+    get {
+      attributes[key]
+    }
+    set(newValue) {
+      attributes[key] = newValue
+    }
+  }
+
+  func defaultPercentageKey() -> String? {
+    let value = attributes["session"] ?? attributes["userkey"]
+
+    if value == nil || value!.isEmpty {
+      return nil
     }
 
-    func user(_ value: String) -> ClientContext {
-        attributes["userkey"] = [value]
-        return self
-    }
+    return value![0]
+  }
 
-    func session(_ value: String) -> ClientContext {
-        attributes["session"] = [value]
-        return self
-    }
+  func feature(_ key: String) -> RepositoryFeatureState? {
+    repo.feature(key)
+  }
 
-    func country(_ value: StrategyAttributeCountryName)  -> ClientContext{
-        attributes["country"] = [value.rawValue]
-        return self
-    }
+  func enabled(_ key: String) -> Bool {
+    feature(key)?.enabled ?? false
+  }
 
-    func device(_ value: StrategyAttributeDeviceName) -> ClientContext {
-        attributes["device"] = [value.rawValue]
-        return self
-    }
+  func hasValue(_ key: String) -> Bool {
+    feature(key)?.hasValue ?? false
+  }
 
-    func platform(_ value: StrategyAttributePlatformName) -> ClientContext {
-        attributes["platform"] = [value.rawValue]
-        return self
-    }
+  func number(_ key: String) -> Double? {
+    feature(key)?.number
+  }
 
-    func version(_ value: String) -> ClientContext {
-        attributes["version"] = [value]
-        return self
-    }
+  func string(_ key: String) -> String? {
+    feature(key)?.string
+  }
 
-    func clear() -> ClientContext {
-        attributes.removeAll()
-        return self
-    }
+  func json(_ key: String) -> String? {
+    feature(key)?.json
+  }
 
-    subscript(_ key: String) -> [String]? {
-        get {
-            attributes[key]
-        }
-        set(newValue) {
-            attributes[key] = newValue
-        }
-    }
+  func flag(_ key: String) -> Bool? {
+    feature(key)?.flag
+  }
 
-    func defaultPercentageKey() -> String? {
-        let value = attributes["session"] ?? attributes["userkey"]
+  func exists(_ key: String) -> Bool? {
+    feature(key)?.exists
+  }
 
-        if value == nil || value!.isEmpty {
-            return nil
-        }
+  @discardableResult
+  func build() async -> ClientContext {
+    self
+  }
 
-        return value![0]
-    }
-
-    func feature(_ key: String) -> RepositoryFeatureState? {
-        repo.feature(key)
-    }
-
-    func enabled(_ key: String) -> Bool {
-        feature(key)?.enabled ?? false
-    }
-
-    func hasValue(_ key: String) -> Bool {
-        feature(key)?.hasValue ?? false
-    }
-
-    func number(_ key: String) -> Float? {
-        feature(key)?.number
-    }
-
-    func string(_ key: String) -> String? {
-        feature(key)?.string
-    }
-
-    func json(_ key: String) -> String? {
-        feature(key)?.json
-    }
-
-    func flag(_ key: String) -> Bool? {
-        feature(key)?.flag
-    }
-
-    func exists(_ key: String) -> Bool? {
-        feature(key)?.exists
-    }
-
-    func build() async -> ClientContext {
-        self
-    }
-
-    /// used: interval function for use by features to indicate they are  being evaluated
-    /// so theh cache can expire
-    func used() async {}
+  /// used: interval function for use by features to indicate they are  being evaluated
+  /// so theh cache can expire. Also to be used for analytics.
+  func used(_ key: String, _ id: UUID?, _ val: Any?) async {
+  }
 }
