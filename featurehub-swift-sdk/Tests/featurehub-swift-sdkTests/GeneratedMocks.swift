@@ -1,4 +1,4 @@
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/featurehub_swift_sdk.swift at 2023-03-12 05:53:41 +0000
+// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/featurehub_swift_sdk.swift at 2023-03-13 22:49:01 +0000
 
 
 import Cuckoo
@@ -491,7 +491,7 @@ public class FeatureRepositoryStub: FeatureRepository {
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/features.swift at 2023-03-12 05:53:41 +0000
+// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/features.swift at 2023-03-13 22:49:01 +0000
 
 
 import Cuckoo

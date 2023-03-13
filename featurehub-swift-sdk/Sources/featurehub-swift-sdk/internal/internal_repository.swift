@@ -11,7 +11,7 @@ internal protocol InternalFeatureRepository: FeatureRepository {
 
   func updateFeatures(_ features: [FeatureState])
   func updateFeature(_ state: FeatureState)
-  func deleteFeature(_ feature: inout FeatureState)
+  func deleteFeature(_ feature: FeatureState)
 
   func notify(status: SSEResultState?) -> Void
 }
@@ -32,6 +32,7 @@ internal class ValueInterceptor {
 }
 
 internal class Repository: InternalFeatureRepository {
+  
   // these are the features (by key) and the features that we may pretend
   // exist (until they do, but they may never do)
   private var features: [String: FeatureStateHolder] = [:]
@@ -126,10 +127,8 @@ internal class Repository: InternalFeatureRepository {
     holder!.setFeatureState(state)
   }
 
-  func deleteFeature(_ feature: inout FeatureState) {
-    feature.value = nil
-    updateFeature(feature)
-    feature.version = -1
+  func deleteFeature(_ feature: FeatureState) {
+    updateFeature(FeatureState(id: feature.id, key: feature.key, version: -1, value: nil))
   }
 
   func feature(_ key: String) -> RepositoryFeatureState {
