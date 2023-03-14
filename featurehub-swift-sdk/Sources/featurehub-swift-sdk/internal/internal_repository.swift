@@ -1,6 +1,9 @@
 import Foundation
 
 internal protocol InternalFeatureRepository: FeatureRepository {
+  // there are no features, but the keys were valid
+  func empty() -> Void
+
   func feat(_ key: String) -> FeatureStateHolder?
   func findInterceptor(_ key: String) -> InterceptorValue?
 
@@ -32,7 +35,6 @@ internal class ValueInterceptor {
 }
 
 internal class Repository: InternalFeatureRepository {
-
   // these are the features (by key) and the features that we may pretend
   // exist (until they do, but they may never do)
   private var features: [String: FeatureStateHolder] = [:]
@@ -141,5 +143,10 @@ internal class Repository: InternalFeatureRepository {
     }
 
     return f!
+  }
+
+  // there are no features, not the repository can be used
+  func empty() {
+    _ready = .ready
   }
 }

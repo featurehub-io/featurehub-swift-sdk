@@ -50,7 +50,7 @@ internal class UseBasedEdge: EdgeService {
   func initialize() async {
     if (canStart) {
       _initialized = true
-      _cacheTimeout = Date() + _timeoutInSeconds
+      _cacheTimeout = Date() - _timeoutInSeconds - 1
       await poll()
     }
   }
@@ -61,9 +61,28 @@ internal class UseBasedEdge: EdgeService {
     }
   }
 
+  internal func ensureCacheExpired() {
+    _initialized = true
+    _cacheTimeout = Date() - _timeoutInSeconds - 1
+  }
+
+  internal func ensureCacheNotExpired() {
+    _initialized = true
+    _cacheTimeout = Date() + (_timeoutInSeconds/2)
+  }
+
   func poll() async {
+    if !_initialized {
+      await initialize() // this will call us again
+      return
+    }
+
     // if we are not initialized, we are stopped, we are busy making a call or the cache hasn't expired yet, just return
-    if !_initialized || _stopped || _callActive || _cacheTimeout.compare(Date()) == ComparisonResult.orderedAscending {
+    let timeout = _cacheTimeout.compare(Date()) != ComparisonResult.orderedAscending
+
+    // if the cache timeout < current date, then it will be order ascending and we should poll
+    if _stopped || _callActive || _cacheTimeout.compare(Date()) != ComparisonResult.orderedAscending {
+      print("returning \(_stopped) \(_callActive) \(timeout)")
       return
     }
 
@@ -77,8 +96,8 @@ internal class UseBasedEdge: EdgeService {
 
     _callActive = true
 
-    print("Starting REST request for \(self._config.featuresUrl) - contextSha is \(self._contextSha)")
-    logger.trace("Starting REST request for \(self._config.featuresUrl) - contextSha is \(self._contextSha)")
+    print("Starting REST request for \(self._config.baseUrl) - contextSha is \(self._contextSha)")
+    logger.trace("Starting REST request for \(self._config.baseUrl) - contextSha is \(self._contextSha)")
 
     if let response = await _requestor.getFeatureStates(apiKeys: _config.apiKeys, contextSha: _contextSha) {
       process(response)
@@ -88,7 +107,7 @@ internal class UseBasedEdge: EdgeService {
   }
 
   private func process(_ val: Response<[FeatureEnvironmentCollection]>) {
-    print("result is \(val)")
+    print("result is \(val.statusCode)")
     logger.trace("Result \(val.statusCode)")
     if (val.statusCode == 200) || (val.statusCode == 236) {
       processResult(val.body)
@@ -115,7 +134,7 @@ internal class UseBasedEdge: EdgeService {
       if allFeatures.count > 0 {
         _repo.updateFeatures(allFeatures)
       } else {
-        _repo.notify(status: SSEResultState.failure)
+        _repo.empty()
       }
     }
   }
