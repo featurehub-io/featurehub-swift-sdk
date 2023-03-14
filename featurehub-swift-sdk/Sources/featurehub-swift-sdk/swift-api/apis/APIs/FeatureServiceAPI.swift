@@ -14,7 +14,7 @@ open class FeatureServiceAPI {
 
     /**
 
-     - parameter apiKey: (query) A list of API keys to retrieve information about 
+     - parameter apiKey: (query) A list of API keys to retrieve information about
      - parameter contextSha: (query) A SHA of the context in string form designed to break any cache if the client changes context. It is not used by the server in any way, but if Fastly support is turned on it must be present. (optional)
      - returns: [FeatureEnvironmentCollection]
      */
@@ -27,9 +27,9 @@ open class FeatureServiceAPI {
      - GET /features/
      - Requests all features for this sdkurl and disconnects
      - responseHeaders: [x-fh-version(String)]
-     - parameter apiKey: (query) A list of API keys to retrieve information about 
+     - parameter apiKey: (query) A list of API keys to retrieve information about
      - parameter contextSha: (query) A SHA of the context in string form designed to break any cache if the client changes context. It is not used by the server in any way, but if Fastly support is turned on it must be present. (optional)
-     - returns: RequestBuilder<[FeatureEnvironmentCollection]> 
+     - returns: RequestBuilder<[FeatureEnvironmentCollection]>
      */
     open class func getFeatureStatesWithRequestBuilder(apiKey: [String], contextSha: String? = nil) -> RequestBuilder<[FeatureEnvironmentCollection]> {
         let localVariablePath = "/features/"
@@ -50,14 +50,15 @@ open class FeatureServiceAPI {
 
         let localVariableRequestBuilder: RequestBuilder<[FeatureEnvironmentCollection]>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
 
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
+        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString),
+          parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 
     /**
 
-     - parameter sdkUrl: (path) The API Key for the environment and service account 
-     - parameter featureKey: (path) The key you wish to update/action 
-     - parameter featureStateUpdate: (body)  
+     - parameter sdkUrl: (path) The API Key for the environment and service account
+     - parameter featureKey: (path) The key you wish to update/action
+     - parameter featureStateUpdate: (body)
      - returns: Void
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
@@ -69,10 +70,10 @@ open class FeatureServiceAPI {
      - PUT /features/{sdkUrl}/{featureKey}
      - Updates the feature state if allowed.
      - responseHeaders: [x-fh-version(String)]
-     - parameter sdkUrl: (path) The API Key for the environment and service account 
-     - parameter featureKey: (path) The key you wish to update/action 
-     - parameter featureStateUpdate: (body)  
-     - returns: RequestBuilder<Void> 
+     - parameter sdkUrl: (path) The API Key for the environment and service account
+     - parameter featureKey: (path) The key you wish to update/action
+     - parameter featureStateUpdate: (body)
+     - returns: RequestBuilder<Void>
      */
     open class func setFeatureStateWithRequestBuilder(sdkUrl: String, featureKey: String, featureStateUpdate: FeatureStateUpdate) -> RequestBuilder<Void> {
         var localVariablePath = "/features/{sdkUrl}/{featureKey}"

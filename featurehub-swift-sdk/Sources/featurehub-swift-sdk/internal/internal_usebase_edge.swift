@@ -9,7 +9,19 @@
 import Foundation
 
 internal protocol FeatureRequestor {
-  func getFeatureStates(apiKeys: [String], contextSha: String?) async -> Response<[FeatureEnvironmentCollection]>?
+  func getFeatureStates(apiKeys: [String], contextSha: String?, etag: String?) async -> Response<[FeatureEnvironmentCollection]>?
+}
+
+// Swift's substring handling is an absolute travesty, this from Stack Overflow makes it palatable
+extension String {
+  func index(from: Int) -> Index {
+    return self.index(startIndex, offsetBy: from)
+  }
+
+  func substring(from: Int) -> String {
+    let fromIndex = index(from: from)
+    return String(self[fromIndex...])
+  }
 }
 
 internal struct DefaultFeatureRequestor: FeatureRequestor {
@@ -19,7 +31,13 @@ internal struct DefaultFeatureRequestor: FeatureRequestor {
     OpenAPIClientAPI.basePath = baseUrl
   }
 
-  func getFeatureStates(apiKeys: [String], contextSha: String?) async -> Response<[FeatureEnvironmentCollection]>? {
+  func getFeatureStates(apiKeys: [String], contextSha: String?, etag: String?) async -> Response<[FeatureEnvironmentCollection]>? {
+    if etag == nil {
+      OpenAPIClientAPI.customHeaders.removeValue(forKey: "if-none-match")
+    } else {
+      OpenAPIClientAPI.customHeaders["if-none-match"] = etag!
+    }
+
     let reqBuilder = FeatureServiceAPI.getFeatureStatesWithRequestBuilder(apiKey: apiKeys, contextSha: contextSha)
 
     return try? await reqBuilder.execute()
@@ -37,6 +55,7 @@ internal class UseBasedEdge: EdgeService {
   var _cacheTimeout: Date
   var _contextSha: String = "0"
   var _callActive: Bool = false
+  var _etag: String? = nil
 
   public init(_ repo: InternalFeatureRepository, _ config: FeatureHubConfig, _ timeoutInSeconds: Int?,
               requestor: FeatureRequestor? = nil) {
@@ -71,18 +90,20 @@ internal class UseBasedEdge: EdgeService {
     _cacheTimeout = Date() + (_timeoutInSeconds/2)
   }
 
+  internal var timeoutInSeconds: Double {
+    get {
+      _timeoutInSeconds
+    }
+  }
+
   func poll() async {
     if !_initialized {
       await initialize() // this will call us again
       return
     }
 
-    // if we are not initialized, we are stopped, we are busy making a call or the cache hasn't expired yet, just return
-    let timeout = _cacheTimeout.compare(Date()) != ComparisonResult.orderedAscending
-
     // if the cache timeout < current date, then it will be order ascending and we should poll
     if _stopped || _callActive || _cacheTimeout.compare(Date()) != ComparisonResult.orderedAscending {
-      print("returning \(_stopped) \(_callActive) \(timeout)")
       return
     }
 
@@ -96,20 +117,20 @@ internal class UseBasedEdge: EdgeService {
 
     _callActive = true
 
-    print("Starting REST request for \(self._config.baseUrl) - contextSha is \(self._contextSha)")
     logger.trace("Starting REST request for \(self._config.baseUrl) - contextSha is \(self._contextSha)")
 
-    if let response = await _requestor.getFeatureStates(apiKeys: _config.apiKeys, contextSha: _contextSha) {
+    if let response = await _requestor.getFeatureStates(apiKeys: _config.apiKeys, contextSha: _contextSha, etag: _etag) {
       process(response)
-    } else {
-      print("failed")
     }
   }
 
   private func process(_ val: Response<[FeatureEnvironmentCollection]>) {
-    print("result is \(val.statusCode)")
     logger.trace("Result \(val.statusCode)")
     if (val.statusCode == 200) || (val.statusCode == 236) {
+      if let cacheControl = val.header["cache-control"] {
+        determineAlternativeTimeoutInterval(cacheControl)
+      }
+
       processResult(val.body)
 
       if (val.statusCode == 236) {
@@ -120,6 +141,34 @@ internal class UseBasedEdge: EdgeService {
     } else if (val.statusCode == 400 || val.statusCode == 404) {
       _stopped = true
       _repo.notify(status: SSEResultState.failure)
+    }
+  }
+
+  // proper regex doesn't  turn up until Ventura, which is just insane
+  private func matches(for regex: String, in text: String) -> [String] {
+
+    do {
+      let regex = try NSRegularExpression(pattern: regex)
+      let results = regex.matches(in: text,
+        range: NSRange(text.startIndex..., in: text))
+      return results.map {
+        String(text[Range($0.range, in: text)!])
+      }
+    } catch {
+      return []
+    }
+  }
+
+  private func determineAlternativeTimeoutInterval(_ cacheHeader: String) {
+    let search = matches(for: "max-age=(\\d+)", in: cacheHeader)
+    if !search.isEmpty {
+      let cacheAge = search[0].substring(from: 8)
+      print("value is \(cacheAge)")
+      let age = Double(cacheAge) ?? _timeoutInSeconds
+
+      if age > 0 {
+        _timeoutInSeconds = age
+      }
     }
   }
 
@@ -142,7 +191,9 @@ internal class UseBasedEdge: EdgeService {
   func context_change(new_header: String) async {
     if (new_header != _header || canStart) {
       if !new_header.isEmpty {
-        OpenAPIClientAPI.customHeaders["x-fh-version"] = new_header
+        OpenAPIClientAPI.customHeaders["x-featurehub"] = new_header
+      } else {
+        OpenAPIClientAPI.customHeaders.removeValue(forKey: "x-featurehub")
       }
       await initialize()
     }

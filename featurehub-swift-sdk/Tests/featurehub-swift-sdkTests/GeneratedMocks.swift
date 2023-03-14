@@ -1,4 +1,4 @@
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/config.swift at 2023-03-14 07:29:07 +0000
+// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/config.swift at 2023-03-14 08:42:49 +0000
 
 
 import Cuckoo
@@ -1384,7 +1384,7 @@ public class EdgeFeatureHubConfigStub: EdgeFeatureHubConfig {
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/featurehub_swift_sdk.swift at 2023-03-14 07:29:07 +0000
+// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/featurehub_swift_sdk.swift at 2023-03-14 08:42:49 +0000
 
 
 import Cuckoo
@@ -1877,7 +1877,7 @@ public class FeatureRepositoryStub: FeatureRepository {
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/features.swift at 2023-03-14 07:29:07 +0000
+// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/features.swift at 2023-03-14 08:42:49 +0000
 
 
 import Cuckoo
@@ -2405,7 +2405,7 @@ public class RepositoryFeatureStateStub: RepositoryFeatureState {
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/internal/internal_repository.swift at 2023-03-14 07:29:07 +0000
+// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/internal/internal_repository.swift at 2023-03-14 08:42:49 +0000
 
 
 import Cuckoo
@@ -3944,7 +3944,7 @@ public class FeatureValueInterceptorStub: FeatureValueInterceptor {
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/internal/internal_usebase_edge.swift at 2023-03-14 07:29:07 +0000
+// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/internal/internal_usebase_edge.swift at 2023-03-14 08:42:49 +0000
 
 ///
 /// FeatureHub: Usage based edge. This service holds an update interval
@@ -3990,19 +3990,19 @@ import Foundation
     
     
     
-     func getFeatureStates(apiKeys: [String], contextSha: String?) async -> Response<[FeatureEnvironmentCollection]>? {
+     func getFeatureStates(apiKeys: [String], contextSha: String?, etag: String?) async -> Response<[FeatureEnvironmentCollection]>? {
         
     return await cuckoo_manager.call(
     """
-    getFeatureStates(apiKeys: [String], contextSha: String?) async -> Response<[FeatureEnvironmentCollection]>?
+    getFeatureStates(apiKeys: [String], contextSha: String?, etag: String?) async -> Response<[FeatureEnvironmentCollection]>?
     """,
-            parameters: (apiKeys, contextSha),
-            escapingParameters: (apiKeys, contextSha),
+            parameters: (apiKeys, contextSha, etag),
+            escapingParameters: (apiKeys, contextSha, etag),
             superclassCall:
                 
                 Cuckoo.MockManager.crashOnProtocolSuperclassCall()
                 ,
-            defaultCall: await __defaultImplStub!.getFeatureStates(apiKeys: apiKeys, contextSha: contextSha))
+            defaultCall: await __defaultImplStub!.getFeatureStates(apiKeys: apiKeys, contextSha: contextSha, etag: etag))
         
     }
     
@@ -4018,11 +4018,11 @@ import Foundation
         
         
         
-        func getFeatureStates<M1: Cuckoo.Matchable, M2: Cuckoo.OptionalMatchable>(apiKeys: M1, contextSha: M2) -> Cuckoo.ProtocolStubFunction<([String], String?), Response<[FeatureEnvironmentCollection]>?> where M1.MatchedType == [String], M2.OptionalMatchedType == String {
-            let matchers: [Cuckoo.ParameterMatcher<([String], String?)>] = [wrap(matchable: apiKeys) { $0.0 }, wrap(matchable: contextSha) { $0.1 }]
+        func getFeatureStates<M1: Cuckoo.Matchable, M2: Cuckoo.OptionalMatchable, M3: Cuckoo.OptionalMatchable>(apiKeys: M1, contextSha: M2, etag: M3) -> Cuckoo.ProtocolStubFunction<([String], String?, String?), Response<[FeatureEnvironmentCollection]>?> where M1.MatchedType == [String], M2.OptionalMatchedType == String, M3.OptionalMatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<([String], String?, String?)>] = [wrap(matchable: apiKeys) { $0.0 }, wrap(matchable: contextSha) { $0.1 }, wrap(matchable: etag) { $0.2 }]
             return .init(stub: cuckoo_manager.createStub(for: MockFeatureRequestor.self, method:
     """
-    getFeatureStates(apiKeys: [String], contextSha: String?) async -> Response<[FeatureEnvironmentCollection]>?
+    getFeatureStates(apiKeys: [String], contextSha: String?, etag: String?) async -> Response<[FeatureEnvironmentCollection]>?
     """, parameterMatchers: matchers))
         }
         
@@ -4046,11 +4046,11 @@ import Foundation
         
         
         @discardableResult
-        func getFeatureStates<M1: Cuckoo.Matchable, M2: Cuckoo.OptionalMatchable>(apiKeys: M1, contextSha: M2) -> Cuckoo.__DoNotUse<([String], String?), Response<[FeatureEnvironmentCollection]>?> where M1.MatchedType == [String], M2.OptionalMatchedType == String {
-            let matchers: [Cuckoo.ParameterMatcher<([String], String?)>] = [wrap(matchable: apiKeys) { $0.0 }, wrap(matchable: contextSha) { $0.1 }]
+        func getFeatureStates<M1: Cuckoo.Matchable, M2: Cuckoo.OptionalMatchable, M3: Cuckoo.OptionalMatchable>(apiKeys: M1, contextSha: M2, etag: M3) -> Cuckoo.__DoNotUse<([String], String?, String?), Response<[FeatureEnvironmentCollection]>?> where M1.MatchedType == [String], M2.OptionalMatchedType == String, M3.OptionalMatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<([String], String?, String?)>] = [wrap(matchable: apiKeys) { $0.0 }, wrap(matchable: contextSha) { $0.1 }, wrap(matchable: etag) { $0.2 }]
             return cuckoo_manager.verify(
     """
-    getFeatureStates(apiKeys: [String], contextSha: String?) async -> Response<[FeatureEnvironmentCollection]>?
+    getFeatureStates(apiKeys: [String], contextSha: String?, etag: String?) async -> Response<[FeatureEnvironmentCollection]>?
     """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
         }
         
@@ -4068,7 +4068,7 @@ import Foundation
     
     
     
-     func getFeatureStates(apiKeys: [String], contextSha: String?) async -> Response<[FeatureEnvironmentCollection]>?  {
+     func getFeatureStates(apiKeys: [String], contextSha: String?, etag: String?) async -> Response<[FeatureEnvironmentCollection]>?  {
         return DefaultValueRegistry.defaultValue(for: (Response<[FeatureEnvironmentCollection]>?).self)
     }
     
@@ -4288,6 +4288,32 @@ import Foundation
     
     
     
+     override var _etag: String? {
+        get {
+            return cuckoo_manager.getter("_etag",
+                superclassCall:
+                    
+                    super._etag
+                    ,
+                defaultCall: __defaultImplStub!._etag)
+        }
+        
+        set {
+            cuckoo_manager.setter("_etag",
+                value: newValue,
+                superclassCall:
+                    
+                    super._etag = newValue
+                    ,
+                defaultCall: __defaultImplStub!._etag = newValue)
+        }
+        
+    }
+    
+    
+    
+    
+    
      override var canStart: Bool {
         get {
             return cuckoo_manager.getter("canStart",
@@ -4296,6 +4322,22 @@ import Foundation
                     super.canStart
                     ,
                 defaultCall: __defaultImplStub!.canStart)
+        }
+        
+    }
+    
+    
+    
+    
+    
+     override var timeoutInSeconds: Double {
+        get {
+            return cuckoo_manager.getter("timeoutInSeconds",
+                superclassCall:
+                    
+                    super.timeoutInSeconds
+                    ,
+                defaultCall: __defaultImplStub!.timeoutInSeconds)
         }
         
     }
@@ -4484,8 +4526,22 @@ import Foundation
         
         
         
+        var _etag: Cuckoo.ClassToBeStubbedOptionalProperty<MockUseBasedEdge, String> {
+            return .init(manager: cuckoo_manager, name: "_etag")
+        }
+        
+        
+        
+        
         var canStart: Cuckoo.ClassToBeStubbedReadOnlyProperty<MockUseBasedEdge, Bool> {
             return .init(manager: cuckoo_manager, name: "canStart")
+        }
+        
+        
+        
+        
+        var timeoutInSeconds: Cuckoo.ClassToBeStubbedReadOnlyProperty<MockUseBasedEdge, Double> {
+            return .init(manager: cuckoo_manager, name: "timeoutInSeconds")
         }
         
         
@@ -4621,8 +4677,22 @@ import Foundation
         
         
         
+        var _etag: Cuckoo.VerifyOptionalProperty<String> {
+            return .init(manager: cuckoo_manager, name: "_etag", callMatcher: callMatcher, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
         var canStart: Cuckoo.VerifyReadOnlyProperty<Bool> {
             return .init(manager: cuckoo_manager, name: "canStart", callMatcher: callMatcher, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        var timeoutInSeconds: Cuckoo.VerifyReadOnlyProperty<Double> {
+            return .init(manager: cuckoo_manager, name: "timeoutInSeconds", callMatcher: callMatcher, sourceLocation: sourceLocation)
         }
         
         
@@ -4800,9 +4870,33 @@ import Foundation
     
     
     
+     override var _etag: String? {
+        get {
+            return DefaultValueRegistry.defaultValue(for: (String?).self)
+        }
+        
+        set { }
+        
+    }
+    
+    
+    
+    
+    
      override var canStart: Bool {
         get {
             return DefaultValueRegistry.defaultValue(for: (Bool).self)
+        }
+        
+    }
+    
+    
+    
+    
+    
+     override var timeoutInSeconds: Double {
+        get {
+            return DefaultValueRegistry.defaultValue(for: (Double).self)
         }
         
     }

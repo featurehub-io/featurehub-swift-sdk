@@ -48,13 +48,13 @@ final class UseBasedEdgeTests : QuickSpec {
     describe("the api is called") {
       afterEach {
         verify(config).apiKeys.get()
-        verify(config).baseUrl.get()
-        verify(requestor).getFeatureStates(apiKeys: ["x"], contextSha: "0")
+//        verify(config).baseUrl.get()
+        verify(requestor).getFeatureStates(apiKeys: ["x"], contextSha: "0", etag: nil as String?)
       }
 
       func stubResp(_ resp: Response<[FeatureEnvironmentCollection]>) {
         stub(requestor) { r in
-          r.getFeatureStates(apiKeys: ["x"], contextSha: "0").thenReturn(resp)
+          r.getFeatureStates(apiKeys: ["x"], contextSha: "0", etag: nil as String?).thenReturn(resp)
         }
       }
 
@@ -93,33 +93,53 @@ final class UseBasedEdgeTests : QuickSpec {
         verify(repository).updateFeatures(equal(to: [f1, f2]))
       }
 
-      describe("error conditions") {
-        func errorCondition(code: Int) async {
+      describe("empty data") {
+        func emptyDataCall(code: Int, _ headers: [String: String]? = nil) async {
+          var h: [String: String] = ["Content-Type": "application/json"]
+
+          if let hdrs = headers {
+            hdrs.forEach( { k,v in h[k] = v })
+          }
+
           let resp = Response<[FeatureEnvironmentCollection]>(statusCode: code,
-            header: ["Content-Type": "application/json"],
+            header: h,
             body: [FeatureEnvironmentCollection(id: UUID())], bodyData: nil)
 
           stubResp(resp)
 
           stub(repository) { r in
             r.notify(status: any()).thenDoNothing()
+            r.empty().thenDoNothing()
           }
 
           await edge.poll()
         }
 
+        it("should update the cache timeout to 300 seconds") {
+          await emptyDataCall(code: 200, ["cache-control": "private, max-age=300"])
+          expect(edge.timeoutInSeconds) == 300
+          verify(repository).empty()
+        }
+
         it("should pass a failure back on a 400") {
-          await errorCondition(code: 400)
+          await emptyDataCall(code: 400)
+          await edge.poll()
+          await edge.poll()
+          expect(edge._stopped).to(beTrue())
           verify(repository).notify(status: equal(to: .failure))
         }
 
         it("should pass a failure back on a 404") {
-          await errorCondition(code: 404)
+          await emptyDataCall(code: 404)
+          await edge.poll()
+          await edge.poll()
+          expect(edge._stopped).to(beTrue())
           verify(repository).notify(status: equal(to: .failure))
         }
 
         it("should do nothing on a 502") {
-          await errorCondition(code: 502)
+          await emptyDataCall(code: 502)
+          expect(edge._stopped).to(beFalse())
         }
       }
     }
