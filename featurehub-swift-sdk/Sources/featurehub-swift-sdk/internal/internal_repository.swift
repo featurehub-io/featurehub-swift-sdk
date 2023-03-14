@@ -32,7 +32,7 @@ internal class ValueInterceptor {
 }
 
 internal class Repository: InternalFeatureRepository {
-  
+
   // these are the features (by key) and the features that we may pretend
   // exist (until they do, but they may never do)
   private var features: [String: FeatureStateHolder] = [:]
@@ -83,9 +83,9 @@ internal class Repository: InternalFeatureRepository {
     case .ack, .bye, .none, .config:
       break
     case .failure:
-      _ready = Readiness.notReady
+      _ready = Readiness.failed
     case .error:
-      _ready = Readiness.notReady
+      _ready = Readiness.failed
     case .some(.features), .some(.feature), .some(.deleteFeature):
       break
     }
@@ -128,7 +128,7 @@ internal class Repository: InternalFeatureRepository {
   }
 
   func deleteFeature(_ feature: FeatureState) {
-    updateFeature(FeatureState(id: feature.id, key: feature.key, version: -1, value: nil))
+    updateFeature(FeatureState(id: feature.id, key: feature.key, l: nil, version: feature.version, value: nil))
   }
 
   func feature(_ key: String) -> RepositoryFeatureState {

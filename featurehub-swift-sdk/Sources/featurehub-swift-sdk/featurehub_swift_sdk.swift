@@ -9,7 +9,7 @@ public protocol EdgeService {
 
 
 public enum Readiness {
-  case ready, notReady, stalled
+  case ready, notReady, stalled, failed
 }
 
 public protocol FeatureRepository {
