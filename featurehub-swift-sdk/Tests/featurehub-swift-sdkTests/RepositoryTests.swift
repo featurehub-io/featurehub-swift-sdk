@@ -13,13 +13,34 @@ final class RepositoryTests: QuickSpec {
   override func spec() {
     var repo: Repository!
 
-    beforeSuite {
-      LoggingSystem.bootstrap(StreamLogHandler.standardError)
-      logger.logLevel = .trace
-    }
+//    beforeSuite {
+//      LoggingSystem.bootstrap(StreamLogHandler.standardError)
+//      logger.logLevel = .trace
+//    }
 
     beforeEach {
       repo = Repository()
+    }
+
+    describe("use of features not in repository") {
+      var feat: RepositoryFeatureState!
+
+      beforeEach {
+        feat = repo.feature("swift")
+      }
+
+      it("update the feature as if from the server") {
+        expect(feat.exists) == false
+        let f1 = FeatureState(id: UUID(), key: "swift", l: false, version: 1, type: .boolean, value: true)
+        repo.updateFeature(f1)
+        expect(feat.exists) == true
+        expect(feat.id) == f1.id
+        expect(repo.feature("swift").id) == f1.id
+        let f2 = FeatureState(id: f1.id, key: "swift2", l: false, version: 2, type: .boolean, value: true)
+        repo.updateFeature(f2)
+        expect(feat.key) == "swift2"
+        expect(feat.id) == f1.id
+      }
     }
 
     describe("with a ready repository") {

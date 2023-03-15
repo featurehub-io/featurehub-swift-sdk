@@ -1,4 +1,4 @@
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/config.swift at 2023-03-14 08:42:49 +0000
+// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/config.swift at 2023-03-15 03:53:15 +0000
 
 
 import Cuckoo
@@ -1384,7 +1384,7 @@ public class EdgeFeatureHubConfigStub: EdgeFeatureHubConfig {
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/featurehub_swift_sdk.swift at 2023-03-14 08:42:49 +0000
+// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/featurehub_swift_sdk.swift at 2023-03-15 03:53:15 +0000
 
 
 import Cuckoo
@@ -1463,11 +1463,11 @@ public class MockEdgeService: EdgeService, Cuckoo.ProtocolMock {
     
     
     
-    public func context_change(new_header: String) async {
+    public func context_change(_ new_header: String) async {
         
     return await cuckoo_manager.call(
     """
-    context_change(new_header: String) async
+    context_change(_: String) async
     """,
             parameters: (new_header),
             escapingParameters: (new_header),
@@ -1475,7 +1475,7 @@ public class MockEdgeService: EdgeService, Cuckoo.ProtocolMock {
                 
                 Cuckoo.MockManager.crashOnProtocolSuperclassCall()
                 ,
-            defaultCall: await __defaultImplStub!.context_change(new_header: new_header))
+            defaultCall: await __defaultImplStub!.context_change(new_header))
         
     }
     
@@ -1533,11 +1533,11 @@ public class MockEdgeService: EdgeService, Cuckoo.ProtocolMock {
         
         
         
-        func context_change<M1: Cuckoo.Matchable>(new_header: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(String)> where M1.MatchedType == String {
+        func context_change<M1: Cuckoo.Matchable>(_ new_header: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(String)> where M1.MatchedType == String {
             let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: new_header) { $0 }]
             return .init(stub: cuckoo_manager.createStub(for: MockEdgeService.self, method:
     """
-    context_change(new_header: String) async
+    context_change(_: String) async
     """, parameterMatchers: matchers))
         }
         
@@ -1596,11 +1596,11 @@ public class MockEdgeService: EdgeService, Cuckoo.ProtocolMock {
         
         
         @discardableResult
-        func context_change<M1: Cuckoo.Matchable>(new_header: M1) -> Cuckoo.__DoNotUse<(String), Void> where M1.MatchedType == String {
+        func context_change<M1: Cuckoo.Matchable>(_ new_header: M1) -> Cuckoo.__DoNotUse<(String), Void> where M1.MatchedType == String {
             let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: new_header) { $0 }]
             return cuckoo_manager.verify(
     """
-    context_change(new_header: String) async
+    context_change(_: String) async
     """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
         }
         
@@ -1646,7 +1646,7 @@ public class EdgeServiceStub: EdgeService {
     
     
     
-    public func context_change(new_header: String) async  {
+    public func context_change(_ new_header: String) async  {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
     
@@ -1877,7 +1877,7 @@ public class FeatureRepositoryStub: FeatureRepository {
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/features.swift at 2023-03-14 08:42:49 +0000
+// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/features.swift at 2023-03-15 03:53:15 +0000
 
 
 import Cuckoo
@@ -1908,6 +1908,22 @@ public class MockRepositoryFeatureState: RepositoryFeatureState, Cuckoo.Protocol
     }
     
 
+    
+    
+    
+    
+    public var key: String {
+        get {
+            return cuckoo_manager.getter("key",
+                superclassCall:
+                    
+                    Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                    ,
+                defaultCall: __defaultImplStub!.key)
+        }
+        
+    }
+    
     
     
     
@@ -2099,6 +2115,13 @@ public class MockRepositoryFeatureState: RepositoryFeatureState, Cuckoo.Protocol
         
         
         
+        var key: Cuckoo.ProtocolToBeStubbedReadOnlyProperty<MockRepositoryFeatureState, String> {
+            return .init(manager: cuckoo_manager, name: "key")
+        }
+        
+        
+        
+        
         var exists: Cuckoo.ProtocolToBeStubbedReadOnlyProperty<MockRepositoryFeatureState, Bool> {
             return .init(manager: cuckoo_manager, name: "exists")
         }
@@ -2191,6 +2214,13 @@ public class MockRepositoryFeatureState: RepositoryFeatureState, Cuckoo.Protocol
         
         
         
+        var key: Cuckoo.VerifyReadOnlyProperty<String> {
+            return .init(manager: cuckoo_manager, name: "key", callMatcher: callMatcher, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
         var exists: Cuckoo.VerifyReadOnlyProperty<Bool> {
             return .init(manager: cuckoo_manager, name: "exists", callMatcher: callMatcher, sourceLocation: sourceLocation)
         }
@@ -2273,6 +2303,17 @@ public class MockRepositoryFeatureState: RepositoryFeatureState, Cuckoo.Protocol
 
 
 public class RepositoryFeatureStateStub: RepositoryFeatureState {
+    
+    
+    
+    
+    public var key: String {
+        get {
+            return DefaultValueRegistry.defaultValue(for: (String).self)
+        }
+        
+    }
+    
     
     
     
@@ -2405,7 +2446,7 @@ public class RepositoryFeatureStateStub: RepositoryFeatureState {
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/internal/internal_repository.swift at 2023-03-14 08:42:49 +0000
+// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/internal/internal_repository.swift at 2023-03-15 03:53:15 +0000
 
 
 import Cuckoo
@@ -3944,7 +3985,7 @@ public class FeatureValueInterceptorStub: FeatureValueInterceptor {
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/internal/internal_usebase_edge.swift at 2023-03-14 08:42:49 +0000
+// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/internal/internal_usebase_edge.swift at 2023-03-15 03:53:15 +0000
 
 ///
 /// FeatureHub: Usage based edge. This service holds an update interval
@@ -3957,6 +3998,7 @@ public class FeatureValueInterceptorStub: FeatureValueInterceptor {
 import Cuckoo
 @testable import featurehub_swift_sdk
 
+import CryptoKit
 import Foundation
 
 
@@ -4343,6 +4385,32 @@ import Foundation
     }
     
     
+    
+    
+    
+     override var etag: String? {
+        get {
+            return cuckoo_manager.getter("etag",
+                superclassCall:
+                    
+                    super.etag
+                    ,
+                defaultCall: __defaultImplStub!.etag)
+        }
+        
+        set {
+            cuckoo_manager.setter("etag",
+                value: newValue,
+                superclassCall:
+                    
+                    super.etag = newValue
+                    ,
+                defaultCall: __defaultImplStub!.etag = newValue)
+        }
+        
+    }
+    
+    
 
     
 
@@ -4430,19 +4498,19 @@ import Foundation
     
     
     
-     override func context_change(new_header: String) async {
+     override func context_change(_ newHeader: String) async {
         
     return await cuckoo_manager.call(
     """
-    context_change(new_header: String) async
+    context_change(_: String) async
     """,
-            parameters: (new_header),
-            escapingParameters: (new_header),
+            parameters: (newHeader),
+            escapingParameters: (newHeader),
             superclassCall:
                 
-                await super.context_change(new_header: new_header)
+                await super.context_change(newHeader)
                 ,
-            defaultCall: await __defaultImplStub!.context_change(new_header: new_header))
+            defaultCall: await __defaultImplStub!.context_change(newHeader))
         
     }
     
@@ -4547,6 +4615,13 @@ import Foundation
         
         
         
+        var etag: Cuckoo.ClassToBeStubbedOptionalProperty<MockUseBasedEdge, String> {
+            return .init(manager: cuckoo_manager, name: "etag")
+        }
+        
+        
+        
+        
         
         func initialize() -> Cuckoo.ClassStubNoReturnFunction<()> {
             let matchers: [Cuckoo.ParameterMatcher<Void>] = []
@@ -4592,11 +4667,11 @@ import Foundation
         
         
         
-        func context_change<M1: Cuckoo.Matchable>(new_header: M1) -> Cuckoo.ClassStubNoReturnFunction<(String)> where M1.MatchedType == String {
-            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: new_header) { $0 }]
+        func context_change<M1: Cuckoo.Matchable>(_ newHeader: M1) -> Cuckoo.ClassStubNoReturnFunction<(String)> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: newHeader) { $0 }]
             return .init(stub: cuckoo_manager.createStub(for: MockUseBasedEdge.self, method:
     """
-    context_change(new_header: String) async
+    context_change(_: String) async
     """, parameterMatchers: matchers))
         }
         
@@ -4696,6 +4771,13 @@ import Foundation
         }
         
         
+        
+        
+        var etag: Cuckoo.VerifyOptionalProperty<String> {
+            return .init(manager: cuckoo_manager, name: "etag", callMatcher: callMatcher, sourceLocation: sourceLocation)
+        }
+        
+        
     
         
         
@@ -4749,11 +4831,11 @@ import Foundation
         
         
         @discardableResult
-        func context_change<M1: Cuckoo.Matchable>(new_header: M1) -> Cuckoo.__DoNotUse<(String), Void> where M1.MatchedType == String {
-            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: new_header) { $0 }]
+        func context_change<M1: Cuckoo.Matchable>(_ newHeader: M1) -> Cuckoo.__DoNotUse<(String), Void> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: newHeader) { $0 }]
             return cuckoo_manager.verify(
     """
-    context_change(new_header: String) async
+    context_change(_: String) async
     """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
         }
         
@@ -4902,6 +4984,19 @@ import Foundation
     }
     
     
+    
+    
+    
+     override var etag: String? {
+        get {
+            return DefaultValueRegistry.defaultValue(for: (String?).self)
+        }
+        
+        set { }
+        
+    }
+    
+    
 
     
 
@@ -4941,7 +5036,7 @@ import Foundation
     
     
     
-     override func context_change(new_header: String) async  {
+     override func context_change(_ newHeader: String) async  {
         return DefaultValueRegistry.defaultValue(for: (Void).self)
     }
     

@@ -1,6 +1,7 @@
 import Foundation
 
 public protocol RepositoryFeatureState {
+  var key: String { get }
   /// does the feature actually exist - you can ask for any feature, and will always get
   /// an object but it will return false if the object is not backed by a real feature. This
   /// allows you to grab features before they even receive state from the server.

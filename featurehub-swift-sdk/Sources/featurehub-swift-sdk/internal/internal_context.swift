@@ -48,7 +48,7 @@ internal class ServerEvalFeatureContext: ClientContext {
       logger.trace("server eval context, header changed to \(newHeader)")
       oldHeader = newHeader
       internalRepo.notReady()
-      await edge.context_change(new_header: newHeader)
+      await edge.context_change(newHeader)
     }
 
     return self

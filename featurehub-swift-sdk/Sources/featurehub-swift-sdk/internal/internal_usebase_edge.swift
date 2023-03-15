@@ -7,6 +7,7 @@
 ///
 
 import Foundation
+import CryptoKit
 
 internal protocol FeatureRequestor {
   func getFeatureStates(apiKeys: [String], contextSha: String?, etag: String?) async -> Response<[FeatureEnvironmentCollection]>?
@@ -76,7 +77,7 @@ internal class UseBasedEdge: EdgeService {
 
   var canStart: Bool {
     get {
-      !_initialized && !_stopped
+      !_stopped
     }
   }
 
@@ -93,6 +94,16 @@ internal class UseBasedEdge: EdgeService {
   internal var timeoutInSeconds: Double {
     get {
       _timeoutInSeconds
+    }
+  }
+
+  internal var etag: String? {
+    get  {
+      _etag
+    }
+
+    set {
+      _etag = newValue
     }
   }
 
@@ -117,7 +128,7 @@ internal class UseBasedEdge: EdgeService {
 
     _callActive = true
 
-    logger.trace("Starting REST request for \(self._config.baseUrl) - contextSha is \(self._contextSha)")
+    logger.trace("Starting REST request for \(self._config.baseUrl) - contextSha is \(self._contextSha), etag \(self._etag)")
 
     if let response = await _requestor.getFeatureStates(apiKeys: _config.apiKeys, contextSha: _contextSha, etag: _etag) {
       process(response)
@@ -125,8 +136,13 @@ internal class UseBasedEdge: EdgeService {
   }
 
   private func process(_ val: Response<[FeatureEnvironmentCollection]>) {
-    logger.trace("Result \(val.statusCode)")
+    logger.trace("REST status is \(val.statusCode)")
+
     if (val.statusCode == 200) || (val.statusCode == 236) {
+      if let etagHeader = val.header["etag"] {
+        _etag = etagHeader
+      }
+
       if let cacheControl = val.header["cache-control"] {
         determineAlternativeTimeoutInterval(cacheControl)
       }
@@ -137,7 +153,6 @@ internal class UseBasedEdge: EdgeService {
         _stopped = true
       }
 
-      // TODO: change polling interval, etc
     } else if (val.statusCode == 400 || val.statusCode == 404) {
       _stopped = true
       _repo.notify(status: SSEResultState.failure)
@@ -163,7 +178,6 @@ internal class UseBasedEdge: EdgeService {
     let search = matches(for: "max-age=(\\d+)", in: cacheHeader)
     if !search.isEmpty {
       let cacheAge = search[0].substring(from: 8)
-      print("value is \(cacheAge)")
       let age = Double(cacheAge) ?? _timeoutInSeconds
 
       if age > 0 {
@@ -188,14 +202,24 @@ internal class UseBasedEdge: EdgeService {
     }
   }
 
-  func context_change(new_header: String) async {
-    if (new_header != _header || canStart) {
-      if !new_header.isEmpty {
-        OpenAPIClientAPI.customHeaders["x-featurehub"] = new_header
+  func context_change(_ newHeader: String) async {
+    if (newHeader != _header && canStart) {
+      if !newHeader.isEmpty {
+        _header = newHeader
+        _contextSha = SHA256.hash(data: Data(newHeader.utf8)).compactMap { String(format: "%02x", $0) }.joined()
+        OpenAPIClientAPI.customHeaders["x-featurehub"] = newHeader
       } else {
         OpenAPIClientAPI.customHeaders.removeValue(forKey: "x-featurehub")
+        _contextSha = "0"
       }
-      await initialize()
+
+      // ooverride  the  call active to allow for a second inflight request
+      _callActive = false
+      _initialized = true
+      // force a poll to happen as the header changed so the state will have changed
+      _cacheTimeout = Date() - _timeoutInSeconds - 1
+
+      await poll()
     }
   }
 

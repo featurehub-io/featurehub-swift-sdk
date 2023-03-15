@@ -1,7 +1,7 @@
 import Foundation
 
 internal class FeatureStateHolder: RepositoryFeatureState {
-  let key: String
+  var _key: String
   let repo: InternalFeatureRepository
   var internalState: FeatureState?
   var parentState: FeatureStateHolder?
@@ -11,7 +11,7 @@ internal class FeatureStateHolder: RepositoryFeatureState {
               featureState: FeatureState? = nil,
               parentState: FeatureStateHolder? = nil,
               clientContext: ClientContext? = nil) {
-    self.key = key
+    _key = key
     self.repo = repo
 
     if featureState != nil {
@@ -24,6 +24,12 @@ internal class FeatureStateHolder: RepositoryFeatureState {
   func exists(_ requestedFeatureState: FeatureState?) -> Bool {
     let fs = requestedFeatureState ?? internalState
     return fs?.l != nil
+  }
+
+  var key: String {
+    get { // we always walk up the tree to get the key in case it changed
+      return parentState?.key ?? _key
+    }
   }
 
   var exists: Bool {
@@ -132,11 +138,14 @@ internal class FeatureStateHolder: RepositoryFeatureState {
   }
 
   func withContext(ctx: ClientContext) -> FeatureStateHolder {
-    FeatureStateHolder(key: key, repo: repo, featureState: nil, parentState: self, clientContext: ctx)
+    FeatureStateHolder(key: _key, repo: repo, featureState: nil, parentState: self, clientContext: ctx)
   }
 
   func setFeatureState(_ state: FeatureState?) {
     internalState = state
+    if let k = state?.key {
+      _key = k
+    }
   }
 
   private func topFeatureState() -> FeatureStateHolder? {
@@ -170,7 +179,7 @@ internal class FeatureStateHolder: RepositoryFeatureState {
     if clientContext != nil && fs?.internalState?.strategies != nil {
       let featureState = fs!.internalState!
       let matched = repo.apply(strategies: featureState.strategies!,
-        key: self.key, featureId: featureState.id, context: clientContext)
+        key: key, featureId: featureState.id, context: clientContext)
       if matched.matched {
         let val = InterceptorValue(matched.value).cast(type!)
         used(fs!.key, fs!.id, val)

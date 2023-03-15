@@ -25,6 +25,8 @@ final class UseBasedEdgeTests : QuickSpec {
     var requestor: MockFeatureRequestor!
     var repository: MockInternalFeatureRepository!
     var config: MockFeatureHubConfig!
+    var etag: String? = nil
+    var contextSha = "0"
 
     beforeEach {
       requestor = MockFeatureRequestor()
@@ -40,23 +42,49 @@ final class UseBasedEdgeTests : QuickSpec {
     }
 
     afterEach {
-      verifyNoMoreInteractions(requestor)
-      verifyNoMoreInteractions(repository)
-      verifyNoMoreInteractions(config)
+      etag = nil
+      contextSha = "0"
+//      verifyNoMoreInteractions(requestor)
+//      verifyNoMoreInteractions(repository)
+//      verifyNoMoreInteractions(config)
     }
+
+    func stubResp(_ resp: Response<[FeatureEnvironmentCollection]>) {
+      stub(requestor) { r in
+        r.getFeatureStates(apiKeys: ["x"], contextSha: contextSha, etag: etag).thenReturn(resp)
+      }
+    }
+
+    func emptyDataCall(code: Int, _ headers: [String: String]? = nil, doPoll: Bool = true) async {
+      var h: [String: String] = ["Content-Type": "application/json"]
+
+      if let hdrs = headers {
+        hdrs.forEach( { k,v in h[k] = v })
+      }
+
+      let resp = Response<[FeatureEnvironmentCollection]>(statusCode: code,
+        header: h,
+        body: [FeatureEnvironmentCollection(id: UUID())], bodyData: nil)
+
+      stubResp(resp)
+
+      stub(repository) { r in
+        r.notify(status: any()).thenDoNothing()
+        r.empty().thenDoNothing()
+      }
+
+      if doPoll {
+        await edge.poll()
+      }
+    }
+
 
     describe("the api is called") {
       afterEach {
         verify(config).apiKeys.get()
-//        verify(config).baseUrl.get()
-        verify(requestor).getFeatureStates(apiKeys: ["x"], contextSha: "0", etag: nil as String?)
+        verify(requestor).getFeatureStates(apiKeys: ["x"], contextSha: contextSha, etag: etag)
       }
 
-      func stubResp(_ resp: Response<[FeatureEnvironmentCollection]>) {
-        stub(requestor) { r in
-          r.getFeatureStates(apiKeys: ["x"], contextSha: "0", etag: nil as String?).thenReturn(resp)
-        }
-      }
 
       it("should poll on start") {
         let resp = Response<[FeatureEnvironmentCollection]>(statusCode: 200,
@@ -89,32 +117,13 @@ final class UseBasedEdgeTests : QuickSpec {
         }
 
         await edge.poll()
+        expect(edge._stopped).to(beTrue())
 
         verify(repository).updateFeatures(equal(to: [f1, f2]))
       }
 
+
       describe("empty data") {
-        func emptyDataCall(code: Int, _ headers: [String: String]? = nil) async {
-          var h: [String: String] = ["Content-Type": "application/json"]
-
-          if let hdrs = headers {
-            hdrs.forEach( { k,v in h[k] = v })
-          }
-
-          let resp = Response<[FeatureEnvironmentCollection]>(statusCode: code,
-            header: h,
-            body: [FeatureEnvironmentCollection(id: UUID())], bodyData: nil)
-
-          stubResp(resp)
-
-          stub(repository) { r in
-            r.notify(status: any()).thenDoNothing()
-            r.empty().thenDoNothing()
-          }
-
-          await edge.poll()
-        }
-
         it("should update the cache timeout to 300 seconds") {
           await emptyDataCall(code: 200, ["cache-control": "private, max-age=300"])
           expect(edge.timeoutInSeconds) == 300
@@ -148,6 +157,28 @@ final class UseBasedEdgeTests : QuickSpec {
       edge.ensureCacheNotExpired()
 
       await edge.poll() // should do nothing
+    }
+
+    describe("etag") {
+      let actualEtag  = "1234/456/8910"
+
+      it("should grab the etag header") {
+        await emptyDataCall(code: 200, ["etag": actualEtag])
+        expect(edge.etag) == actualEtag
+      }
+
+      it("should send the etag header if one is set") {
+        etag = actualEtag
+        edge.etag = actualEtag
+        await emptyDataCall(code: 200, ["etag": "newtag"])
+        expect(edge.etag) == "newtag"
+      }
+
+      it("should poll immediately if the context has changed and update the x-featurehub header") {
+        contextSha = "42144f3939c3ffbbf0bf8b1f12affb5c23a4c5bd41e0ff672d54a5754f062058"
+        await emptyDataCall(code: 200, [:], doPoll: false)
+        await edge.context_change("a=b")
+      }
     }
   }
 }

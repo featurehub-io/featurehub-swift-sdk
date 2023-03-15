@@ -137,7 +137,7 @@ internal class Repository: InternalFeatureRepository {
     var f = features[key]
 
     if f == nil {
-      print("feature \(key) doesnt exist, c reating")
+      logger.trace("feature \(key) doesnt exist, creating")
       f = FeatureStateHolder(key: key, repo: self)
       features[key] = f
     }
