@@ -7,113 +7,223 @@
 ///
 
 import Foundation
+import CryptoKit
+
+internal protocol FeatureRequestor {
+  func getFeatureStates(apiKeys: [String], contextSha: String?, etag: String?) async -> Response<[FeatureEnvironmentCollection]>?
+}
+
+// Swift's substring handling is an absolute travesty, this from Stack Overflow makes it palatable
+extension String {
+  func index(from: Int) -> Index {
+    return self.index(startIndex, offsetBy: from)
+  }
+
+  func substring(from: Int) -> String {
+    let fromIndex = index(from: from)
+    return String(self[fromIndex...])
+  }
+}
+
+internal struct DefaultFeatureRequestor: FeatureRequestor {
+  let _apiService = FeatureServiceAPI()
+
+  public init(_ baseUrl: String) {
+    OpenAPIClientAPI.basePath = baseUrl
+  }
+
+  func getFeatureStates(apiKeys: [String], contextSha: String?, etag: String?) async -> Response<[FeatureEnvironmentCollection]>? {
+    if etag == nil {
+      OpenAPIClientAPI.customHeaders.removeValue(forKey: "if-none-match")
+    } else {
+      OpenAPIClientAPI.customHeaders["if-none-match"] = etag!
+    }
+
+    let reqBuilder = FeatureServiceAPI.getFeatureStatesWithRequestBuilder(apiKey: apiKeys, contextSha: contextSha)
+
+    return try? await reqBuilder.execute()
+  }
+}
 
 internal class UseBasedEdge: EdgeService {
-    let _repo: InternalFeatureRepository
-    let _config: FeatureHubConfig
-    var _timeoutInSeconds: Double
-    var _initialized: Bool = false
-    var _stopped: Bool = false
-    var _header: String?
-    var _cacheTimeout: Date
-    var _contextSha: String = "0"
-    var _callActive: Bool = false
-    var _apiService: FeatureServiceAPI
+  let _repo: InternalFeatureRepository
+  let _config: FeatureHubConfig
+  let _requestor: FeatureRequestor
+  var _timeoutInSeconds: Double
+  var _initialized: Bool = false
+  var _stopped: Bool = false
+  var _header: String?
+  var _cacheTimeout: Date
+  var _contextSha: String = "0"
+  var _callActive: Bool = false
+  var _etag: String? = nil
 
-    public init(_ repo: InternalFeatureRepository, _ config: FeatureHubConfig, _ timeoutInSeconds: Int?) {
-        _repo = repo
-        _config = config
-        _timeoutInSeconds = Double(timeoutInSeconds ?? 360)
-        _cacheTimeout = Date() - _timeoutInSeconds - 1  // ensure the cache is already timed out
+  public init(_ repo: InternalFeatureRepository, _ config: FeatureHubConfig, _ timeoutInSeconds: Int?,
+              requestor: FeatureRequestor? = nil) {
+    _repo = repo
+    _config = config
+    _timeoutInSeconds = Double(timeoutInSeconds ?? 360)
+    _cacheTimeout = Date() - _timeoutInSeconds - 1  // ensure the cache is already timed out
+    _requestor = requestor ?? DefaultFeatureRequestor(config.baseUrl)
+  }
 
-        OpenAPIClientAPI.basePath = config.baseUrl
-        _apiService = FeatureServiceAPI()
+  func initialize() async {
+    if (canStart) {
+      _initialized = true
+      _cacheTimeout = Date() - _timeoutInSeconds - 1
+      await poll()
+    }
+  }
+
+  var canStart: Bool {
+    get {
+      !_stopped
+    }
+  }
+
+  internal func ensureCacheExpired() {
+    _initialized = true
+    _cacheTimeout = Date() - _timeoutInSeconds - 1
+  }
+
+  internal func ensureCacheNotExpired() {
+    _initialized = true
+    _cacheTimeout = Date() + (_timeoutInSeconds/2)
+  }
+
+  internal var timeoutInSeconds: Double {
+    get {
+      _timeoutInSeconds
+    }
+  }
+
+  internal var etag: String? {
+    get  {
+      _etag
     }
 
-    func initialize() async {
-        if (canStart) {
-            _initialized = true
-            _cacheTimeout = Date() + _timeoutInSeconds
-            await poll()
-        }
+    set {
+      _etag = newValue
+    }
+  }
+
+  func poll() async {
+    if !_initialized {
+      await initialize() // this will call us again
+      return
     }
 
-    var canStart: Bool {
-        get {
-            !_initialized && !_stopped
-        }
+    // if the cache timeout < current date, then it will be order ascending and we should poll
+    if _stopped || _callActive || _cacheTimeout.compare(Date()) != ComparisonResult.orderedAscending {
+      return
     }
 
-    func poll() async {
-        // if we are not initialized, we are stopped, we are busy making a call or the cache hasn't expired yet, just return
-        if !_initialized || _stopped || _callActive || _cacheTimeout.compare(Date()) == ComparisonResult.orderedAscending {
-            return
-        }
+    defer {
+      _callActive = false
 
-        defer {
-            _callActive = false
-
-            if !_stopped {
-                calculateNextTimerPeriod()
-            }
-        }
-
-        _callActive = true
-
-        print("Starting REST request for \(self._config.featuresUrl) - contextSha is \(self._contextSha)")
-        logger.trace("Starting REST request for \(self._config.featuresUrl, privacy: .public) - contextSha is \(self._contextSha, privacy: .public)")
-
-        let reqBuilder = FeatureServiceAPI.getFeatureStatesWithRequestBuilder(apiKey: _config.apiKeys, contextSha: _contextSha)
-        if let response = try? await reqBuilder.execute() {
-            process(response)
-        } else {
-            print("failed")
-        }
+      if !_stopped {
+        calculateNextTimerPeriod()
+      }
     }
 
-    private func process(_ val: Response<[FeatureEnvironmentCollection]>) {
-        print("result is \(val)")
-        logger.trace("Result \(val.statusCode, privacy: .public)")
-        if (val.statusCode == 200) || (val.statusCode == 236) {
-            processResult(val.body)
+    _callActive = true
 
-            if (val.statusCode == 236) {
-                _stopped = true
-            }
+    logger.trace("Starting REST request for \(self._config.baseUrl) - contextSha is \(self._contextSha), etag \(self._etag)")
 
-            // TODO: change polling interval, etc
-        } else if (val.statusCode == 400 || val.statusCode == 404) {
-            _stopped = true
-            _repo.notify(status: SSEResultState.failure)
-        }
+    if let response = await _requestor.getFeatureStates(apiKeys: _config.apiKeys, contextSha: _contextSha, etag: _etag) {
+      process(response)
     }
+  }
 
-    private func calculateNextTimerPeriod() {
-        _cacheTimeout = Date() + _timeoutInSeconds
-    }
+  private func process(_ val: Response<[FeatureEnvironmentCollection]>) {
+    logger.trace("REST status is \(val.statusCode)")
 
-    private func processResult(_ environments: [FeatureEnvironmentCollection]?) -> Void {
-        if environments != nil {
-            let allFeatures: [FeatureState] = environments!.map({ $0.features }).compactMap({ $0 }).flatMap( { $0 })
+    if (val.statusCode == 200) || (val.statusCode == 236) {
+      if let etagHeader = val.header["etag"] {
+        _etag = etagHeader
+      }
 
-            if allFeatures.count > 0 {
-                _repo.updateFeatures(allFeatures)
-            } else {
-                _repo.notify(status: SSEResultState.failure)
-            }
-        }
-    }
+      if let cacheControl = val.header["cache-control"] {
+        determineAlternativeTimeoutInterval(cacheControl)
+      }
 
-    func context_change(new_header: String) async {
-        if (new_header != _header || canStart) {
-            if !new_header.isEmpty {
-                OpenAPIClientAPI.customHeaders["x-fh-version"] = new_header
-            }
-            await initialize()
-        }
-    }
+      processResult(val.body)
 
-    func close() {
+      if (val.statusCode == 236) {
         _stopped = true
+      }
+
+    } else if (val.statusCode == 400 || val.statusCode == 404) {
+      _stopped = true
+      _repo.notify(status: SSEResultState.failure)
     }
+  }
+
+  // proper regex doesn't  turn up until Ventura, which is just insane
+  private func matches(for regex: String, in text: String) -> [String] {
+
+    do {
+      let regex = try NSRegularExpression(pattern: regex)
+      let results = regex.matches(in: text,
+        range: NSRange(text.startIndex..., in: text))
+      return results.map {
+        String(text[Range($0.range, in: text)!])
+      }
+    } catch {
+      return []
+    }
+  }
+
+  private func determineAlternativeTimeoutInterval(_ cacheHeader: String) {
+    let search = matches(for: "max-age=(\\d+)", in: cacheHeader)
+    if !search.isEmpty {
+      let cacheAge = search[0].substring(from: 8)
+      let age = Double(cacheAge) ?? _timeoutInSeconds
+
+      if age > 0 {
+        _timeoutInSeconds = age
+      }
+    }
+  }
+
+  private func calculateNextTimerPeriod() {
+    _cacheTimeout = Date() + _timeoutInSeconds
+  }
+
+  private func processResult(_ environments: [FeatureEnvironmentCollection]?) -> Void {
+    if environments != nil {
+      let allFeatures: [FeatureState] = environments!.map({ $0.features }).compactMap({ $0 }).flatMap({ $0 })
+
+      if allFeatures.count > 0 {
+        _repo.updateFeatures(allFeatures)
+      } else {
+        _repo.empty()
+      }
+    }
+  }
+
+  func context_change(_ newHeader: String) async {
+    if (newHeader != _header && canStart) {
+      if !newHeader.isEmpty {
+        _header = newHeader
+        _contextSha = SHA256.hash(data: Data(newHeader.utf8)).compactMap { String(format: "%02x", $0) }.joined()
+        OpenAPIClientAPI.customHeaders["x-featurehub"] = newHeader
+      } else {
+        OpenAPIClientAPI.customHeaders.removeValue(forKey: "x-featurehub")
+        _contextSha = "0"
+      }
+
+      // ooverride  the  call active to allow for a second inflight request
+      _callActive = false
+      _initialized = true
+      // force a poll to happen as the header changed so the state will have changed
+      _cacheTimeout = Date() - _timeoutInSeconds - 1
+
+      await poll()
+    }
+  }
+
+  func close() {
+    _stopped = true
+  }
 }
