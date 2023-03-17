@@ -180,5 +180,18 @@ final class UseBasedEdgeTests : QuickSpec {
         await edge.context_change("a=b")
       }
     }
+
+    describe("poll timeout works as expected") {
+      it("should poll again after the start") {
+        contextSha = "629d7f91c9b2dacda7232e77dbe8874736eaf74589a15d2a23befbc880b6cb5c"
+        edge = UseBasedEdge(repository, config, 1, requestor: requestor)
+        await emptyDataCall(code: 200, nil, doPoll: false)
+        await edge.context_change("zoot=riot")
+        try await Task.sleep(nanoseconds: UInt64(2 * Double(NSEC_PER_SEC)))
+        await edge.poll()
+        verify(config, times(2)).apiKeys.get()
+        verify(requestor, times(2)).getFeatureStates(apiKeys: ["x"], contextSha: contextSha, etag: etag)
+      }
+    }
   }
 }

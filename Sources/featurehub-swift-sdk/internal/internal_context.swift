@@ -68,4 +68,9 @@ internal class ServerEvalFeatureContext: ClientContext {
   override func used(_ key: String, _ id: UUID?, _ val: Any?) async {
     await edge.poll()
   }
+
+  // we override this to pass ourselves as context so that the refresh of the cache can happen
+  override func feature(_ key: String) -> RepositoryFeatureState? {
+    internalRepo.feat(key)?.withContext(ctx: self)
+  }
 }
