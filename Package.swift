@@ -4,24 +4,22 @@
 import PackageDescription
 
 let package = Package(
-        name: "featurehub-swift-sdk",
+        name: "featurehub_swift_sdk",
         platforms: [
-            .iOS(.v11),
+            .iOS(.v13),
             .macOS(.v11),
             .tvOS(.v11),
             .watchOS(.v4),
         ],
         products: [
-            // Products define the executables and libraries produced by a package, and make them visible to other packages.
-            .library(name: "featurehub-swift-sdk", targets: ["featurehub-swift-sdk"]),
+            .library(name: "featurehub_swift_sdk", targets: ["featurehub-swift-sdk"]),
         ],
         dependencies: [
-            // Dependencies declare other packages that this package depends on.
             .package(url: "https://github.com/Flight-School/AnyCodable", .upToNextMajor(from: "0.6.7")),
+            .package(url: "https://github.com/apple/swift-log.git", .upToNextMajor(from: "1.5.2")),
             .package(url: "https://github.com/Quick/Nimble", .upToNextMajor(from: "11.2.1")),
             .package(url: "https://github.com/Brightify/Cuckoo.git", .upToNextMajor(from: "1.9.1")),
-            .package(url: "https://github.com/Quick/Quick", .upToNextMajor(from: "6.1.0")),
-            .package(url: "https://github.com/apple/swift-log.git", .upToNextMajor(from: "1.5.2"))
+            .package(url: "https://github.com/Quick/Quick", .upToNextMajor(from: "6.1.0"))
         ],
 
         targets: [

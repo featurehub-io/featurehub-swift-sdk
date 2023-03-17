@@ -66,7 +66,7 @@ final class ClientContextTests: QuickSpec {
       }
 
       func known(_ key: ContextKeys, _ val: String) {
-        expect(ctx.attributes[key.rawValue]).to(equal([val]))
+        expect(ctx[key.rawValue]).to(equal([val]))
       }
     }
   }

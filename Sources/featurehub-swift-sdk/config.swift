@@ -12,9 +12,9 @@ public protocol FeatureHubConfig {
 
   var repository: FeatureRepository { get }
 
-  func useRest(_ timoutInSeconds: Int)
+  func cacheTimeout(_ timoutInSeconds: Int) -> FeatureHubConfig
 
-  func useStreaming()
+//  func useStreaming() -> FeatureHubConfig
 
   func start() -> ClientContext
   func newContext() -> ClientContext
@@ -72,10 +72,12 @@ public class EdgeFeatureHubConfig: FeatureHubConfig {
     }
   }
 
-  public func useRest(_ timeoutInSeconds: Int) {
+  public func cacheTimeout(_ timeoutInSeconds: Int) -> FeatureHubConfig {
     edgeProvider = { (repo, config) in
       UseBasedEdge(repo, config, timeoutInSeconds)
     }
+
+    return self
   }
 
   internal func useRest(_ timeoutInSeconds: Int, requestor: FeatureRequestor) {
@@ -137,7 +139,8 @@ public class EdgeFeatureHubConfig: FeatureHubConfig {
     return ctx
   }
 
-  public func useStreaming() {
+  public func useStreaming() -> FeatureHubConfig {
     // not yet supported
+    return self
   }
 }

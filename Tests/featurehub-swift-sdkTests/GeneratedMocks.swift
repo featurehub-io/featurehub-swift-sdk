@@ -1,4 +1,4 @@
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/config.swift at 2023-03-15 03:53:15 +0000
+// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/config.swift at 2023-03-17 07:08:48 +0000
 
 
 import Cuckoo
@@ -117,11 +117,11 @@ public class MockFeatureHubConfig: FeatureHubConfig, Cuckoo.ProtocolMock {
     
     
     
-    public func useRest(_ timoutInSeconds: Int)  {
+    public func cacheTimeout(_ timoutInSeconds: Int) -> FeatureHubConfig {
         
     return cuckoo_manager.call(
     """
-    useRest(_: Int)
+    cacheTimeout(_: Int) -> FeatureHubConfig
     """,
             parameters: (timoutInSeconds),
             escapingParameters: (timoutInSeconds),
@@ -129,27 +129,7 @@ public class MockFeatureHubConfig: FeatureHubConfig, Cuckoo.ProtocolMock {
                 
                 Cuckoo.MockManager.crashOnProtocolSuperclassCall()
                 ,
-            defaultCall: __defaultImplStub!.useRest(timoutInSeconds))
-        
-    }
-    
-    
-    
-    
-    
-    public func useStreaming()  {
-        
-    return cuckoo_manager.call(
-    """
-    useStreaming()
-    """,
-            parameters: (),
-            escapingParameters: (),
-            superclassCall:
-                
-                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
-                ,
-            defaultCall: __defaultImplStub!.useStreaming())
+            defaultCall: __defaultImplStub!.cacheTimeout(timoutInSeconds))
         
     }
     
@@ -240,22 +220,11 @@ public class MockFeatureHubConfig: FeatureHubConfig, Cuckoo.ProtocolMock {
         
         
         
-        func useRest<M1: Cuckoo.Matchable>(_ timoutInSeconds: M1) -> Cuckoo.ProtocolStubNoReturnFunction<(Int)> where M1.MatchedType == Int {
+        func cacheTimeout<M1: Cuckoo.Matchable>(_ timoutInSeconds: M1) -> Cuckoo.ProtocolStubFunction<(Int), FeatureHubConfig> where M1.MatchedType == Int {
             let matchers: [Cuckoo.ParameterMatcher<(Int)>] = [wrap(matchable: timoutInSeconds) { $0 }]
             return .init(stub: cuckoo_manager.createStub(for: MockFeatureHubConfig.self, method:
     """
-    useRest(_: Int)
-    """, parameterMatchers: matchers))
-        }
-        
-        
-        
-        
-        func useStreaming() -> Cuckoo.ProtocolStubNoReturnFunction<()> {
-            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
-            return .init(stub: cuckoo_manager.createStub(for: MockFeatureHubConfig.self, method:
-    """
-    useStreaming()
+    cacheTimeout(_: Int) -> FeatureHubConfig
     """, parameterMatchers: matchers))
         }
         
@@ -336,23 +305,11 @@ public class MockFeatureHubConfig: FeatureHubConfig, Cuckoo.ProtocolMock {
         
         
         @discardableResult
-        func useRest<M1: Cuckoo.Matchable>(_ timoutInSeconds: M1) -> Cuckoo.__DoNotUse<(Int), Void> where M1.MatchedType == Int {
+        func cacheTimeout<M1: Cuckoo.Matchable>(_ timoutInSeconds: M1) -> Cuckoo.__DoNotUse<(Int), FeatureHubConfig> where M1.MatchedType == Int {
             let matchers: [Cuckoo.ParameterMatcher<(Int)>] = [wrap(matchable: timoutInSeconds) { $0 }]
             return cuckoo_manager.verify(
     """
-    useRest(_: Int)
-    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
-        }
-        
-        
-        
-        
-        @discardableResult
-        func useStreaming() -> Cuckoo.__DoNotUse<(), Void> {
-            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
-            return cuckoo_manager.verify(
-    """
-    useStreaming()
+    cacheTimeout(_: Int) -> FeatureHubConfig
     """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
         }
         
@@ -449,16 +406,8 @@ public class FeatureHubConfigStub: FeatureHubConfig {
     
     
     
-    public func useRest(_ timoutInSeconds: Int)   {
-        return DefaultValueRegistry.defaultValue(for: (Void).self)
-    }
-    
-    
-    
-    
-    
-    public func useStreaming()   {
-        return DefaultValueRegistry.defaultValue(for: (Void).self)
+    public func cacheTimeout(_ timoutInSeconds: Int) -> FeatureHubConfig  {
+        return DefaultValueRegistry.defaultValue(for: (FeatureHubConfig).self)
     }
     
     
@@ -777,19 +726,19 @@ public class MockEdgeFeatureHubConfig: EdgeFeatureHubConfig, Cuckoo.ClassMock {
     
     
     
-    public override func useRest(_ timeoutInSeconds: Int)  {
+    public override func cacheTimeout(_ timeoutInSeconds: Int) -> FeatureHubConfig {
         
     return cuckoo_manager.call(
     """
-    useRest(_: Int)
+    cacheTimeout(_: Int) -> FeatureHubConfig
     """,
             parameters: (timeoutInSeconds),
             escapingParameters: (timeoutInSeconds),
             superclassCall:
                 
-                super.useRest(timeoutInSeconds)
+                super.cacheTimeout(timeoutInSeconds)
                 ,
-            defaultCall: __defaultImplStub!.useRest(timeoutInSeconds))
+            defaultCall: __defaultImplStub!.cacheTimeout(timeoutInSeconds))
         
     }
     
@@ -857,11 +806,11 @@ public class MockEdgeFeatureHubConfig: EdgeFeatureHubConfig, Cuckoo.ClassMock {
     
     
     
-    public override func useStreaming()  {
+    public override func useStreaming() -> FeatureHubConfig {
         
     return cuckoo_manager.call(
     """
-    useStreaming()
+    useStreaming() -> FeatureHubConfig
     """,
             parameters: (),
             escapingParameters: (),
@@ -969,11 +918,11 @@ public class MockEdgeFeatureHubConfig: EdgeFeatureHubConfig, Cuckoo.ClassMock {
         
         
         
-        func useRest<M1: Cuckoo.Matchable>(_ timeoutInSeconds: M1) -> Cuckoo.ClassStubNoReturnFunction<(Int)> where M1.MatchedType == Int {
+        func cacheTimeout<M1: Cuckoo.Matchable>(_ timeoutInSeconds: M1) -> Cuckoo.ClassStubFunction<(Int), FeatureHubConfig> where M1.MatchedType == Int {
             let matchers: [Cuckoo.ParameterMatcher<(Int)>] = [wrap(matchable: timeoutInSeconds) { $0 }]
             return .init(stub: cuckoo_manager.createStub(for: MockEdgeFeatureHubConfig.self, method:
     """
-    useRest(_: Int)
+    cacheTimeout(_: Int) -> FeatureHubConfig
     """, parameterMatchers: matchers))
         }
         
@@ -1013,11 +962,11 @@ public class MockEdgeFeatureHubConfig: EdgeFeatureHubConfig, Cuckoo.ClassMock {
         
         
         
-        func useStreaming() -> Cuckoo.ClassStubNoReturnFunction<()> {
+        func useStreaming() -> Cuckoo.ClassStubFunction<(), FeatureHubConfig> {
             let matchers: [Cuckoo.ParameterMatcher<Void>] = []
             return .init(stub: cuckoo_manager.createStub(for: MockEdgeFeatureHubConfig.self, method:
     """
-    useStreaming()
+    useStreaming() -> FeatureHubConfig
     """, parameterMatchers: matchers))
         }
         
@@ -1125,11 +1074,11 @@ public class MockEdgeFeatureHubConfig: EdgeFeatureHubConfig, Cuckoo.ClassMock {
         
         
         @discardableResult
-        func useRest<M1: Cuckoo.Matchable>(_ timeoutInSeconds: M1) -> Cuckoo.__DoNotUse<(Int), Void> where M1.MatchedType == Int {
+        func cacheTimeout<M1: Cuckoo.Matchable>(_ timeoutInSeconds: M1) -> Cuckoo.__DoNotUse<(Int), FeatureHubConfig> where M1.MatchedType == Int {
             let matchers: [Cuckoo.ParameterMatcher<(Int)>] = [wrap(matchable: timeoutInSeconds) { $0 }]
             return cuckoo_manager.verify(
     """
-    useRest(_: Int)
+    cacheTimeout(_: Int) -> FeatureHubConfig
     """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
         }
         
@@ -1173,11 +1122,11 @@ public class MockEdgeFeatureHubConfig: EdgeFeatureHubConfig, Cuckoo.ClassMock {
         
         
         @discardableResult
-        func useStreaming() -> Cuckoo.__DoNotUse<(), Void> {
+        func useStreaming() -> Cuckoo.__DoNotUse<(), FeatureHubConfig> {
             let matchers: [Cuckoo.ParameterMatcher<Void>] = []
             return cuckoo_manager.verify(
     """
-    useStreaming()
+    useStreaming() -> FeatureHubConfig
     """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
         }
         
@@ -1341,8 +1290,8 @@ public class EdgeFeatureHubConfigStub: EdgeFeatureHubConfig {
     
     
     
-    public override func useRest(_ timeoutInSeconds: Int)   {
-        return DefaultValueRegistry.defaultValue(for: (Void).self)
+    public override func cacheTimeout(_ timeoutInSeconds: Int) -> FeatureHubConfig  {
+        return DefaultValueRegistry.defaultValue(for: (FeatureHubConfig).self)
     }
     
     
@@ -1373,8 +1322,8 @@ public class EdgeFeatureHubConfigStub: EdgeFeatureHubConfig {
     
     
     
-    public override func useStreaming()   {
-        return DefaultValueRegistry.defaultValue(for: (Void).self)
+    public override func useStreaming() -> FeatureHubConfig  {
+        return DefaultValueRegistry.defaultValue(for: (FeatureHubConfig).self)
     }
     
     
@@ -1384,7 +1333,7 @@ public class EdgeFeatureHubConfigStub: EdgeFeatureHubConfig {
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/featurehub_swift_sdk.swift at 2023-03-15 03:53:15 +0000
+// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/featurehub_swift_sdk.swift at 2023-03-17 07:08:48 +0000
 
 
 import Cuckoo
@@ -1419,26 +1368,6 @@ public class MockEdgeService: EdgeService, Cuckoo.ProtocolMock {
 
     
 
-    
-    
-    
-    
-    public func initialize() async {
-        
-    return await cuckoo_manager.call(
-    """
-    initialize() async
-    """,
-            parameters: (),
-            escapingParameters: (),
-            superclassCall:
-                
-                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
-                ,
-            defaultCall: await __defaultImplStub!.initialize())
-        
-    }
-    
     
     
     
@@ -1511,17 +1440,6 @@ public class MockEdgeService: EdgeService, Cuckoo.ProtocolMock {
         
         
         
-        func initialize() -> Cuckoo.ProtocolStubNoReturnFunction<()> {
-            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
-            return .init(stub: cuckoo_manager.createStub(for: MockEdgeService.self, method:
-    """
-    initialize() async
-    """, parameterMatchers: matchers))
-        }
-        
-        
-        
-        
         func poll() -> Cuckoo.ProtocolStubNoReturnFunction<()> {
             let matchers: [Cuckoo.ParameterMatcher<Void>] = []
             return .init(stub: cuckoo_manager.createStub(for: MockEdgeService.self, method:
@@ -1572,18 +1490,6 @@ public class MockEdgeService: EdgeService, Cuckoo.ProtocolMock {
         
         
         @discardableResult
-        func initialize() -> Cuckoo.__DoNotUse<(), Void> {
-            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
-            return cuckoo_manager.verify(
-    """
-    initialize() async
-    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
-        }
-        
-        
-        
-        
-        @discardableResult
         func poll() -> Cuckoo.__DoNotUse<(), Void> {
             let matchers: [Cuckoo.ParameterMatcher<Void>] = []
             return cuckoo_manager.verify(
@@ -1626,14 +1532,6 @@ public class EdgeServiceStub: EdgeService {
 
     
 
-    
-    
-    
-    
-    public func initialize() async  {
-        return DefaultValueRegistry.defaultValue(for: (Void).self)
-    }
-    
     
     
     
@@ -1877,7 +1775,7 @@ public class FeatureRepositoryStub: FeatureRepository {
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/features.swift at 2023-03-15 03:53:15 +0000
+// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/features.swift at 2023-03-17 07:08:48 +0000
 
 
 import Cuckoo
@@ -2446,7 +2344,7 @@ public class RepositoryFeatureStateStub: RepositoryFeatureState {
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/internal/internal_repository.swift at 2023-03-15 03:53:15 +0000
+// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/internal/internal_repository.swift at 2023-03-17 07:08:48 +0000
 
 
 import Cuckoo
@@ -3985,7 +3883,7 @@ public class FeatureValueInterceptorStub: FeatureValueInterceptor {
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/internal/internal_usebase_edge.swift at 2023-03-15 03:53:15 +0000
+// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/internal/internal_usebase_edge.swift at 2023-03-17 07:08:48 +0000
 
 ///
 /// FeatureHub: Usage based edge. This service holds an update interval
@@ -4418,26 +4316,6 @@ import Foundation
     
     
     
-     override func initialize() async {
-        
-    return await cuckoo_manager.call(
-    """
-    initialize() async
-    """,
-            parameters: (),
-            escapingParameters: (),
-            superclassCall:
-                
-                await super.initialize()
-                ,
-            defaultCall: await __defaultImplStub!.initialize())
-        
-    }
-    
-    
-    
-    
-    
      override func ensureCacheExpired()  {
         
     return cuckoo_manager.call(
@@ -4623,17 +4501,6 @@ import Foundation
         
         
         
-        func initialize() -> Cuckoo.ClassStubNoReturnFunction<()> {
-            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
-            return .init(stub: cuckoo_manager.createStub(for: MockUseBasedEdge.self, method:
-    """
-    initialize() async
-    """, parameterMatchers: matchers))
-        }
-        
-        
-        
-        
         func ensureCacheExpired() -> Cuckoo.ClassStubNoReturnFunction<()> {
             let matchers: [Cuckoo.ParameterMatcher<Void>] = []
             return .init(stub: cuckoo_manager.createStub(for: MockUseBasedEdge.self, method:
@@ -4779,18 +4646,6 @@ import Foundation
         
         
     
-        
-        
-        
-        @discardableResult
-        func initialize() -> Cuckoo.__DoNotUse<(), Void> {
-            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
-            return cuckoo_manager.verify(
-    """
-    initialize() async
-    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
-        }
-        
         
         
         
@@ -5000,14 +4855,6 @@ import Foundation
 
     
 
-    
-    
-    
-    
-     override func initialize() async  {
-        return DefaultValueRegistry.defaultValue(for: (Void).self)
-    }
-    
     
     
     

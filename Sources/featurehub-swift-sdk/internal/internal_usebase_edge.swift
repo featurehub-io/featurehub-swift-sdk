@@ -16,7 +16,7 @@ internal protocol FeatureRequestor {
 // Swift's substring handling is an absolute travesty, this from Stack Overflow makes it palatable
 extension String {
   func index(from: Int) -> Index {
-    return self.index(startIndex, offsetBy: from)
+    self.index(startIndex, offsetBy: from)
   }
 
   func substring(from: Int) -> String {
@@ -62,17 +62,9 @@ internal class UseBasedEdge: EdgeService {
               requestor: FeatureRequestor? = nil) {
     _repo = repo
     _config = config
-    _timeoutInSeconds = Double(timeoutInSeconds ?? 360)
+    _timeoutInSeconds = Double(timeoutInSeconds ?? 300)
     _cacheTimeout = Date() - _timeoutInSeconds - 1  // ensure the cache is already timed out
     _requestor = requestor ?? DefaultFeatureRequestor(config.baseUrl)
-  }
-
-  func initialize() async {
-    if (canStart) {
-      _initialized = true
-      _cacheTimeout = Date() - _timeoutInSeconds - 1
-      await poll()
-    }
   }
 
   var canStart: Bool {
@@ -108,15 +100,17 @@ internal class UseBasedEdge: EdgeService {
   }
 
   func poll() async {
-    if !_initialized {
-      await initialize() // this will call us again
+    // they set the timeout to zero, so we don't ask again
+    if (_initialized && _timeoutInSeconds == 0) {
       return
     }
 
     // if the cache timeout < current date, then it will be order ascending and we should poll
-    if _stopped || _callActive || _cacheTimeout.compare(Date()) != ComparisonResult.orderedAscending {
+    if _stopped || _callActive || (_initialized && (_cacheTimeout.compare(Date()) != ComparisonResult.orderedAscending)) {
       return
     }
+
+    _initialized = true
 
     defer {
       _callActive = false
@@ -128,7 +122,7 @@ internal class UseBasedEdge: EdgeService {
 
     _callActive = true
 
-    logger.trace("Starting REST request for \(self._config.baseUrl) - contextSha is \(self._contextSha), etag \(self._etag)")
+    logger.trace("Starting REST request for \(_config.baseUrl) - contextSha is \(_contextSha), etag \(String(describing: _etag))")
 
     if let response = await _requestor.getFeatureStates(apiKeys: _config.apiKeys, contextSha: _contextSha, etag: _etag) {
       process(response)
@@ -213,7 +207,7 @@ internal class UseBasedEdge: EdgeService {
         _contextSha = "0"
       }
 
-      // ooverride  the  call active to allow for a second inflight request
+      // override  the  call active to allow for a second inflight request
       _callActive = false
       _initialized = true
       // force a poll to happen as the header changed so the state will have changed

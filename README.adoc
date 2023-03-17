@@ -1,3 +1,80 @@
-= FeatureHub Swift SDK
+= featurehub-swift-sdk
 
-This is currently a work in process. 
+NOTE: This SDK is in Beta
+
+
+This is an App friendly FeatureHub SDK for Swift. It is designed
+to allow for the use of Server Evaluated Keys, and focuses on
+"use based evaluation" using the FeatureHub REST API. It is not intended for server side use.
+
+== Quick Start
+
+The basic use of the SDK is simple:
+
+[source,swift]
+----
+let context = 
+        EdgeFeatureHubConfig("https://featurehub-url", ["api-key"]).start()
+
+----
+
+This will give you a new `Context` that you can customise for the user or leave as is
+and ask for features, e.g.
+
+[source,swift]
+----
+if context.feature("UPPERCASE_TEXT").enabled {
+    // do something
+}
+----
+
+This context will live for five minutes (300 seconds, by default) before it attempts to reconnect to the FeatureHub
+server to determine if there are new features.
+
+=== Customising the Context
+
+If you wish to customise the context, and use https://docs.featurehub.io/featurehub/latest/strategies.html#_rollout_strategies[FeatureHub Strategies], then
+you can do so by setting those attribute values on the context and calling `build`. This triggers the SDK
+to bundle up your configuration and send it to the FeatureHub server to get your customised feature
+values given that set of attributes.
+
+[source,swift]
+----
+await context.userKey("user@email.com").attribute("warehouseId", [warehouseId]).build()
+----
+
+=== Caching
+
+The Swift SDK works by implicit caching. What this means if that you set a timeout for the cache (i.e. not 0), and
+if you evaluate a feature past that timeout, the SDK will go and get an update to the cached set of features
+in the background. Your code does not need to do anything other that set your desired timeout (or
+go with the default 300 seconds), and keep evaluating features.
+
+The SDK does not have a background automatic polling system as that is usually undesirable on Mobile.
+
+The cache has a status - you can ask for it to determine if the cache is ready to be evaluated,
+but you can always evaluate a feature, it will just return a "holder" and empty or false values.
+
+[source,swift]
+----
+context.readiness == Readiness.ready
+----
+
+If you wish to set the timeout on the repository, you need to do it up front, with
+
+[source,swift]
+----
+let context =
+        EdgeFeatureHubConfig("https://featurehub-url", ["api-key"]).cacheTimeout(30).start()
+----
+
+for example - this would set it to 30 seconds. The FeatureHub server is able to override the cache
+timeout at any time.
+
+
+== Future enhancements
+
+- Ability to extract feature state and reload it so it can be cached ready for reload
+- Modification of API to allow it to compile on Linux
+- Addition of Streaming API for server support.
+

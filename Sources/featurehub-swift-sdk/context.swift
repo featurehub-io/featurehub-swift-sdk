@@ -3,55 +3,70 @@ import Foundation
 
 public class ClientContext {
   let repo: FeatureRepository
-  var attributes: [String: [String]] = [:]
+  internal var attributes: [String: [String]] = [:]
 
   public init(_ repo: FeatureRepository) {
     self.repo = repo
   }
 
   @discardableResult
-  func user(_ value: String) -> ClientContext {
+  public func user(_ value: String) -> ClientContext {
     attributes[ContextKeys.userKey.rawValue] = [value]
     return self
   }
 
   @discardableResult
-  func session(_ value: String) -> ClientContext {
+  public func session(_ value: String) -> ClientContext {
     attributes[ContextKeys.session.rawValue] = [value]
     return self
   }
 
   @discardableResult
-  func country(_ value: StrategyAttributeCountryName) -> ClientContext {
+  public func country(_ value: StrategyAttributeCountryName) -> ClientContext {
     attributes[ContextKeys.country.rawValue] = [value.rawValue]
     return self
   }
 
   @discardableResult
-  func device(_ value: StrategyAttributeDeviceName) -> ClientContext {
+  public func device(_ value: StrategyAttributeDeviceName) -> ClientContext {
     attributes[ContextKeys.device.rawValue] = [value.rawValue]
     return self
   }
 
   @discardableResult
-  func platform(_ value: StrategyAttributePlatformName) -> ClientContext {
+  public func platform(_ value: StrategyAttributePlatformName) -> ClientContext {
     attributes[ContextKeys.platform.rawValue] = [value.rawValue]
     return self
   }
 
   @discardableResult
-  func version(_ value: String) -> ClientContext {
+  public func version(_ value: String) -> ClientContext {
     attributes[ContextKeys.version.rawValue] = [value]
     return self
   }
 
+  /// lets you easily set a single value for an attribute
   @discardableResult
-  func clear() -> ClientContext {
+  public func attribute(_ key: String, _ value: String) -> ClientContext {
+    attributes[key] = [value]
+    return self
+  }
+
+  /// lets you set an array of values for an attribute
+  @discardableResult
+  public func attributes(_ key: String, _ value: [String]) -> ClientContext {
+    attributes[key] = value
+    return self
+  }
+
+  @discardableResult
+  public func clear() -> ClientContext {
     attributes.removeAll()
     return self
   }
 
-  subscript(_ key: String) -> [String]? {
+  /// allows you to access the attribute values as a subscript
+  public subscript(_ key: String) -> [String]? {
     get {
       attributes[key]
     }
@@ -70,40 +85,42 @@ public class ClientContext {
     return value![0]
   }
 
-  func feature(_ key: String) -> RepositoryFeatureState? {
+  public func feature(_ key: String) -> RepositoryFeatureState? {
     repo.feature(key)
   }
 
-  func enabled(_ key: String) -> Bool {
+  public func enabled(_ key: String) -> Bool {
     feature(key)?.enabled ?? false
   }
 
-  func hasValue(_ key: String) -> Bool {
+  public func hasValue(_ key: String) -> Bool {
     feature(key)?.hasValue ?? false
   }
 
-  func number(_ key: String) -> Double? {
+  public func number(_ key: String) -> Double? {
     feature(key)?.number
   }
 
-  func string(_ key: String) -> String? {
+  public func string(_ key: String) -> String? {
     feature(key)?.string
   }
 
-  func json(_ key: String) -> String? {
+  public func json(_ key: String) -> String? {
     feature(key)?.json
   }
 
-  func flag(_ key: String) -> Bool? {
+  public func flag(_ key: String) -> Bool? {
     feature(key)?.flag
   }
 
-  func exists(_ key: String) -> Bool? {
+  public func exists(_ key: String) -> Bool? {
     feature(key)?.exists
   }
 
+  public var readiness: Readiness { get { repo.readiness }}
+
   @discardableResult
-  func build() async -> ClientContext {
+  public func build() async -> ClientContext {
     self
   }
 
