@@ -5,14 +5,16 @@ internal class FeatureStateHolder: RepositoryFeatureState {
   let repo: InternalFeatureRepository
   var internalState: FeatureState?
   var parentState: FeatureStateHolder?
-  var clientContext: ClientContext?
+  var clientContext: InternalContext?
 
   public init(key: String, repo: InternalFeatureRepository,
               featureState: FeatureState? = nil,
               parentState: FeatureStateHolder? = nil,
-              clientContext: ClientContext? = nil) {
+              clientContext: InternalContext? = nil) {
     _key = key
     self.repo = repo
+    self.parentState = parentState
+    self.clientContext = clientContext
 
     if featureState != nil {
       setFeatureState(featureState)
@@ -133,11 +135,11 @@ internal class FeatureStateHolder: RepositoryFeatureState {
 
   var featureState: FeatureState? {
     get {
-      topFeatureState()?.internalState
+      topFeatureState().internalState
     }
   }
 
-  func withContext(ctx: ClientContext) -> FeatureStateHolder {
+  func withContext(ctx: InternalContext) -> FeatureStateHolder {
     FeatureStateHolder(key: _key, repo: repo, featureState: nil, parentState: self, clientContext: ctx)
   }
 
@@ -148,9 +150,9 @@ internal class FeatureStateHolder: RepositoryFeatureState {
     }
   }
 
-  private func topFeatureState() -> FeatureStateHolder? {
-    if parentState != nil {
-      return parentState!.topFeatureState()
+  private func topFeatureState() -> FeatureStateHolder {
+    if let ps = parentState {
+      return ps.topFeatureState()
     }
 
     return self
@@ -167,35 +169,35 @@ internal class FeatureStateHolder: RepositoryFeatureState {
 
     let fs = topFeatureState()
 
-    let state = fs?.internalState
-    if (state == nil) {
+    let state = fs.internalState
+    if state == nil {
       return nil
     }
 
-    if fs == nil || (fs?.featureType != type) {
+    if fs.featureType != type {
       return nil
     }
 
-    if clientContext != nil && fs?.internalState?.strategies != nil {
-      let featureState = fs!.internalState!
+    if clientContext != nil && fs.internalState?.strategies != nil {
+      let featureState = fs.internalState!
       let matched = repo.apply(strategies: featureState.strategies!,
         key: key, featureId: featureState.id, context: clientContext)
       if matched.matched {
         let val = InterceptorValue(matched.value).cast(type!)
-        used(fs!.key, fs!.id, val)
+        used(fs.key, fs.id, val, type!)
         return val
       }
     }
 
     let val = state?.value?.value
-    used(fs!.key, fs!.id, val)
+    used(fs.key, fs.id, val, type!)
     return val
   }
 
-  private func used(_ key: String, _ id: UUID?, _ val: Any?) {
+  private func used(_ key: String, _ id: UUID?, _ val: Any?, _ valueType: FeatureValueType) {
     if clientContext != nil && id != nil {
       Task.detached(operation: { // background this update
-        await self.clientContext?.used(key, id, val)
+        await self.clientContext?.used(key, id, val, valueType)
       })
     }
   }

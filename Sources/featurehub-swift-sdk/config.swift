@@ -22,6 +22,18 @@ public protocol FeatureHubConfig {
   var clientEval: Bool { get }
 }
 
+struct RuntimeError: Error {
+  let message: String
+
+  init(_ message: String) {
+    self.message = message
+  }
+
+  public var localizedDescription: String {
+    message
+  }
+}
+
 public class EdgeFeatureHubConfig: FeatureHubConfig {
   var _apiKeys: [String] = []
   var _baseUrl: String
@@ -31,7 +43,7 @@ public class EdgeFeatureHubConfig: FeatureHubConfig {
   var _serverContext: ClientContext?
   var _edge: EdgeService?
 
-  public init(_ featurehubUrl: String, _ apiKey: [String]) {
+  public init(_ featurehubUrl: String, _ apiKey: [String]) throws {
     _apiKeys = apiKey
 
     _baseUrl = featurehubUrl
@@ -41,7 +53,9 @@ public class EdgeFeatureHubConfig: FeatureHubConfig {
       _featuresUrl = _baseUrl + "/features"
     }
 
-    // TODO: if client key, use streaming by default, if server key, use usebased by default
+    if apiKey.contains(where: { key in key.contains("*") }) {
+      throw RuntimeError("Does not support client side keys yet")
+    }
 
     edgeProvider = { (repo, config) in
       UseBasedEdge(repo, config, 360)

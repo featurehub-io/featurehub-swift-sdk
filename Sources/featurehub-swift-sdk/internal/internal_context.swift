@@ -4,7 +4,11 @@ internal enum ContextKeys: String {
   case userKey = "userkey", session = "session", country = "country", platform = "platform", device = "device", version = "version"
 }
 
-internal class ClientEvalFeatureContext: ClientContext {
+internal protocol InternalContext: ClientContext {
+  func used(_ key: String, _ id: UUID?, _ val: Any?, _ valueType: FeatureValueType) async
+}
+
+internal class ClientEvalFeatureContext: BaseClientContext, InternalContext {
   let edge: EdgeService
   let internalRepo: InternalFeatureRepository
 
@@ -18,12 +22,12 @@ internal class ClientEvalFeatureContext: ClientContext {
     self
   }
 
-  override func feature(_ key: String) -> RepositoryFeatureState? {
-    internalRepo.feat(key)?.withContext(ctx: self)
+  override func feature(_ key: String) -> RepositoryFeatureState {
+    internalRepo.feat(key).withContext(ctx: self)
   }
 }
 
-internal class ServerEvalFeatureContext: ClientContext {
+internal class ServerEvalFeatureContext: BaseClientContext, InternalContext {
   var oldHeader: String?
   let edge: EdgeService
   let internalRepo: InternalFeatureRepository
@@ -65,12 +69,12 @@ internal class ServerEvalFeatureContext: ClientContext {
     return "\(k)=\(v)"
   }
 
-  override func used(_ key: String, _ id: UUID?, _ val: Any?) async {
+  override func used(_ key: String, _ id: UUID?, _ val: Any?, _ valueType: FeatureValueType) async {
     await edge.poll()
   }
 
   // we override this to pass ourselves as context so that the refresh of the cache can happen
-  override func feature(_ key: String) -> RepositoryFeatureState? {
-    internalRepo.feat(key)?.withContext(ctx: self)
+  override func feature(_ key: String) -> RepositoryFeatureState {
+    internalRepo.feat(key).withContext(ctx: self)
   }
 }

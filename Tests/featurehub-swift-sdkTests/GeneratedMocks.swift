@@ -1,4 +1,4 @@
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/config.swift at 2023-03-17 07:08:48 +0000
+// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/config.swift at 2023-03-18 05:08:11 +0000
 
 
 import Cuckoo
@@ -1333,7 +1333,2328 @@ public class EdgeFeatureHubConfigStub: EdgeFeatureHubConfig {
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/featurehub_swift_sdk.swift at 2023-03-17 07:08:48 +0000
+// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/context.swift at 2023-03-18 05:08:11 +0000
+
+
+import Cuckoo
+@testable import featurehub_swift_sdk
+
+import Foundation
+
+
+
+
+
+
+public class MockClientContext: ClientContext, Cuckoo.ProtocolMock {
+    
+    public typealias MocksType = ClientContext
+    
+    public typealias Stubbing = __StubbingProxy_ClientContext
+    public typealias Verification = __VerificationProxy_ClientContext
+
+    public let cuckoo_manager = Cuckoo.MockManager.preconfiguredManager ?? Cuckoo.MockManager(hasParent: false)
+
+    
+    private var __defaultImplStub: ClientContext?
+
+    public func enableDefaultImplementation(_ stub: ClientContext) {
+        __defaultImplStub = stub
+        cuckoo_manager.enableDefaultStubImplementation()
+    }
+    
+
+    
+    
+    
+    
+    public var readiness: Readiness {
+        get {
+            return cuckoo_manager.getter("readiness",
+                superclassCall:
+                    
+                    Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                    ,
+                defaultCall: __defaultImplStub!.readiness)
+        }
+        
+    }
+    
+    
+
+    
+
+    
+    
+    
+    
+    public func user(_ value: String) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    user(_: String) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.user(value))
+        
+    }
+    
+    
+    
+    
+    
+    public func session(_ value: String) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    session(_: String) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.session(value))
+        
+    }
+    
+    
+    
+    
+    
+    public func country(_ value: StrategyAttributeCountryName) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    country(_: StrategyAttributeCountryName) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.country(value))
+        
+    }
+    
+    
+    
+    
+    
+    public func device(_ value: StrategyAttributeDeviceName) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    device(_: StrategyAttributeDeviceName) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.device(value))
+        
+    }
+    
+    
+    
+    
+    
+    public func platform(_ value: StrategyAttributePlatformName) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    platform(_: StrategyAttributePlatformName) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.platform(value))
+        
+    }
+    
+    
+    
+    
+    
+    public func version(_ value: String) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    version(_: String) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.version(value))
+        
+    }
+    
+    
+    
+    
+    
+    public func attribute(_ key: String, _ value: String) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    attribute(_: String, _: String) -> ClientContext
+    """,
+            parameters: (key, value),
+            escapingParameters: (key, value),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.attribute(key, value))
+        
+    }
+    
+    
+    
+    
+    
+    public func attributes(_ key: String, _ value: [String]) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    attributes(_: String, _: [String]) -> ClientContext
+    """,
+            parameters: (key, value),
+            escapingParameters: (key, value),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.attributes(key, value))
+        
+    }
+    
+    
+    
+    
+    
+    public func clear() -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    clear() -> ClientContext
+    """,
+            parameters: (),
+            escapingParameters: (),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.clear())
+        
+    }
+    
+    
+    
+    
+    
+    public func attr(_ key: String) -> [String]? {
+        
+    return cuckoo_manager.call(
+    """
+    attr(_: String) -> [String]?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.attr(key))
+        
+    }
+    
+    
+    
+    
+    
+    public func feature(_ key: String) -> RepositoryFeatureState {
+        
+    return cuckoo_manager.call(
+    """
+    feature(_: String) -> RepositoryFeatureState
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.feature(key))
+        
+    }
+    
+    
+    
+    
+    
+    public func enabled(_ key: String) -> Bool {
+        
+    return cuckoo_manager.call(
+    """
+    enabled(_: String) -> Bool
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.enabled(key))
+        
+    }
+    
+    
+    
+    
+    
+    public func hasValue(_ key: String) -> Bool {
+        
+    return cuckoo_manager.call(
+    """
+    hasValue(_: String) -> Bool
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.hasValue(key))
+        
+    }
+    
+    
+    
+    
+    
+    public func number(_ key: String) -> Double? {
+        
+    return cuckoo_manager.call(
+    """
+    number(_: String) -> Double?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.number(key))
+        
+    }
+    
+    
+    
+    
+    
+    public func string(_ key: String) -> String? {
+        
+    return cuckoo_manager.call(
+    """
+    string(_: String) -> String?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.string(key))
+        
+    }
+    
+    
+    
+    
+    
+    public func json(_ key: String) -> String? {
+        
+    return cuckoo_manager.call(
+    """
+    json(_: String) -> String?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.json(key))
+        
+    }
+    
+    
+    
+    
+    
+    public func flag(_ key: String) -> Bool? {
+        
+    return cuckoo_manager.call(
+    """
+    flag(_: String) -> Bool?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.flag(key))
+        
+    }
+    
+    
+    
+    
+    
+    public func exists(_ key: String) -> Bool? {
+        
+    return cuckoo_manager.call(
+    """
+    exists(_: String) -> Bool?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.exists(key))
+        
+    }
+    
+    
+    
+    
+    
+    public func build() async -> ClientContext {
+        
+    return await cuckoo_manager.call(
+    """
+    build() async -> ClientContext
+    """,
+            parameters: (),
+            escapingParameters: (),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: await __defaultImplStub!.build())
+        
+    }
+    
+    
+
+    public struct __StubbingProxy_ClientContext: Cuckoo.StubbingProxy {
+        private let cuckoo_manager: Cuckoo.MockManager
+    
+        public init(manager: Cuckoo.MockManager) {
+            self.cuckoo_manager = manager
+        }
+        
+        
+        
+        var readiness: Cuckoo.ProtocolToBeStubbedReadOnlyProperty<MockClientContext, Readiness> {
+            return .init(manager: cuckoo_manager, name: "readiness")
+        }
+        
+        
+        
+        
+        
+        func user<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ProtocolStubFunction<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientContext.self, method:
+    """
+    user(_: String) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func session<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ProtocolStubFunction<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientContext.self, method:
+    """
+    session(_: String) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func country<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ProtocolStubFunction<(StrategyAttributeCountryName), ClientContext> where M1.MatchedType == StrategyAttributeCountryName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributeCountryName)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientContext.self, method:
+    """
+    country(_: StrategyAttributeCountryName) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func device<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ProtocolStubFunction<(StrategyAttributeDeviceName), ClientContext> where M1.MatchedType == StrategyAttributeDeviceName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributeDeviceName)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientContext.self, method:
+    """
+    device(_: StrategyAttributeDeviceName) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func platform<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ProtocolStubFunction<(StrategyAttributePlatformName), ClientContext> where M1.MatchedType == StrategyAttributePlatformName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributePlatformName)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientContext.self, method:
+    """
+    platform(_: StrategyAttributePlatformName) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func version<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ProtocolStubFunction<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientContext.self, method:
+    """
+    version(_: String) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func attribute<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(_ key: M1, _ value: M2) -> Cuckoo.ProtocolStubFunction<(String, String), ClientContext> where M1.MatchedType == String, M2.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String, String)>] = [wrap(matchable: key) { $0.0 }, wrap(matchable: value) { $0.1 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientContext.self, method:
+    """
+    attribute(_: String, _: String) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func attributes<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(_ key: M1, _ value: M2) -> Cuckoo.ProtocolStubFunction<(String, [String]), ClientContext> where M1.MatchedType == String, M2.MatchedType == [String] {
+            let matchers: [Cuckoo.ParameterMatcher<(String, [String])>] = [wrap(matchable: key) { $0.0 }, wrap(matchable: value) { $0.1 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientContext.self, method:
+    """
+    attributes(_: String, _: [String]) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func clear() -> Cuckoo.ProtocolStubFunction<(), ClientContext> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return .init(stub: cuckoo_manager.createStub(for: MockClientContext.self, method:
+    """
+    clear() -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func attr<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ProtocolStubFunction<(String), [String]?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientContext.self, method:
+    """
+    attr(_: String) -> [String]?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func feature<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ProtocolStubFunction<(String), RepositoryFeatureState> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientContext.self, method:
+    """
+    feature(_: String) -> RepositoryFeatureState
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func enabled<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ProtocolStubFunction<(String), Bool> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientContext.self, method:
+    """
+    enabled(_: String) -> Bool
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func hasValue<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ProtocolStubFunction<(String), Bool> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientContext.self, method:
+    """
+    hasValue(_: String) -> Bool
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func number<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ProtocolStubFunction<(String), Double?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientContext.self, method:
+    """
+    number(_: String) -> Double?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func string<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ProtocolStubFunction<(String), String?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientContext.self, method:
+    """
+    string(_: String) -> String?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func json<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ProtocolStubFunction<(String), String?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientContext.self, method:
+    """
+    json(_: String) -> String?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func flag<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ProtocolStubFunction<(String), Bool?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientContext.self, method:
+    """
+    flag(_: String) -> Bool?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func exists<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ProtocolStubFunction<(String), Bool?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientContext.self, method:
+    """
+    exists(_: String) -> Bool?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func build() -> Cuckoo.ProtocolStubFunction<(), ClientContext> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return .init(stub: cuckoo_manager.createStub(for: MockClientContext.self, method:
+    """
+    build() async -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+    }
+
+    public struct __VerificationProxy_ClientContext: Cuckoo.VerificationProxy {
+        private let cuckoo_manager: Cuckoo.MockManager
+        private let callMatcher: Cuckoo.CallMatcher
+        private let sourceLocation: Cuckoo.SourceLocation
+    
+        public init(manager: Cuckoo.MockManager, callMatcher: Cuckoo.CallMatcher, sourceLocation: Cuckoo.SourceLocation) {
+            self.cuckoo_manager = manager
+            self.callMatcher = callMatcher
+            self.sourceLocation = sourceLocation
+        }
+    
+        
+        
+        
+        var readiness: Cuckoo.VerifyReadOnlyProperty<Readiness> {
+            return .init(manager: cuckoo_manager, name: "readiness", callMatcher: callMatcher, sourceLocation: sourceLocation)
+        }
+        
+        
+    
+        
+        
+        
+        @discardableResult
+        func user<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    user(_: String) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func session<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    session(_: String) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func country<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(StrategyAttributeCountryName), ClientContext> where M1.MatchedType == StrategyAttributeCountryName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributeCountryName)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    country(_: StrategyAttributeCountryName) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func device<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(StrategyAttributeDeviceName), ClientContext> where M1.MatchedType == StrategyAttributeDeviceName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributeDeviceName)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    device(_: StrategyAttributeDeviceName) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func platform<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(StrategyAttributePlatformName), ClientContext> where M1.MatchedType == StrategyAttributePlatformName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributePlatformName)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    platform(_: StrategyAttributePlatformName) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func version<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    version(_: String) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func attribute<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(_ key: M1, _ value: M2) -> Cuckoo.__DoNotUse<(String, String), ClientContext> where M1.MatchedType == String, M2.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String, String)>] = [wrap(matchable: key) { $0.0 }, wrap(matchable: value) { $0.1 }]
+            return cuckoo_manager.verify(
+    """
+    attribute(_: String, _: String) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func attributes<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(_ key: M1, _ value: M2) -> Cuckoo.__DoNotUse<(String, [String]), ClientContext> where M1.MatchedType == String, M2.MatchedType == [String] {
+            let matchers: [Cuckoo.ParameterMatcher<(String, [String])>] = [wrap(matchable: key) { $0.0 }, wrap(matchable: value) { $0.1 }]
+            return cuckoo_manager.verify(
+    """
+    attributes(_: String, _: [String]) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func clear() -> Cuckoo.__DoNotUse<(), ClientContext> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return cuckoo_manager.verify(
+    """
+    clear() -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func attr<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), [String]?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    attr(_: String) -> [String]?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func feature<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), RepositoryFeatureState> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    feature(_: String) -> RepositoryFeatureState
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func enabled<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), Bool> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    enabled(_: String) -> Bool
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func hasValue<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), Bool> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    hasValue(_: String) -> Bool
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func number<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), Double?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    number(_: String) -> Double?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func string<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), String?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    string(_: String) -> String?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func json<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), String?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    json(_: String) -> String?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func flag<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), Bool?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    flag(_: String) -> Bool?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func exists<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), Bool?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    exists(_: String) -> Bool?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func build() -> Cuckoo.__DoNotUse<(), ClientContext> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return cuckoo_manager.verify(
+    """
+    build() async -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+    }
+}
+
+
+public class ClientContextStub: ClientContext {
+    
+    
+    
+    
+    public var readiness: Readiness {
+        get {
+            return DefaultValueRegistry.defaultValue(for: (Readiness).self)
+        }
+        
+    }
+    
+    
+
+    
+
+    
+    
+    
+    
+    public func user(_ value: String) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public func session(_ value: String) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public func country(_ value: StrategyAttributeCountryName) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public func device(_ value: StrategyAttributeDeviceName) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public func platform(_ value: StrategyAttributePlatformName) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public func version(_ value: String) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public func attribute(_ key: String, _ value: String) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public func attributes(_ key: String, _ value: [String]) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public func clear() -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public func attr(_ key: String) -> [String]?  {
+        return DefaultValueRegistry.defaultValue(for: ([String]?).self)
+    }
+    
+    
+    
+    
+    
+    public func feature(_ key: String) -> RepositoryFeatureState  {
+        return DefaultValueRegistry.defaultValue(for: (RepositoryFeatureState).self)
+    }
+    
+    
+    
+    
+    
+    public func enabled(_ key: String) -> Bool  {
+        return DefaultValueRegistry.defaultValue(for: (Bool).self)
+    }
+    
+    
+    
+    
+    
+    public func hasValue(_ key: String) -> Bool  {
+        return DefaultValueRegistry.defaultValue(for: (Bool).self)
+    }
+    
+    
+    
+    
+    
+    public func number(_ key: String) -> Double?  {
+        return DefaultValueRegistry.defaultValue(for: (Double?).self)
+    }
+    
+    
+    
+    
+    
+    public func string(_ key: String) -> String?  {
+        return DefaultValueRegistry.defaultValue(for: (String?).self)
+    }
+    
+    
+    
+    
+    
+    public func json(_ key: String) -> String?  {
+        return DefaultValueRegistry.defaultValue(for: (String?).self)
+    }
+    
+    
+    
+    
+    
+    public func flag(_ key: String) -> Bool?  {
+        return DefaultValueRegistry.defaultValue(for: (Bool?).self)
+    }
+    
+    
+    
+    
+    
+    public func exists(_ key: String) -> Bool?  {
+        return DefaultValueRegistry.defaultValue(for: (Bool?).self)
+    }
+    
+    
+    
+    
+    
+    public func build() async -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+public class MockBaseClientContext: BaseClientContext, Cuckoo.ClassMock {
+    
+    public typealias MocksType = BaseClientContext
+    
+    public typealias Stubbing = __StubbingProxy_BaseClientContext
+    public typealias Verification = __VerificationProxy_BaseClientContext
+
+    public let cuckoo_manager = Cuckoo.MockManager.preconfiguredManager ?? Cuckoo.MockManager(hasParent: true)
+
+    
+    private var __defaultImplStub: BaseClientContext?
+
+    public func enableDefaultImplementation(_ stub: BaseClientContext) {
+        __defaultImplStub = stub
+        cuckoo_manager.enableDefaultStubImplementation()
+    }
+    
+
+    
+    
+    
+    
+    public override var attributes: [String: [String]] {
+        get {
+            return cuckoo_manager.getter("attributes",
+                superclassCall:
+                    
+                    super.attributes
+                    ,
+                defaultCall: __defaultImplStub!.attributes)
+        }
+        
+        set {
+            cuckoo_manager.setter("attributes",
+                value: newValue,
+                superclassCall:
+                    
+                    super.attributes = newValue
+                    ,
+                defaultCall: __defaultImplStub!.attributes = newValue)
+        }
+        
+    }
+    
+    
+    
+    
+    
+    public override var readiness: Readiness {
+        get {
+            return cuckoo_manager.getter("readiness",
+                superclassCall:
+                    
+                    super.readiness
+                    ,
+                defaultCall: __defaultImplStub!.readiness)
+        }
+        
+    }
+    
+    
+
+    
+
+    
+    
+    
+    
+    public override func user(_ value: String) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    user(_: String) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                super.user(value)
+                ,
+            defaultCall: __defaultImplStub!.user(value))
+        
+    }
+    
+    
+    
+    
+    
+    public override func session(_ value: String) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    session(_: String) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                super.session(value)
+                ,
+            defaultCall: __defaultImplStub!.session(value))
+        
+    }
+    
+    
+    
+    
+    
+    public override func country(_ value: StrategyAttributeCountryName) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    country(_: StrategyAttributeCountryName) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                super.country(value)
+                ,
+            defaultCall: __defaultImplStub!.country(value))
+        
+    }
+    
+    
+    
+    
+    
+    public override func device(_ value: StrategyAttributeDeviceName) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    device(_: StrategyAttributeDeviceName) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                super.device(value)
+                ,
+            defaultCall: __defaultImplStub!.device(value))
+        
+    }
+    
+    
+    
+    
+    
+    public override func platform(_ value: StrategyAttributePlatformName) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    platform(_: StrategyAttributePlatformName) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                super.platform(value)
+                ,
+            defaultCall: __defaultImplStub!.platform(value))
+        
+    }
+    
+    
+    
+    
+    
+    public override func version(_ value: String) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    version(_: String) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                super.version(value)
+                ,
+            defaultCall: __defaultImplStub!.version(value))
+        
+    }
+    
+    
+    
+    
+    
+    public override func attribute(_ key: String, _ value: String) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    attribute(_: String, _: String) -> ClientContext
+    """,
+            parameters: (key, value),
+            escapingParameters: (key, value),
+            superclassCall:
+                
+                super.attribute(key, value)
+                ,
+            defaultCall: __defaultImplStub!.attribute(key, value))
+        
+    }
+    
+    
+    
+    
+    
+    public override func attributes(_ key: String, _ value: [String]) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    attributes(_: String, _: [String]) -> ClientContext
+    """,
+            parameters: (key, value),
+            escapingParameters: (key, value),
+            superclassCall:
+                
+                super.attributes(key, value)
+                ,
+            defaultCall: __defaultImplStub!.attributes(key, value))
+        
+    }
+    
+    
+    
+    
+    
+    public override func clear() -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    clear() -> ClientContext
+    """,
+            parameters: (),
+            escapingParameters: (),
+            superclassCall:
+                
+                super.clear()
+                ,
+            defaultCall: __defaultImplStub!.clear())
+        
+    }
+    
+    
+    
+    
+    
+    public override func attr(_ key: String) -> [String]? {
+        
+    return cuckoo_manager.call(
+    """
+    attr(_: String) -> [String]?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                super.attr(key)
+                ,
+            defaultCall: __defaultImplStub!.attr(key))
+        
+    }
+    
+    
+    
+    
+    
+    public override func defaultPercentageKey() -> String? {
+        
+    return cuckoo_manager.call(
+    """
+    defaultPercentageKey() -> String?
+    """,
+            parameters: (),
+            escapingParameters: (),
+            superclassCall:
+                
+                super.defaultPercentageKey()
+                ,
+            defaultCall: __defaultImplStub!.defaultPercentageKey())
+        
+    }
+    
+    
+    
+    
+    
+    public override func feature(_ key: String) -> RepositoryFeatureState {
+        
+    return cuckoo_manager.call(
+    """
+    feature(_: String) -> RepositoryFeatureState
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                super.feature(key)
+                ,
+            defaultCall: __defaultImplStub!.feature(key))
+        
+    }
+    
+    
+    
+    
+    
+    public override func enabled(_ key: String) -> Bool {
+        
+    return cuckoo_manager.call(
+    """
+    enabled(_: String) -> Bool
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                super.enabled(key)
+                ,
+            defaultCall: __defaultImplStub!.enabled(key))
+        
+    }
+    
+    
+    
+    
+    
+    public override func hasValue(_ key: String) -> Bool {
+        
+    return cuckoo_manager.call(
+    """
+    hasValue(_: String) -> Bool
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                super.hasValue(key)
+                ,
+            defaultCall: __defaultImplStub!.hasValue(key))
+        
+    }
+    
+    
+    
+    
+    
+    public override func number(_ key: String) -> Double? {
+        
+    return cuckoo_manager.call(
+    """
+    number(_: String) -> Double?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                super.number(key)
+                ,
+            defaultCall: __defaultImplStub!.number(key))
+        
+    }
+    
+    
+    
+    
+    
+    public override func string(_ key: String) -> String? {
+        
+    return cuckoo_manager.call(
+    """
+    string(_: String) -> String?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                super.string(key)
+                ,
+            defaultCall: __defaultImplStub!.string(key))
+        
+    }
+    
+    
+    
+    
+    
+    public override func json(_ key: String) -> String? {
+        
+    return cuckoo_manager.call(
+    """
+    json(_: String) -> String?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                super.json(key)
+                ,
+            defaultCall: __defaultImplStub!.json(key))
+        
+    }
+    
+    
+    
+    
+    
+    public override func flag(_ key: String) -> Bool? {
+        
+    return cuckoo_manager.call(
+    """
+    flag(_: String) -> Bool?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                super.flag(key)
+                ,
+            defaultCall: __defaultImplStub!.flag(key))
+        
+    }
+    
+    
+    
+    
+    
+    public override func exists(_ key: String) -> Bool? {
+        
+    return cuckoo_manager.call(
+    """
+    exists(_: String) -> Bool?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                super.exists(key)
+                ,
+            defaultCall: __defaultImplStub!.exists(key))
+        
+    }
+    
+    
+    
+    
+    
+    public override func build() async -> ClientContext {
+        
+    return await cuckoo_manager.call(
+    """
+    build() async -> ClientContext
+    """,
+            parameters: (),
+            escapingParameters: (),
+            superclassCall:
+                
+                await super.build()
+                ,
+            defaultCall: await __defaultImplStub!.build())
+        
+    }
+    
+    
+    
+    
+    
+    public override func used(_ key: String, _ id: UUID?, _ val: Any?, _ valueType: FeatureValueType) async {
+        
+    return await cuckoo_manager.call(
+    """
+    used(_: String, _: UUID?, _: Any?, _: FeatureValueType) async
+    """,
+            parameters: (key, id, val, valueType),
+            escapingParameters: (key, id, val, valueType),
+            superclassCall:
+                
+                await super.used(key, id, val, valueType)
+                ,
+            defaultCall: await __defaultImplStub!.used(key, id, val, valueType))
+        
+    }
+    
+    
+
+    public struct __StubbingProxy_BaseClientContext: Cuckoo.StubbingProxy {
+        private let cuckoo_manager: Cuckoo.MockManager
+    
+        public init(manager: Cuckoo.MockManager) {
+            self.cuckoo_manager = manager
+        }
+        
+        
+        
+        var attributes: Cuckoo.ClassToBeStubbedProperty<MockBaseClientContext, [String: [String]]> {
+            return .init(manager: cuckoo_manager, name: "attributes")
+        }
+        
+        
+        
+        
+        var readiness: Cuckoo.ClassToBeStubbedReadOnlyProperty<MockBaseClientContext, Readiness> {
+            return .init(manager: cuckoo_manager, name: "readiness")
+        }
+        
+        
+        
+        
+        
+        func user<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ClassStubFunction<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockBaseClientContext.self, method:
+    """
+    user(_: String) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func session<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ClassStubFunction<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockBaseClientContext.self, method:
+    """
+    session(_: String) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func country<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ClassStubFunction<(StrategyAttributeCountryName), ClientContext> where M1.MatchedType == StrategyAttributeCountryName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributeCountryName)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockBaseClientContext.self, method:
+    """
+    country(_: StrategyAttributeCountryName) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func device<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ClassStubFunction<(StrategyAttributeDeviceName), ClientContext> where M1.MatchedType == StrategyAttributeDeviceName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributeDeviceName)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockBaseClientContext.self, method:
+    """
+    device(_: StrategyAttributeDeviceName) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func platform<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ClassStubFunction<(StrategyAttributePlatformName), ClientContext> where M1.MatchedType == StrategyAttributePlatformName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributePlatformName)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockBaseClientContext.self, method:
+    """
+    platform(_: StrategyAttributePlatformName) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func version<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ClassStubFunction<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockBaseClientContext.self, method:
+    """
+    version(_: String) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func attribute<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(_ key: M1, _ value: M2) -> Cuckoo.ClassStubFunction<(String, String), ClientContext> where M1.MatchedType == String, M2.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String, String)>] = [wrap(matchable: key) { $0.0 }, wrap(matchable: value) { $0.1 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockBaseClientContext.self, method:
+    """
+    attribute(_: String, _: String) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func attributes<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(_ key: M1, _ value: M2) -> Cuckoo.ClassStubFunction<(String, [String]), ClientContext> where M1.MatchedType == String, M2.MatchedType == [String] {
+            let matchers: [Cuckoo.ParameterMatcher<(String, [String])>] = [wrap(matchable: key) { $0.0 }, wrap(matchable: value) { $0.1 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockBaseClientContext.self, method:
+    """
+    attributes(_: String, _: [String]) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func clear() -> Cuckoo.ClassStubFunction<(), ClientContext> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return .init(stub: cuckoo_manager.createStub(for: MockBaseClientContext.self, method:
+    """
+    clear() -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func attr<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), [String]?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockBaseClientContext.self, method:
+    """
+    attr(_: String) -> [String]?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func defaultPercentageKey() -> Cuckoo.ClassStubFunction<(), String?> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return .init(stub: cuckoo_manager.createStub(for: MockBaseClientContext.self, method:
+    """
+    defaultPercentageKey() -> String?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func feature<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), RepositoryFeatureState> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockBaseClientContext.self, method:
+    """
+    feature(_: String) -> RepositoryFeatureState
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func enabled<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), Bool> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockBaseClientContext.self, method:
+    """
+    enabled(_: String) -> Bool
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func hasValue<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), Bool> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockBaseClientContext.self, method:
+    """
+    hasValue(_: String) -> Bool
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func number<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), Double?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockBaseClientContext.self, method:
+    """
+    number(_: String) -> Double?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func string<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), String?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockBaseClientContext.self, method:
+    """
+    string(_: String) -> String?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func json<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), String?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockBaseClientContext.self, method:
+    """
+    json(_: String) -> String?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func flag<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), Bool?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockBaseClientContext.self, method:
+    """
+    flag(_: String) -> Bool?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func exists<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), Bool?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockBaseClientContext.self, method:
+    """
+    exists(_: String) -> Bool?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func build() -> Cuckoo.ClassStubFunction<(), ClientContext> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return .init(stub: cuckoo_manager.createStub(for: MockBaseClientContext.self, method:
+    """
+    build() async -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func used<M1: Cuckoo.Matchable, M2: Cuckoo.OptionalMatchable, M3: Cuckoo.OptionalMatchable, M4: Cuckoo.Matchable>(_ key: M1, _ id: M2, _ val: M3, _ valueType: M4) -> Cuckoo.ClassStubNoReturnFunction<(String, UUID?, Any?, FeatureValueType)> where M1.MatchedType == String, M2.OptionalMatchedType == UUID, M3.OptionalMatchedType == Any, M4.MatchedType == FeatureValueType {
+            let matchers: [Cuckoo.ParameterMatcher<(String, UUID?, Any?, FeatureValueType)>] = [wrap(matchable: key) { $0.0 }, wrap(matchable: id) { $0.1 }, wrap(matchable: val) { $0.2 }, wrap(matchable: valueType) { $0.3 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockBaseClientContext.self, method:
+    """
+    used(_: String, _: UUID?, _: Any?, _: FeatureValueType) async
+    """, parameterMatchers: matchers))
+        }
+        
+        
+    }
+
+    public struct __VerificationProxy_BaseClientContext: Cuckoo.VerificationProxy {
+        private let cuckoo_manager: Cuckoo.MockManager
+        private let callMatcher: Cuckoo.CallMatcher
+        private let sourceLocation: Cuckoo.SourceLocation
+    
+        public init(manager: Cuckoo.MockManager, callMatcher: Cuckoo.CallMatcher, sourceLocation: Cuckoo.SourceLocation) {
+            self.cuckoo_manager = manager
+            self.callMatcher = callMatcher
+            self.sourceLocation = sourceLocation
+        }
+    
+        
+        
+        
+        var attributes: Cuckoo.VerifyProperty<[String: [String]]> {
+            return .init(manager: cuckoo_manager, name: "attributes", callMatcher: callMatcher, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        var readiness: Cuckoo.VerifyReadOnlyProperty<Readiness> {
+            return .init(manager: cuckoo_manager, name: "readiness", callMatcher: callMatcher, sourceLocation: sourceLocation)
+        }
+        
+        
+    
+        
+        
+        
+        @discardableResult
+        func user<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    user(_: String) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func session<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    session(_: String) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func country<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(StrategyAttributeCountryName), ClientContext> where M1.MatchedType == StrategyAttributeCountryName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributeCountryName)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    country(_: StrategyAttributeCountryName) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func device<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(StrategyAttributeDeviceName), ClientContext> where M1.MatchedType == StrategyAttributeDeviceName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributeDeviceName)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    device(_: StrategyAttributeDeviceName) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func platform<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(StrategyAttributePlatformName), ClientContext> where M1.MatchedType == StrategyAttributePlatformName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributePlatformName)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    platform(_: StrategyAttributePlatformName) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func version<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    version(_: String) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func attribute<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(_ key: M1, _ value: M2) -> Cuckoo.__DoNotUse<(String, String), ClientContext> where M1.MatchedType == String, M2.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String, String)>] = [wrap(matchable: key) { $0.0 }, wrap(matchable: value) { $0.1 }]
+            return cuckoo_manager.verify(
+    """
+    attribute(_: String, _: String) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func attributes<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(_ key: M1, _ value: M2) -> Cuckoo.__DoNotUse<(String, [String]), ClientContext> where M1.MatchedType == String, M2.MatchedType == [String] {
+            let matchers: [Cuckoo.ParameterMatcher<(String, [String])>] = [wrap(matchable: key) { $0.0 }, wrap(matchable: value) { $0.1 }]
+            return cuckoo_manager.verify(
+    """
+    attributes(_: String, _: [String]) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func clear() -> Cuckoo.__DoNotUse<(), ClientContext> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return cuckoo_manager.verify(
+    """
+    clear() -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func attr<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), [String]?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    attr(_: String) -> [String]?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func defaultPercentageKey() -> Cuckoo.__DoNotUse<(), String?> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return cuckoo_manager.verify(
+    """
+    defaultPercentageKey() -> String?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func feature<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), RepositoryFeatureState> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    feature(_: String) -> RepositoryFeatureState
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func enabled<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), Bool> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    enabled(_: String) -> Bool
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func hasValue<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), Bool> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    hasValue(_: String) -> Bool
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func number<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), Double?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    number(_: String) -> Double?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func string<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), String?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    string(_: String) -> String?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func json<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), String?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    json(_: String) -> String?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func flag<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), Bool?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    flag(_: String) -> Bool?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func exists<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), Bool?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    exists(_: String) -> Bool?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func build() -> Cuckoo.__DoNotUse<(), ClientContext> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return cuckoo_manager.verify(
+    """
+    build() async -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func used<M1: Cuckoo.Matchable, M2: Cuckoo.OptionalMatchable, M3: Cuckoo.OptionalMatchable, M4: Cuckoo.Matchable>(_ key: M1, _ id: M2, _ val: M3, _ valueType: M4) -> Cuckoo.__DoNotUse<(String, UUID?, Any?, FeatureValueType), Void> where M1.MatchedType == String, M2.OptionalMatchedType == UUID, M3.OptionalMatchedType == Any, M4.MatchedType == FeatureValueType {
+            let matchers: [Cuckoo.ParameterMatcher<(String, UUID?, Any?, FeatureValueType)>] = [wrap(matchable: key) { $0.0 }, wrap(matchable: id) { $0.1 }, wrap(matchable: val) { $0.2 }, wrap(matchable: valueType) { $0.3 }]
+            return cuckoo_manager.verify(
+    """
+    used(_: String, _: UUID?, _: Any?, _: FeatureValueType) async
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+    }
+}
+
+
+public class BaseClientContextStub: BaseClientContext {
+    
+    
+    
+    
+    public override var attributes: [String: [String]] {
+        get {
+            return DefaultValueRegistry.defaultValue(for: ([String: [String]]).self)
+        }
+        
+        set { }
+        
+    }
+    
+    
+    
+    
+    
+    public override var readiness: Readiness {
+        get {
+            return DefaultValueRegistry.defaultValue(for: (Readiness).self)
+        }
+        
+    }
+    
+    
+
+    
+
+    
+    
+    
+    
+    public override func user(_ value: String) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public override func session(_ value: String) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public override func country(_ value: StrategyAttributeCountryName) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public override func device(_ value: StrategyAttributeDeviceName) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public override func platform(_ value: StrategyAttributePlatformName) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public override func version(_ value: String) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public override func attribute(_ key: String, _ value: String) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public override func attributes(_ key: String, _ value: [String]) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public override func clear() -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public override func attr(_ key: String) -> [String]?  {
+        return DefaultValueRegistry.defaultValue(for: ([String]?).self)
+    }
+    
+    
+    
+    
+    
+    public override func defaultPercentageKey() -> String?  {
+        return DefaultValueRegistry.defaultValue(for: (String?).self)
+    }
+    
+    
+    
+    
+    
+    public override func feature(_ key: String) -> RepositoryFeatureState  {
+        return DefaultValueRegistry.defaultValue(for: (RepositoryFeatureState).self)
+    }
+    
+    
+    
+    
+    
+    public override func enabled(_ key: String) -> Bool  {
+        return DefaultValueRegistry.defaultValue(for: (Bool).self)
+    }
+    
+    
+    
+    
+    
+    public override func hasValue(_ key: String) -> Bool  {
+        return DefaultValueRegistry.defaultValue(for: (Bool).self)
+    }
+    
+    
+    
+    
+    
+    public override func number(_ key: String) -> Double?  {
+        return DefaultValueRegistry.defaultValue(for: (Double?).self)
+    }
+    
+    
+    
+    
+    
+    public override func string(_ key: String) -> String?  {
+        return DefaultValueRegistry.defaultValue(for: (String?).self)
+    }
+    
+    
+    
+    
+    
+    public override func json(_ key: String) -> String?  {
+        return DefaultValueRegistry.defaultValue(for: (String?).self)
+    }
+    
+    
+    
+    
+    
+    public override func flag(_ key: String) -> Bool?  {
+        return DefaultValueRegistry.defaultValue(for: (Bool?).self)
+    }
+    
+    
+    
+    
+    
+    public override func exists(_ key: String) -> Bool?  {
+        return DefaultValueRegistry.defaultValue(for: (Bool?).self)
+    }
+    
+    
+    
+    
+    
+    public override func build() async -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public override func used(_ key: String, _ id: UUID?, _ val: Any?, _ valueType: FeatureValueType) async  {
+        return DefaultValueRegistry.defaultValue(for: (Void).self)
+    }
+    
+    
+}
+
+
+
+
+
+// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/featurehub_swift_sdk.swift at 2023-03-18 05:08:11 +0000
 
 
 import Cuckoo
@@ -1775,7 +4096,7 @@ public class FeatureRepositoryStub: FeatureRepository {
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/features.swift at 2023-03-17 07:08:48 +0000
+// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/features.swift at 2023-03-18 05:08:11 +0000
 
 
 import Cuckoo
@@ -2344,7 +4665,3666 @@ public class RepositoryFeatureStateStub: RepositoryFeatureState {
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/internal/internal_repository.swift at 2023-03-17 07:08:48 +0000
+// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/internal/internal_context.swift at 2023-03-18 05:08:11 +0000
+
+
+import Cuckoo
+@testable import featurehub_swift_sdk
+
+import Foundation
+
+
+
+
+
+
+ class MockInternalContext: InternalContext, Cuckoo.ProtocolMock {
+    
+     typealias MocksType = InternalContext
+    
+     typealias Stubbing = __StubbingProxy_InternalContext
+     typealias Verification = __VerificationProxy_InternalContext
+
+     let cuckoo_manager = Cuckoo.MockManager.preconfiguredManager ?? Cuckoo.MockManager(hasParent: false)
+
+    
+    private var __defaultImplStub: InternalContext?
+
+     func enableDefaultImplementation(_ stub: InternalContext) {
+        __defaultImplStub = stub
+        cuckoo_manager.enableDefaultStubImplementation()
+    }
+    
+
+    
+    
+    
+    
+    public var readiness: Readiness {
+        get {
+            return cuckoo_manager.getter("readiness",
+                superclassCall:
+                    
+                    Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                    ,
+                defaultCall: __defaultImplStub!.readiness)
+        }
+        
+    }
+    
+    
+
+    
+
+    
+    
+    
+    
+     func used(_ key: String, _ id: UUID?, _ val: Any?, _ valueType: FeatureValueType) async {
+        
+    return await cuckoo_manager.call(
+    """
+    used(_: String, _: UUID?, _: Any?, _: FeatureValueType) async
+    """,
+            parameters: (key, id, val, valueType),
+            escapingParameters: (key, id, val, valueType),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: await __defaultImplStub!.used(key, id, val, valueType))
+        
+    }
+    
+    
+    
+    
+    
+    public func user(_ value: String) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    user(_: String) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.user(value))
+        
+    }
+    
+    
+    
+    
+    
+    public func session(_ value: String) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    session(_: String) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.session(value))
+        
+    }
+    
+    
+    
+    
+    
+    public func country(_ value: StrategyAttributeCountryName) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    country(_: StrategyAttributeCountryName) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.country(value))
+        
+    }
+    
+    
+    
+    
+    
+    public func device(_ value: StrategyAttributeDeviceName) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    device(_: StrategyAttributeDeviceName) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.device(value))
+        
+    }
+    
+    
+    
+    
+    
+    public func platform(_ value: StrategyAttributePlatformName) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    platform(_: StrategyAttributePlatformName) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.platform(value))
+        
+    }
+    
+    
+    
+    
+    
+    public func version(_ value: String) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    version(_: String) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.version(value))
+        
+    }
+    
+    
+    
+    
+    
+    public func attribute(_ key: String, _ value: String) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    attribute(_: String, _: String) -> ClientContext
+    """,
+            parameters: (key, value),
+            escapingParameters: (key, value),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.attribute(key, value))
+        
+    }
+    
+    
+    
+    
+    
+    public func attributes(_ key: String, _ value: [String]) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    attributes(_: String, _: [String]) -> ClientContext
+    """,
+            parameters: (key, value),
+            escapingParameters: (key, value),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.attributes(key, value))
+        
+    }
+    
+    
+    
+    
+    
+    public func clear() -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    clear() -> ClientContext
+    """,
+            parameters: (),
+            escapingParameters: (),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.clear())
+        
+    }
+    
+    
+    
+    
+    
+    public func attr(_ key: String) -> [String]? {
+        
+    return cuckoo_manager.call(
+    """
+    attr(_: String) -> [String]?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.attr(key))
+        
+    }
+    
+    
+    
+    
+    
+    public func feature(_ key: String) -> RepositoryFeatureState {
+        
+    return cuckoo_manager.call(
+    """
+    feature(_: String) -> RepositoryFeatureState
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.feature(key))
+        
+    }
+    
+    
+    
+    
+    
+    public func enabled(_ key: String) -> Bool {
+        
+    return cuckoo_manager.call(
+    """
+    enabled(_: String) -> Bool
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.enabled(key))
+        
+    }
+    
+    
+    
+    
+    
+    public func hasValue(_ key: String) -> Bool {
+        
+    return cuckoo_manager.call(
+    """
+    hasValue(_: String) -> Bool
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.hasValue(key))
+        
+    }
+    
+    
+    
+    
+    
+    public func number(_ key: String) -> Double? {
+        
+    return cuckoo_manager.call(
+    """
+    number(_: String) -> Double?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.number(key))
+        
+    }
+    
+    
+    
+    
+    
+    public func string(_ key: String) -> String? {
+        
+    return cuckoo_manager.call(
+    """
+    string(_: String) -> String?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.string(key))
+        
+    }
+    
+    
+    
+    
+    
+    public func json(_ key: String) -> String? {
+        
+    return cuckoo_manager.call(
+    """
+    json(_: String) -> String?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.json(key))
+        
+    }
+    
+    
+    
+    
+    
+    public func flag(_ key: String) -> Bool? {
+        
+    return cuckoo_manager.call(
+    """
+    flag(_: String) -> Bool?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.flag(key))
+        
+    }
+    
+    
+    
+    
+    
+    public func exists(_ key: String) -> Bool? {
+        
+    return cuckoo_manager.call(
+    """
+    exists(_: String) -> Bool?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: __defaultImplStub!.exists(key))
+        
+    }
+    
+    
+    
+    
+    
+    public func build() async -> ClientContext {
+        
+    return await cuckoo_manager.call(
+    """
+    build() async -> ClientContext
+    """,
+            parameters: (),
+            escapingParameters: (),
+            superclassCall:
+                
+                Cuckoo.MockManager.crashOnProtocolSuperclassCall()
+                ,
+            defaultCall: await __defaultImplStub!.build())
+        
+    }
+    
+    
+
+     struct __StubbingProxy_InternalContext: Cuckoo.StubbingProxy {
+        private let cuckoo_manager: Cuckoo.MockManager
+    
+         init(manager: Cuckoo.MockManager) {
+            self.cuckoo_manager = manager
+        }
+        
+        
+        
+        var readiness: Cuckoo.ProtocolToBeStubbedReadOnlyProperty<MockInternalContext, Readiness> {
+            return .init(manager: cuckoo_manager, name: "readiness")
+        }
+        
+        
+        
+        
+        
+        func used<M1: Cuckoo.Matchable, M2: Cuckoo.OptionalMatchable, M3: Cuckoo.OptionalMatchable, M4: Cuckoo.Matchable>(_ key: M1, _ id: M2, _ val: M3, _ valueType: M4) -> Cuckoo.ProtocolStubNoReturnFunction<(String, UUID?, Any?, FeatureValueType)> where M1.MatchedType == String, M2.OptionalMatchedType == UUID, M3.OptionalMatchedType == Any, M4.MatchedType == FeatureValueType {
+            let matchers: [Cuckoo.ParameterMatcher<(String, UUID?, Any?, FeatureValueType)>] = [wrap(matchable: key) { $0.0 }, wrap(matchable: id) { $0.1 }, wrap(matchable: val) { $0.2 }, wrap(matchable: valueType) { $0.3 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockInternalContext.self, method:
+    """
+    used(_: String, _: UUID?, _: Any?, _: FeatureValueType) async
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func user<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ProtocolStubFunction<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockInternalContext.self, method:
+    """
+    user(_: String) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func session<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ProtocolStubFunction<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockInternalContext.self, method:
+    """
+    session(_: String) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func country<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ProtocolStubFunction<(StrategyAttributeCountryName), ClientContext> where M1.MatchedType == StrategyAttributeCountryName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributeCountryName)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockInternalContext.self, method:
+    """
+    country(_: StrategyAttributeCountryName) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func device<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ProtocolStubFunction<(StrategyAttributeDeviceName), ClientContext> where M1.MatchedType == StrategyAttributeDeviceName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributeDeviceName)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockInternalContext.self, method:
+    """
+    device(_: StrategyAttributeDeviceName) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func platform<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ProtocolStubFunction<(StrategyAttributePlatformName), ClientContext> where M1.MatchedType == StrategyAttributePlatformName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributePlatformName)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockInternalContext.self, method:
+    """
+    platform(_: StrategyAttributePlatformName) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func version<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ProtocolStubFunction<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockInternalContext.self, method:
+    """
+    version(_: String) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func attribute<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(_ key: M1, _ value: M2) -> Cuckoo.ProtocolStubFunction<(String, String), ClientContext> where M1.MatchedType == String, M2.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String, String)>] = [wrap(matchable: key) { $0.0 }, wrap(matchable: value) { $0.1 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockInternalContext.self, method:
+    """
+    attribute(_: String, _: String) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func attributes<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(_ key: M1, _ value: M2) -> Cuckoo.ProtocolStubFunction<(String, [String]), ClientContext> where M1.MatchedType == String, M2.MatchedType == [String] {
+            let matchers: [Cuckoo.ParameterMatcher<(String, [String])>] = [wrap(matchable: key) { $0.0 }, wrap(matchable: value) { $0.1 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockInternalContext.self, method:
+    """
+    attributes(_: String, _: [String]) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func clear() -> Cuckoo.ProtocolStubFunction<(), ClientContext> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return .init(stub: cuckoo_manager.createStub(for: MockInternalContext.self, method:
+    """
+    clear() -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func attr<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ProtocolStubFunction<(String), [String]?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockInternalContext.self, method:
+    """
+    attr(_: String) -> [String]?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func feature<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ProtocolStubFunction<(String), RepositoryFeatureState> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockInternalContext.self, method:
+    """
+    feature(_: String) -> RepositoryFeatureState
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func enabled<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ProtocolStubFunction<(String), Bool> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockInternalContext.self, method:
+    """
+    enabled(_: String) -> Bool
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func hasValue<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ProtocolStubFunction<(String), Bool> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockInternalContext.self, method:
+    """
+    hasValue(_: String) -> Bool
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func number<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ProtocolStubFunction<(String), Double?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockInternalContext.self, method:
+    """
+    number(_: String) -> Double?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func string<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ProtocolStubFunction<(String), String?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockInternalContext.self, method:
+    """
+    string(_: String) -> String?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func json<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ProtocolStubFunction<(String), String?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockInternalContext.self, method:
+    """
+    json(_: String) -> String?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func flag<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ProtocolStubFunction<(String), Bool?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockInternalContext.self, method:
+    """
+    flag(_: String) -> Bool?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func exists<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ProtocolStubFunction<(String), Bool?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockInternalContext.self, method:
+    """
+    exists(_: String) -> Bool?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func build() -> Cuckoo.ProtocolStubFunction<(), ClientContext> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return .init(stub: cuckoo_manager.createStub(for: MockInternalContext.self, method:
+    """
+    build() async -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+    }
+
+     struct __VerificationProxy_InternalContext: Cuckoo.VerificationProxy {
+        private let cuckoo_manager: Cuckoo.MockManager
+        private let callMatcher: Cuckoo.CallMatcher
+        private let sourceLocation: Cuckoo.SourceLocation
+    
+         init(manager: Cuckoo.MockManager, callMatcher: Cuckoo.CallMatcher, sourceLocation: Cuckoo.SourceLocation) {
+            self.cuckoo_manager = manager
+            self.callMatcher = callMatcher
+            self.sourceLocation = sourceLocation
+        }
+    
+        
+        
+        
+        var readiness: Cuckoo.VerifyReadOnlyProperty<Readiness> {
+            return .init(manager: cuckoo_manager, name: "readiness", callMatcher: callMatcher, sourceLocation: sourceLocation)
+        }
+        
+        
+    
+        
+        
+        
+        @discardableResult
+        func used<M1: Cuckoo.Matchable, M2: Cuckoo.OptionalMatchable, M3: Cuckoo.OptionalMatchable, M4: Cuckoo.Matchable>(_ key: M1, _ id: M2, _ val: M3, _ valueType: M4) -> Cuckoo.__DoNotUse<(String, UUID?, Any?, FeatureValueType), Void> where M1.MatchedType == String, M2.OptionalMatchedType == UUID, M3.OptionalMatchedType == Any, M4.MatchedType == FeatureValueType {
+            let matchers: [Cuckoo.ParameterMatcher<(String, UUID?, Any?, FeatureValueType)>] = [wrap(matchable: key) { $0.0 }, wrap(matchable: id) { $0.1 }, wrap(matchable: val) { $0.2 }, wrap(matchable: valueType) { $0.3 }]
+            return cuckoo_manager.verify(
+    """
+    used(_: String, _: UUID?, _: Any?, _: FeatureValueType) async
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func user<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    user(_: String) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func session<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    session(_: String) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func country<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(StrategyAttributeCountryName), ClientContext> where M1.MatchedType == StrategyAttributeCountryName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributeCountryName)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    country(_: StrategyAttributeCountryName) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func device<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(StrategyAttributeDeviceName), ClientContext> where M1.MatchedType == StrategyAttributeDeviceName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributeDeviceName)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    device(_: StrategyAttributeDeviceName) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func platform<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(StrategyAttributePlatformName), ClientContext> where M1.MatchedType == StrategyAttributePlatformName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributePlatformName)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    platform(_: StrategyAttributePlatformName) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func version<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    version(_: String) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func attribute<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(_ key: M1, _ value: M2) -> Cuckoo.__DoNotUse<(String, String), ClientContext> where M1.MatchedType == String, M2.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String, String)>] = [wrap(matchable: key) { $0.0 }, wrap(matchable: value) { $0.1 }]
+            return cuckoo_manager.verify(
+    """
+    attribute(_: String, _: String) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func attributes<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(_ key: M1, _ value: M2) -> Cuckoo.__DoNotUse<(String, [String]), ClientContext> where M1.MatchedType == String, M2.MatchedType == [String] {
+            let matchers: [Cuckoo.ParameterMatcher<(String, [String])>] = [wrap(matchable: key) { $0.0 }, wrap(matchable: value) { $0.1 }]
+            return cuckoo_manager.verify(
+    """
+    attributes(_: String, _: [String]) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func clear() -> Cuckoo.__DoNotUse<(), ClientContext> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return cuckoo_manager.verify(
+    """
+    clear() -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func attr<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), [String]?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    attr(_: String) -> [String]?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func feature<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), RepositoryFeatureState> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    feature(_: String) -> RepositoryFeatureState
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func enabled<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), Bool> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    enabled(_: String) -> Bool
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func hasValue<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), Bool> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    hasValue(_: String) -> Bool
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func number<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), Double?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    number(_: String) -> Double?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func string<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), String?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    string(_: String) -> String?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func json<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), String?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    json(_: String) -> String?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func flag<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), Bool?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    flag(_: String) -> Bool?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func exists<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), Bool?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    exists(_: String) -> Bool?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func build() -> Cuckoo.__DoNotUse<(), ClientContext> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return cuckoo_manager.verify(
+    """
+    build() async -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+    }
+}
+
+
+ class InternalContextStub: InternalContext {
+    
+    
+    
+    
+    public var readiness: Readiness {
+        get {
+            return DefaultValueRegistry.defaultValue(for: (Readiness).self)
+        }
+        
+    }
+    
+    
+
+    
+
+    
+    
+    
+    
+     func used(_ key: String, _ id: UUID?, _ val: Any?, _ valueType: FeatureValueType) async  {
+        return DefaultValueRegistry.defaultValue(for: (Void).self)
+    }
+    
+    
+    
+    
+    
+    public func user(_ value: String) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public func session(_ value: String) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public func country(_ value: StrategyAttributeCountryName) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public func device(_ value: StrategyAttributeDeviceName) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public func platform(_ value: StrategyAttributePlatformName) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public func version(_ value: String) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public func attribute(_ key: String, _ value: String) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public func attributes(_ key: String, _ value: [String]) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public func clear() -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public func attr(_ key: String) -> [String]?  {
+        return DefaultValueRegistry.defaultValue(for: ([String]?).self)
+    }
+    
+    
+    
+    
+    
+    public func feature(_ key: String) -> RepositoryFeatureState  {
+        return DefaultValueRegistry.defaultValue(for: (RepositoryFeatureState).self)
+    }
+    
+    
+    
+    
+    
+    public func enabled(_ key: String) -> Bool  {
+        return DefaultValueRegistry.defaultValue(for: (Bool).self)
+    }
+    
+    
+    
+    
+    
+    public func hasValue(_ key: String) -> Bool  {
+        return DefaultValueRegistry.defaultValue(for: (Bool).self)
+    }
+    
+    
+    
+    
+    
+    public func number(_ key: String) -> Double?  {
+        return DefaultValueRegistry.defaultValue(for: (Double?).self)
+    }
+    
+    
+    
+    
+    
+    public func string(_ key: String) -> String?  {
+        return DefaultValueRegistry.defaultValue(for: (String?).self)
+    }
+    
+    
+    
+    
+    
+    public func json(_ key: String) -> String?  {
+        return DefaultValueRegistry.defaultValue(for: (String?).self)
+    }
+    
+    
+    
+    
+    
+    public func flag(_ key: String) -> Bool?  {
+        return DefaultValueRegistry.defaultValue(for: (Bool?).self)
+    }
+    
+    
+    
+    
+    
+    public func exists(_ key: String) -> Bool?  {
+        return DefaultValueRegistry.defaultValue(for: (Bool?).self)
+    }
+    
+    
+    
+    
+    
+    public func build() async -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+ class MockClientEvalFeatureContext: ClientEvalFeatureContext, Cuckoo.ClassMock {
+    
+     typealias MocksType = ClientEvalFeatureContext
+    
+     typealias Stubbing = __StubbingProxy_ClientEvalFeatureContext
+     typealias Verification = __VerificationProxy_ClientEvalFeatureContext
+
+     let cuckoo_manager = Cuckoo.MockManager.preconfiguredManager ?? Cuckoo.MockManager(hasParent: true)
+
+    
+    private var __defaultImplStub: ClientEvalFeatureContext?
+
+     func enableDefaultImplementation(_ stub: ClientEvalFeatureContext) {
+        __defaultImplStub = stub
+        cuckoo_manager.enableDefaultStubImplementation()
+    }
+    
+
+    
+    
+    
+    
+     override var attributes: [String: [String]] {
+        get {
+            return cuckoo_manager.getter("attributes",
+                superclassCall:
+                    
+                    super.attributes
+                    ,
+                defaultCall: __defaultImplStub!.attributes)
+        }
+        
+        set {
+            cuckoo_manager.setter("attributes",
+                value: newValue,
+                superclassCall:
+                    
+                    super.attributes = newValue
+                    ,
+                defaultCall: __defaultImplStub!.attributes = newValue)
+        }
+        
+    }
+    
+    
+    
+    
+    
+    public override var readiness: Readiness {
+        get {
+            return cuckoo_manager.getter("readiness",
+                superclassCall:
+                    
+                    super.readiness
+                    ,
+                defaultCall: __defaultImplStub!.readiness)
+        }
+        
+    }
+    
+    
+
+    
+
+    
+    
+    
+    
+     override func build() async -> ClientContext {
+        
+    return await cuckoo_manager.call(
+    """
+    build() async -> ClientContext
+    """,
+            parameters: (),
+            escapingParameters: (),
+            superclassCall:
+                
+                await super.build()
+                ,
+            defaultCall: await __defaultImplStub!.build())
+        
+    }
+    
+    
+    
+    
+    
+     override func feature(_ key: String) -> RepositoryFeatureState {
+        
+    return cuckoo_manager.call(
+    """
+    feature(_: String) -> RepositoryFeatureState
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                super.feature(key)
+                ,
+            defaultCall: __defaultImplStub!.feature(key))
+        
+    }
+    
+    
+    
+    
+    
+    public override func user(_ value: String) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    user(_: String) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                super.user(value)
+                ,
+            defaultCall: __defaultImplStub!.user(value))
+        
+    }
+    
+    
+    
+    
+    
+    public override func session(_ value: String) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    session(_: String) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                super.session(value)
+                ,
+            defaultCall: __defaultImplStub!.session(value))
+        
+    }
+    
+    
+    
+    
+    
+    public override func country(_ value: StrategyAttributeCountryName) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    country(_: StrategyAttributeCountryName) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                super.country(value)
+                ,
+            defaultCall: __defaultImplStub!.country(value))
+        
+    }
+    
+    
+    
+    
+    
+    public override func device(_ value: StrategyAttributeDeviceName) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    device(_: StrategyAttributeDeviceName) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                super.device(value)
+                ,
+            defaultCall: __defaultImplStub!.device(value))
+        
+    }
+    
+    
+    
+    
+    
+    public override func platform(_ value: StrategyAttributePlatformName) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    platform(_: StrategyAttributePlatformName) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                super.platform(value)
+                ,
+            defaultCall: __defaultImplStub!.platform(value))
+        
+    }
+    
+    
+    
+    
+    
+    public override func version(_ value: String) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    version(_: String) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                super.version(value)
+                ,
+            defaultCall: __defaultImplStub!.version(value))
+        
+    }
+    
+    
+    
+    
+    
+    public override func attribute(_ key: String, _ value: String) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    attribute(_: String, _: String) -> ClientContext
+    """,
+            parameters: (key, value),
+            escapingParameters: (key, value),
+            superclassCall:
+                
+                super.attribute(key, value)
+                ,
+            defaultCall: __defaultImplStub!.attribute(key, value))
+        
+    }
+    
+    
+    
+    
+    
+    public override func attributes(_ key: String, _ value: [String]) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    attributes(_: String, _: [String]) -> ClientContext
+    """,
+            parameters: (key, value),
+            escapingParameters: (key, value),
+            superclassCall:
+                
+                super.attributes(key, value)
+                ,
+            defaultCall: __defaultImplStub!.attributes(key, value))
+        
+    }
+    
+    
+    
+    
+    
+    public override func clear() -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    clear() -> ClientContext
+    """,
+            parameters: (),
+            escapingParameters: (),
+            superclassCall:
+                
+                super.clear()
+                ,
+            defaultCall: __defaultImplStub!.clear())
+        
+    }
+    
+    
+    
+    
+    
+    public override func attr(_ key: String) -> [String]? {
+        
+    return cuckoo_manager.call(
+    """
+    attr(_: String) -> [String]?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                super.attr(key)
+                ,
+            defaultCall: __defaultImplStub!.attr(key))
+        
+    }
+    
+    
+    
+    
+    
+     override func defaultPercentageKey() -> String? {
+        
+    return cuckoo_manager.call(
+    """
+    defaultPercentageKey() -> String?
+    """,
+            parameters: (),
+            escapingParameters: (),
+            superclassCall:
+                
+                super.defaultPercentageKey()
+                ,
+            defaultCall: __defaultImplStub!.defaultPercentageKey())
+        
+    }
+    
+    
+    
+    
+    
+    public override func enabled(_ key: String) -> Bool {
+        
+    return cuckoo_manager.call(
+    """
+    enabled(_: String) -> Bool
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                super.enabled(key)
+                ,
+            defaultCall: __defaultImplStub!.enabled(key))
+        
+    }
+    
+    
+    
+    
+    
+    public override func hasValue(_ key: String) -> Bool {
+        
+    return cuckoo_manager.call(
+    """
+    hasValue(_: String) -> Bool
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                super.hasValue(key)
+                ,
+            defaultCall: __defaultImplStub!.hasValue(key))
+        
+    }
+    
+    
+    
+    
+    
+    public override func number(_ key: String) -> Double? {
+        
+    return cuckoo_manager.call(
+    """
+    number(_: String) -> Double?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                super.number(key)
+                ,
+            defaultCall: __defaultImplStub!.number(key))
+        
+    }
+    
+    
+    
+    
+    
+    public override func string(_ key: String) -> String? {
+        
+    return cuckoo_manager.call(
+    """
+    string(_: String) -> String?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                super.string(key)
+                ,
+            defaultCall: __defaultImplStub!.string(key))
+        
+    }
+    
+    
+    
+    
+    
+    public override func json(_ key: String) -> String? {
+        
+    return cuckoo_manager.call(
+    """
+    json(_: String) -> String?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                super.json(key)
+                ,
+            defaultCall: __defaultImplStub!.json(key))
+        
+    }
+    
+    
+    
+    
+    
+    public override func flag(_ key: String) -> Bool? {
+        
+    return cuckoo_manager.call(
+    """
+    flag(_: String) -> Bool?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                super.flag(key)
+                ,
+            defaultCall: __defaultImplStub!.flag(key))
+        
+    }
+    
+    
+    
+    
+    
+    public override func exists(_ key: String) -> Bool? {
+        
+    return cuckoo_manager.call(
+    """
+    exists(_: String) -> Bool?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                super.exists(key)
+                ,
+            defaultCall: __defaultImplStub!.exists(key))
+        
+    }
+    
+    
+    
+    
+    
+     override func used(_ key: String, _ id: UUID?, _ val: Any?, _ valueType: FeatureValueType) async {
+        
+    return await cuckoo_manager.call(
+    """
+    used(_: String, _: UUID?, _: Any?, _: FeatureValueType) async
+    """,
+            parameters: (key, id, val, valueType),
+            escapingParameters: (key, id, val, valueType),
+            superclassCall:
+                
+                await super.used(key, id, val, valueType)
+                ,
+            defaultCall: await __defaultImplStub!.used(key, id, val, valueType))
+        
+    }
+    
+    
+
+     struct __StubbingProxy_ClientEvalFeatureContext: Cuckoo.StubbingProxy {
+        private let cuckoo_manager: Cuckoo.MockManager
+    
+         init(manager: Cuckoo.MockManager) {
+            self.cuckoo_manager = manager
+        }
+        
+        
+        
+        var attributes: Cuckoo.ClassToBeStubbedProperty<MockClientEvalFeatureContext, [String: [String]]> {
+            return .init(manager: cuckoo_manager, name: "attributes")
+        }
+        
+        
+        
+        
+        var readiness: Cuckoo.ClassToBeStubbedReadOnlyProperty<MockClientEvalFeatureContext, Readiness> {
+            return .init(manager: cuckoo_manager, name: "readiness")
+        }
+        
+        
+        
+        
+        
+        func build() -> Cuckoo.ClassStubFunction<(), ClientContext> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return .init(stub: cuckoo_manager.createStub(for: MockClientEvalFeatureContext.self, method:
+    """
+    build() async -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func feature<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), RepositoryFeatureState> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientEvalFeatureContext.self, method:
+    """
+    feature(_: String) -> RepositoryFeatureState
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func user<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ClassStubFunction<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientEvalFeatureContext.self, method:
+    """
+    user(_: String) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func session<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ClassStubFunction<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientEvalFeatureContext.self, method:
+    """
+    session(_: String) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func country<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ClassStubFunction<(StrategyAttributeCountryName), ClientContext> where M1.MatchedType == StrategyAttributeCountryName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributeCountryName)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientEvalFeatureContext.self, method:
+    """
+    country(_: StrategyAttributeCountryName) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func device<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ClassStubFunction<(StrategyAttributeDeviceName), ClientContext> where M1.MatchedType == StrategyAttributeDeviceName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributeDeviceName)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientEvalFeatureContext.self, method:
+    """
+    device(_: StrategyAttributeDeviceName) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func platform<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ClassStubFunction<(StrategyAttributePlatformName), ClientContext> where M1.MatchedType == StrategyAttributePlatformName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributePlatformName)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientEvalFeatureContext.self, method:
+    """
+    platform(_: StrategyAttributePlatformName) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func version<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ClassStubFunction<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientEvalFeatureContext.self, method:
+    """
+    version(_: String) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func attribute<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(_ key: M1, _ value: M2) -> Cuckoo.ClassStubFunction<(String, String), ClientContext> where M1.MatchedType == String, M2.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String, String)>] = [wrap(matchable: key) { $0.0 }, wrap(matchable: value) { $0.1 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientEvalFeatureContext.self, method:
+    """
+    attribute(_: String, _: String) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func attributes<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(_ key: M1, _ value: M2) -> Cuckoo.ClassStubFunction<(String, [String]), ClientContext> where M1.MatchedType == String, M2.MatchedType == [String] {
+            let matchers: [Cuckoo.ParameterMatcher<(String, [String])>] = [wrap(matchable: key) { $0.0 }, wrap(matchable: value) { $0.1 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientEvalFeatureContext.self, method:
+    """
+    attributes(_: String, _: [String]) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func clear() -> Cuckoo.ClassStubFunction<(), ClientContext> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return .init(stub: cuckoo_manager.createStub(for: MockClientEvalFeatureContext.self, method:
+    """
+    clear() -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func attr<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), [String]?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientEvalFeatureContext.self, method:
+    """
+    attr(_: String) -> [String]?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func defaultPercentageKey() -> Cuckoo.ClassStubFunction<(), String?> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return .init(stub: cuckoo_manager.createStub(for: MockClientEvalFeatureContext.self, method:
+    """
+    defaultPercentageKey() -> String?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func enabled<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), Bool> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientEvalFeatureContext.self, method:
+    """
+    enabled(_: String) -> Bool
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func hasValue<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), Bool> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientEvalFeatureContext.self, method:
+    """
+    hasValue(_: String) -> Bool
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func number<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), Double?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientEvalFeatureContext.self, method:
+    """
+    number(_: String) -> Double?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func string<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), String?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientEvalFeatureContext.self, method:
+    """
+    string(_: String) -> String?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func json<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), String?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientEvalFeatureContext.self, method:
+    """
+    json(_: String) -> String?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func flag<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), Bool?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientEvalFeatureContext.self, method:
+    """
+    flag(_: String) -> Bool?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func exists<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), Bool?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientEvalFeatureContext.self, method:
+    """
+    exists(_: String) -> Bool?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func used<M1: Cuckoo.Matchable, M2: Cuckoo.OptionalMatchable, M3: Cuckoo.OptionalMatchable, M4: Cuckoo.Matchable>(_ key: M1, _ id: M2, _ val: M3, _ valueType: M4) -> Cuckoo.ClassStubNoReturnFunction<(String, UUID?, Any?, FeatureValueType)> where M1.MatchedType == String, M2.OptionalMatchedType == UUID, M3.OptionalMatchedType == Any, M4.MatchedType == FeatureValueType {
+            let matchers: [Cuckoo.ParameterMatcher<(String, UUID?, Any?, FeatureValueType)>] = [wrap(matchable: key) { $0.0 }, wrap(matchable: id) { $0.1 }, wrap(matchable: val) { $0.2 }, wrap(matchable: valueType) { $0.3 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockClientEvalFeatureContext.self, method:
+    """
+    used(_: String, _: UUID?, _: Any?, _: FeatureValueType) async
+    """, parameterMatchers: matchers))
+        }
+        
+        
+    }
+
+     struct __VerificationProxy_ClientEvalFeatureContext: Cuckoo.VerificationProxy {
+        private let cuckoo_manager: Cuckoo.MockManager
+        private let callMatcher: Cuckoo.CallMatcher
+        private let sourceLocation: Cuckoo.SourceLocation
+    
+         init(manager: Cuckoo.MockManager, callMatcher: Cuckoo.CallMatcher, sourceLocation: Cuckoo.SourceLocation) {
+            self.cuckoo_manager = manager
+            self.callMatcher = callMatcher
+            self.sourceLocation = sourceLocation
+        }
+    
+        
+        
+        
+        var attributes: Cuckoo.VerifyProperty<[String: [String]]> {
+            return .init(manager: cuckoo_manager, name: "attributes", callMatcher: callMatcher, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        var readiness: Cuckoo.VerifyReadOnlyProperty<Readiness> {
+            return .init(manager: cuckoo_manager, name: "readiness", callMatcher: callMatcher, sourceLocation: sourceLocation)
+        }
+        
+        
+    
+        
+        
+        
+        @discardableResult
+        func build() -> Cuckoo.__DoNotUse<(), ClientContext> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return cuckoo_manager.verify(
+    """
+    build() async -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func feature<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), RepositoryFeatureState> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    feature(_: String) -> RepositoryFeatureState
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func user<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    user(_: String) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func session<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    session(_: String) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func country<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(StrategyAttributeCountryName), ClientContext> where M1.MatchedType == StrategyAttributeCountryName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributeCountryName)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    country(_: StrategyAttributeCountryName) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func device<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(StrategyAttributeDeviceName), ClientContext> where M1.MatchedType == StrategyAttributeDeviceName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributeDeviceName)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    device(_: StrategyAttributeDeviceName) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func platform<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(StrategyAttributePlatformName), ClientContext> where M1.MatchedType == StrategyAttributePlatformName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributePlatformName)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    platform(_: StrategyAttributePlatformName) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func version<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    version(_: String) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func attribute<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(_ key: M1, _ value: M2) -> Cuckoo.__DoNotUse<(String, String), ClientContext> where M1.MatchedType == String, M2.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String, String)>] = [wrap(matchable: key) { $0.0 }, wrap(matchable: value) { $0.1 }]
+            return cuckoo_manager.verify(
+    """
+    attribute(_: String, _: String) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func attributes<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(_ key: M1, _ value: M2) -> Cuckoo.__DoNotUse<(String, [String]), ClientContext> where M1.MatchedType == String, M2.MatchedType == [String] {
+            let matchers: [Cuckoo.ParameterMatcher<(String, [String])>] = [wrap(matchable: key) { $0.0 }, wrap(matchable: value) { $0.1 }]
+            return cuckoo_manager.verify(
+    """
+    attributes(_: String, _: [String]) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func clear() -> Cuckoo.__DoNotUse<(), ClientContext> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return cuckoo_manager.verify(
+    """
+    clear() -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func attr<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), [String]?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    attr(_: String) -> [String]?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func defaultPercentageKey() -> Cuckoo.__DoNotUse<(), String?> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return cuckoo_manager.verify(
+    """
+    defaultPercentageKey() -> String?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func enabled<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), Bool> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    enabled(_: String) -> Bool
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func hasValue<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), Bool> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    hasValue(_: String) -> Bool
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func number<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), Double?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    number(_: String) -> Double?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func string<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), String?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    string(_: String) -> String?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func json<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), String?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    json(_: String) -> String?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func flag<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), Bool?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    flag(_: String) -> Bool?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func exists<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), Bool?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    exists(_: String) -> Bool?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func used<M1: Cuckoo.Matchable, M2: Cuckoo.OptionalMatchable, M3: Cuckoo.OptionalMatchable, M4: Cuckoo.Matchable>(_ key: M1, _ id: M2, _ val: M3, _ valueType: M4) -> Cuckoo.__DoNotUse<(String, UUID?, Any?, FeatureValueType), Void> where M1.MatchedType == String, M2.OptionalMatchedType == UUID, M3.OptionalMatchedType == Any, M4.MatchedType == FeatureValueType {
+            let matchers: [Cuckoo.ParameterMatcher<(String, UUID?, Any?, FeatureValueType)>] = [wrap(matchable: key) { $0.0 }, wrap(matchable: id) { $0.1 }, wrap(matchable: val) { $0.2 }, wrap(matchable: valueType) { $0.3 }]
+            return cuckoo_manager.verify(
+    """
+    used(_: String, _: UUID?, _: Any?, _: FeatureValueType) async
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+    }
+}
+
+
+ class ClientEvalFeatureContextStub: ClientEvalFeatureContext {
+    
+    
+    
+    
+     override var attributes: [String: [String]] {
+        get {
+            return DefaultValueRegistry.defaultValue(for: ([String: [String]]).self)
+        }
+        
+        set { }
+        
+    }
+    
+    
+    
+    
+    
+    public override var readiness: Readiness {
+        get {
+            return DefaultValueRegistry.defaultValue(for: (Readiness).self)
+        }
+        
+    }
+    
+    
+
+    
+
+    
+    
+    
+    
+     override func build() async -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+     override func feature(_ key: String) -> RepositoryFeatureState  {
+        return DefaultValueRegistry.defaultValue(for: (RepositoryFeatureState).self)
+    }
+    
+    
+    
+    
+    
+    public override func user(_ value: String) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public override func session(_ value: String) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public override func country(_ value: StrategyAttributeCountryName) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public override func device(_ value: StrategyAttributeDeviceName) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public override func platform(_ value: StrategyAttributePlatformName) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public override func version(_ value: String) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public override func attribute(_ key: String, _ value: String) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public override func attributes(_ key: String, _ value: [String]) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public override func clear() -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public override func attr(_ key: String) -> [String]?  {
+        return DefaultValueRegistry.defaultValue(for: ([String]?).self)
+    }
+    
+    
+    
+    
+    
+     override func defaultPercentageKey() -> String?  {
+        return DefaultValueRegistry.defaultValue(for: (String?).self)
+    }
+    
+    
+    
+    
+    
+    public override func enabled(_ key: String) -> Bool  {
+        return DefaultValueRegistry.defaultValue(for: (Bool).self)
+    }
+    
+    
+    
+    
+    
+    public override func hasValue(_ key: String) -> Bool  {
+        return DefaultValueRegistry.defaultValue(for: (Bool).self)
+    }
+    
+    
+    
+    
+    
+    public override func number(_ key: String) -> Double?  {
+        return DefaultValueRegistry.defaultValue(for: (Double?).self)
+    }
+    
+    
+    
+    
+    
+    public override func string(_ key: String) -> String?  {
+        return DefaultValueRegistry.defaultValue(for: (String?).self)
+    }
+    
+    
+    
+    
+    
+    public override func json(_ key: String) -> String?  {
+        return DefaultValueRegistry.defaultValue(for: (String?).self)
+    }
+    
+    
+    
+    
+    
+    public override func flag(_ key: String) -> Bool?  {
+        return DefaultValueRegistry.defaultValue(for: (Bool?).self)
+    }
+    
+    
+    
+    
+    
+    public override func exists(_ key: String) -> Bool?  {
+        return DefaultValueRegistry.defaultValue(for: (Bool?).self)
+    }
+    
+    
+    
+    
+    
+     override func used(_ key: String, _ id: UUID?, _ val: Any?, _ valueType: FeatureValueType) async  {
+        return DefaultValueRegistry.defaultValue(for: (Void).self)
+    }
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+ class MockServerEvalFeatureContext: ServerEvalFeatureContext, Cuckoo.ClassMock {
+    
+     typealias MocksType = ServerEvalFeatureContext
+    
+     typealias Stubbing = __StubbingProxy_ServerEvalFeatureContext
+     typealias Verification = __VerificationProxy_ServerEvalFeatureContext
+
+     let cuckoo_manager = Cuckoo.MockManager.preconfiguredManager ?? Cuckoo.MockManager(hasParent: true)
+
+    
+    private var __defaultImplStub: ServerEvalFeatureContext?
+
+     func enableDefaultImplementation(_ stub: ServerEvalFeatureContext) {
+        __defaultImplStub = stub
+        cuckoo_manager.enableDefaultStubImplementation()
+    }
+    
+
+    
+    
+    
+    
+     override var oldHeader: String? {
+        get {
+            return cuckoo_manager.getter("oldHeader",
+                superclassCall:
+                    
+                    super.oldHeader
+                    ,
+                defaultCall: __defaultImplStub!.oldHeader)
+        }
+        
+        set {
+            cuckoo_manager.setter("oldHeader",
+                value: newValue,
+                superclassCall:
+                    
+                    super.oldHeader = newValue
+                    ,
+                defaultCall: __defaultImplStub!.oldHeader = newValue)
+        }
+        
+    }
+    
+    
+    
+    
+    
+     override var attributes: [String: [String]] {
+        get {
+            return cuckoo_manager.getter("attributes",
+                superclassCall:
+                    
+                    super.attributes
+                    ,
+                defaultCall: __defaultImplStub!.attributes)
+        }
+        
+        set {
+            cuckoo_manager.setter("attributes",
+                value: newValue,
+                superclassCall:
+                    
+                    super.attributes = newValue
+                    ,
+                defaultCall: __defaultImplStub!.attributes = newValue)
+        }
+        
+    }
+    
+    
+    
+    
+    
+    public override var readiness: Readiness {
+        get {
+            return cuckoo_manager.getter("readiness",
+                superclassCall:
+                    
+                    super.readiness
+                    ,
+                defaultCall: __defaultImplStub!.readiness)
+        }
+        
+    }
+    
+    
+
+    
+
+    
+    
+    
+    
+     override func build() async -> ClientContext {
+        
+    return await cuckoo_manager.call(
+    """
+    build() async -> ClientContext
+    """,
+            parameters: (),
+            escapingParameters: (),
+            superclassCall:
+                
+                await super.build()
+                ,
+            defaultCall: await __defaultImplStub!.build())
+        
+    }
+    
+    
+    
+    
+    
+     override func used(_ key: String, _ id: UUID?, _ val: Any?, _ valueType: FeatureValueType) async {
+        
+    return await cuckoo_manager.call(
+    """
+    used(_: String, _: UUID?, _: Any?, _: FeatureValueType) async
+    """,
+            parameters: (key, id, val, valueType),
+            escapingParameters: (key, id, val, valueType),
+            superclassCall:
+                
+                await super.used(key, id, val, valueType)
+                ,
+            defaultCall: await __defaultImplStub!.used(key, id, val, valueType))
+        
+    }
+    
+    
+    
+    
+    
+     override func feature(_ key: String) -> RepositoryFeatureState {
+        
+    return cuckoo_manager.call(
+    """
+    feature(_: String) -> RepositoryFeatureState
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                super.feature(key)
+                ,
+            defaultCall: __defaultImplStub!.feature(key))
+        
+    }
+    
+    
+    
+    
+    
+    public override func user(_ value: String) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    user(_: String) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                super.user(value)
+                ,
+            defaultCall: __defaultImplStub!.user(value))
+        
+    }
+    
+    
+    
+    
+    
+    public override func session(_ value: String) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    session(_: String) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                super.session(value)
+                ,
+            defaultCall: __defaultImplStub!.session(value))
+        
+    }
+    
+    
+    
+    
+    
+    public override func country(_ value: StrategyAttributeCountryName) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    country(_: StrategyAttributeCountryName) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                super.country(value)
+                ,
+            defaultCall: __defaultImplStub!.country(value))
+        
+    }
+    
+    
+    
+    
+    
+    public override func device(_ value: StrategyAttributeDeviceName) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    device(_: StrategyAttributeDeviceName) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                super.device(value)
+                ,
+            defaultCall: __defaultImplStub!.device(value))
+        
+    }
+    
+    
+    
+    
+    
+    public override func platform(_ value: StrategyAttributePlatformName) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    platform(_: StrategyAttributePlatformName) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                super.platform(value)
+                ,
+            defaultCall: __defaultImplStub!.platform(value))
+        
+    }
+    
+    
+    
+    
+    
+    public override func version(_ value: String) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    version(_: String) -> ClientContext
+    """,
+            parameters: (value),
+            escapingParameters: (value),
+            superclassCall:
+                
+                super.version(value)
+                ,
+            defaultCall: __defaultImplStub!.version(value))
+        
+    }
+    
+    
+    
+    
+    
+    public override func attribute(_ key: String, _ value: String) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    attribute(_: String, _: String) -> ClientContext
+    """,
+            parameters: (key, value),
+            escapingParameters: (key, value),
+            superclassCall:
+                
+                super.attribute(key, value)
+                ,
+            defaultCall: __defaultImplStub!.attribute(key, value))
+        
+    }
+    
+    
+    
+    
+    
+    public override func attributes(_ key: String, _ value: [String]) -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    attributes(_: String, _: [String]) -> ClientContext
+    """,
+            parameters: (key, value),
+            escapingParameters: (key, value),
+            superclassCall:
+                
+                super.attributes(key, value)
+                ,
+            defaultCall: __defaultImplStub!.attributes(key, value))
+        
+    }
+    
+    
+    
+    
+    
+    public override func clear() -> ClientContext {
+        
+    return cuckoo_manager.call(
+    """
+    clear() -> ClientContext
+    """,
+            parameters: (),
+            escapingParameters: (),
+            superclassCall:
+                
+                super.clear()
+                ,
+            defaultCall: __defaultImplStub!.clear())
+        
+    }
+    
+    
+    
+    
+    
+    public override func attr(_ key: String) -> [String]? {
+        
+    return cuckoo_manager.call(
+    """
+    attr(_: String) -> [String]?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                super.attr(key)
+                ,
+            defaultCall: __defaultImplStub!.attr(key))
+        
+    }
+    
+    
+    
+    
+    
+     override func defaultPercentageKey() -> String? {
+        
+    return cuckoo_manager.call(
+    """
+    defaultPercentageKey() -> String?
+    """,
+            parameters: (),
+            escapingParameters: (),
+            superclassCall:
+                
+                super.defaultPercentageKey()
+                ,
+            defaultCall: __defaultImplStub!.defaultPercentageKey())
+        
+    }
+    
+    
+    
+    
+    
+    public override func enabled(_ key: String) -> Bool {
+        
+    return cuckoo_manager.call(
+    """
+    enabled(_: String) -> Bool
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                super.enabled(key)
+                ,
+            defaultCall: __defaultImplStub!.enabled(key))
+        
+    }
+    
+    
+    
+    
+    
+    public override func hasValue(_ key: String) -> Bool {
+        
+    return cuckoo_manager.call(
+    """
+    hasValue(_: String) -> Bool
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                super.hasValue(key)
+                ,
+            defaultCall: __defaultImplStub!.hasValue(key))
+        
+    }
+    
+    
+    
+    
+    
+    public override func number(_ key: String) -> Double? {
+        
+    return cuckoo_manager.call(
+    """
+    number(_: String) -> Double?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                super.number(key)
+                ,
+            defaultCall: __defaultImplStub!.number(key))
+        
+    }
+    
+    
+    
+    
+    
+    public override func string(_ key: String) -> String? {
+        
+    return cuckoo_manager.call(
+    """
+    string(_: String) -> String?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                super.string(key)
+                ,
+            defaultCall: __defaultImplStub!.string(key))
+        
+    }
+    
+    
+    
+    
+    
+    public override func json(_ key: String) -> String? {
+        
+    return cuckoo_manager.call(
+    """
+    json(_: String) -> String?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                super.json(key)
+                ,
+            defaultCall: __defaultImplStub!.json(key))
+        
+    }
+    
+    
+    
+    
+    
+    public override func flag(_ key: String) -> Bool? {
+        
+    return cuckoo_manager.call(
+    """
+    flag(_: String) -> Bool?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                super.flag(key)
+                ,
+            defaultCall: __defaultImplStub!.flag(key))
+        
+    }
+    
+    
+    
+    
+    
+    public override func exists(_ key: String) -> Bool? {
+        
+    return cuckoo_manager.call(
+    """
+    exists(_: String) -> Bool?
+    """,
+            parameters: (key),
+            escapingParameters: (key),
+            superclassCall:
+                
+                super.exists(key)
+                ,
+            defaultCall: __defaultImplStub!.exists(key))
+        
+    }
+    
+    
+
+     struct __StubbingProxy_ServerEvalFeatureContext: Cuckoo.StubbingProxy {
+        private let cuckoo_manager: Cuckoo.MockManager
+    
+         init(manager: Cuckoo.MockManager) {
+            self.cuckoo_manager = manager
+        }
+        
+        
+        
+        var oldHeader: Cuckoo.ClassToBeStubbedOptionalProperty<MockServerEvalFeatureContext, String> {
+            return .init(manager: cuckoo_manager, name: "oldHeader")
+        }
+        
+        
+        
+        
+        var attributes: Cuckoo.ClassToBeStubbedProperty<MockServerEvalFeatureContext, [String: [String]]> {
+            return .init(manager: cuckoo_manager, name: "attributes")
+        }
+        
+        
+        
+        
+        var readiness: Cuckoo.ClassToBeStubbedReadOnlyProperty<MockServerEvalFeatureContext, Readiness> {
+            return .init(manager: cuckoo_manager, name: "readiness")
+        }
+        
+        
+        
+        
+        
+        func build() -> Cuckoo.ClassStubFunction<(), ClientContext> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return .init(stub: cuckoo_manager.createStub(for: MockServerEvalFeatureContext.self, method:
+    """
+    build() async -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func used<M1: Cuckoo.Matchable, M2: Cuckoo.OptionalMatchable, M3: Cuckoo.OptionalMatchable, M4: Cuckoo.Matchable>(_ key: M1, _ id: M2, _ val: M3, _ valueType: M4) -> Cuckoo.ClassStubNoReturnFunction<(String, UUID?, Any?, FeatureValueType)> where M1.MatchedType == String, M2.OptionalMatchedType == UUID, M3.OptionalMatchedType == Any, M4.MatchedType == FeatureValueType {
+            let matchers: [Cuckoo.ParameterMatcher<(String, UUID?, Any?, FeatureValueType)>] = [wrap(matchable: key) { $0.0 }, wrap(matchable: id) { $0.1 }, wrap(matchable: val) { $0.2 }, wrap(matchable: valueType) { $0.3 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockServerEvalFeatureContext.self, method:
+    """
+    used(_: String, _: UUID?, _: Any?, _: FeatureValueType) async
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func feature<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), RepositoryFeatureState> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockServerEvalFeatureContext.self, method:
+    """
+    feature(_: String) -> RepositoryFeatureState
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func user<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ClassStubFunction<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockServerEvalFeatureContext.self, method:
+    """
+    user(_: String) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func session<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ClassStubFunction<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockServerEvalFeatureContext.self, method:
+    """
+    session(_: String) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func country<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ClassStubFunction<(StrategyAttributeCountryName), ClientContext> where M1.MatchedType == StrategyAttributeCountryName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributeCountryName)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockServerEvalFeatureContext.self, method:
+    """
+    country(_: StrategyAttributeCountryName) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func device<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ClassStubFunction<(StrategyAttributeDeviceName), ClientContext> where M1.MatchedType == StrategyAttributeDeviceName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributeDeviceName)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockServerEvalFeatureContext.self, method:
+    """
+    device(_: StrategyAttributeDeviceName) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func platform<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ClassStubFunction<(StrategyAttributePlatformName), ClientContext> where M1.MatchedType == StrategyAttributePlatformName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributePlatformName)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockServerEvalFeatureContext.self, method:
+    """
+    platform(_: StrategyAttributePlatformName) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func version<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.ClassStubFunction<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockServerEvalFeatureContext.self, method:
+    """
+    version(_: String) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func attribute<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(_ key: M1, _ value: M2) -> Cuckoo.ClassStubFunction<(String, String), ClientContext> where M1.MatchedType == String, M2.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String, String)>] = [wrap(matchable: key) { $0.0 }, wrap(matchable: value) { $0.1 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockServerEvalFeatureContext.self, method:
+    """
+    attribute(_: String, _: String) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func attributes<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(_ key: M1, _ value: M2) -> Cuckoo.ClassStubFunction<(String, [String]), ClientContext> where M1.MatchedType == String, M2.MatchedType == [String] {
+            let matchers: [Cuckoo.ParameterMatcher<(String, [String])>] = [wrap(matchable: key) { $0.0 }, wrap(matchable: value) { $0.1 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockServerEvalFeatureContext.self, method:
+    """
+    attributes(_: String, _: [String]) -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func clear() -> Cuckoo.ClassStubFunction<(), ClientContext> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return .init(stub: cuckoo_manager.createStub(for: MockServerEvalFeatureContext.self, method:
+    """
+    clear() -> ClientContext
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func attr<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), [String]?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockServerEvalFeatureContext.self, method:
+    """
+    attr(_: String) -> [String]?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func defaultPercentageKey() -> Cuckoo.ClassStubFunction<(), String?> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return .init(stub: cuckoo_manager.createStub(for: MockServerEvalFeatureContext.self, method:
+    """
+    defaultPercentageKey() -> String?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func enabled<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), Bool> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockServerEvalFeatureContext.self, method:
+    """
+    enabled(_: String) -> Bool
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func hasValue<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), Bool> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockServerEvalFeatureContext.self, method:
+    """
+    hasValue(_: String) -> Bool
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func number<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), Double?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockServerEvalFeatureContext.self, method:
+    """
+    number(_: String) -> Double?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func string<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), String?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockServerEvalFeatureContext.self, method:
+    """
+    string(_: String) -> String?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func json<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), String?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockServerEvalFeatureContext.self, method:
+    """
+    json(_: String) -> String?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func flag<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), Bool?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockServerEvalFeatureContext.self, method:
+    """
+    flag(_: String) -> Bool?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+        
+        
+        func exists<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), Bool?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return .init(stub: cuckoo_manager.createStub(for: MockServerEvalFeatureContext.self, method:
+    """
+    exists(_: String) -> Bool?
+    """, parameterMatchers: matchers))
+        }
+        
+        
+    }
+
+     struct __VerificationProxy_ServerEvalFeatureContext: Cuckoo.VerificationProxy {
+        private let cuckoo_manager: Cuckoo.MockManager
+        private let callMatcher: Cuckoo.CallMatcher
+        private let sourceLocation: Cuckoo.SourceLocation
+    
+         init(manager: Cuckoo.MockManager, callMatcher: Cuckoo.CallMatcher, sourceLocation: Cuckoo.SourceLocation) {
+            self.cuckoo_manager = manager
+            self.callMatcher = callMatcher
+            self.sourceLocation = sourceLocation
+        }
+    
+        
+        
+        
+        var oldHeader: Cuckoo.VerifyOptionalProperty<String> {
+            return .init(manager: cuckoo_manager, name: "oldHeader", callMatcher: callMatcher, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        var attributes: Cuckoo.VerifyProperty<[String: [String]]> {
+            return .init(manager: cuckoo_manager, name: "attributes", callMatcher: callMatcher, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        var readiness: Cuckoo.VerifyReadOnlyProperty<Readiness> {
+            return .init(manager: cuckoo_manager, name: "readiness", callMatcher: callMatcher, sourceLocation: sourceLocation)
+        }
+        
+        
+    
+        
+        
+        
+        @discardableResult
+        func build() -> Cuckoo.__DoNotUse<(), ClientContext> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return cuckoo_manager.verify(
+    """
+    build() async -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func used<M1: Cuckoo.Matchable, M2: Cuckoo.OptionalMatchable, M3: Cuckoo.OptionalMatchable, M4: Cuckoo.Matchable>(_ key: M1, _ id: M2, _ val: M3, _ valueType: M4) -> Cuckoo.__DoNotUse<(String, UUID?, Any?, FeatureValueType), Void> where M1.MatchedType == String, M2.OptionalMatchedType == UUID, M3.OptionalMatchedType == Any, M4.MatchedType == FeatureValueType {
+            let matchers: [Cuckoo.ParameterMatcher<(String, UUID?, Any?, FeatureValueType)>] = [wrap(matchable: key) { $0.0 }, wrap(matchable: id) { $0.1 }, wrap(matchable: val) { $0.2 }, wrap(matchable: valueType) { $0.3 }]
+            return cuckoo_manager.verify(
+    """
+    used(_: String, _: UUID?, _: Any?, _: FeatureValueType) async
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func feature<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), RepositoryFeatureState> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    feature(_: String) -> RepositoryFeatureState
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func user<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    user(_: String) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func session<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    session(_: String) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func country<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(StrategyAttributeCountryName), ClientContext> where M1.MatchedType == StrategyAttributeCountryName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributeCountryName)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    country(_: StrategyAttributeCountryName) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func device<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(StrategyAttributeDeviceName), ClientContext> where M1.MatchedType == StrategyAttributeDeviceName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributeDeviceName)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    device(_: StrategyAttributeDeviceName) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func platform<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(StrategyAttributePlatformName), ClientContext> where M1.MatchedType == StrategyAttributePlatformName {
+            let matchers: [Cuckoo.ParameterMatcher<(StrategyAttributePlatformName)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    platform(_: StrategyAttributePlatformName) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func version<M1: Cuckoo.Matchable>(_ value: M1) -> Cuckoo.__DoNotUse<(String), ClientContext> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: value) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    version(_: String) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func attribute<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(_ key: M1, _ value: M2) -> Cuckoo.__DoNotUse<(String, String), ClientContext> where M1.MatchedType == String, M2.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String, String)>] = [wrap(matchable: key) { $0.0 }, wrap(matchable: value) { $0.1 }]
+            return cuckoo_manager.verify(
+    """
+    attribute(_: String, _: String) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func attributes<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(_ key: M1, _ value: M2) -> Cuckoo.__DoNotUse<(String, [String]), ClientContext> where M1.MatchedType == String, M2.MatchedType == [String] {
+            let matchers: [Cuckoo.ParameterMatcher<(String, [String])>] = [wrap(matchable: key) { $0.0 }, wrap(matchable: value) { $0.1 }]
+            return cuckoo_manager.verify(
+    """
+    attributes(_: String, _: [String]) -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func clear() -> Cuckoo.__DoNotUse<(), ClientContext> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return cuckoo_manager.verify(
+    """
+    clear() -> ClientContext
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func attr<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), [String]?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    attr(_: String) -> [String]?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func defaultPercentageKey() -> Cuckoo.__DoNotUse<(), String?> {
+            let matchers: [Cuckoo.ParameterMatcher<Void>] = []
+            return cuckoo_manager.verify(
+    """
+    defaultPercentageKey() -> String?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func enabled<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), Bool> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    enabled(_: String) -> Bool
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func hasValue<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), Bool> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    hasValue(_: String) -> Bool
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func number<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), Double?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    number(_: String) -> Double?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func string<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), String?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    string(_: String) -> String?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func json<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), String?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    json(_: String) -> String?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func flag<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), Bool?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    flag(_: String) -> Bool?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+        
+        
+        @discardableResult
+        func exists<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), Bool?> where M1.MatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
+            return cuckoo_manager.verify(
+    """
+    exists(_: String) -> Bool?
+    """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+        }
+        
+        
+    }
+}
+
+
+ class ServerEvalFeatureContextStub: ServerEvalFeatureContext {
+    
+    
+    
+    
+     override var oldHeader: String? {
+        get {
+            return DefaultValueRegistry.defaultValue(for: (String?).self)
+        }
+        
+        set { }
+        
+    }
+    
+    
+    
+    
+    
+     override var attributes: [String: [String]] {
+        get {
+            return DefaultValueRegistry.defaultValue(for: ([String: [String]]).self)
+        }
+        
+        set { }
+        
+    }
+    
+    
+    
+    
+    
+    public override var readiness: Readiness {
+        get {
+            return DefaultValueRegistry.defaultValue(for: (Readiness).self)
+        }
+        
+    }
+    
+    
+
+    
+
+    
+    
+    
+    
+     override func build() async -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+     override func used(_ key: String, _ id: UUID?, _ val: Any?, _ valueType: FeatureValueType) async  {
+        return DefaultValueRegistry.defaultValue(for: (Void).self)
+    }
+    
+    
+    
+    
+    
+     override func feature(_ key: String) -> RepositoryFeatureState  {
+        return DefaultValueRegistry.defaultValue(for: (RepositoryFeatureState).self)
+    }
+    
+    
+    
+    
+    
+    public override func user(_ value: String) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public override func session(_ value: String) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public override func country(_ value: StrategyAttributeCountryName) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public override func device(_ value: StrategyAttributeDeviceName) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public override func platform(_ value: StrategyAttributePlatformName) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public override func version(_ value: String) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public override func attribute(_ key: String, _ value: String) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public override func attributes(_ key: String, _ value: [String]) -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public override func clear() -> ClientContext  {
+        return DefaultValueRegistry.defaultValue(for: (ClientContext).self)
+    }
+    
+    
+    
+    
+    
+    public override func attr(_ key: String) -> [String]?  {
+        return DefaultValueRegistry.defaultValue(for: ([String]?).self)
+    }
+    
+    
+    
+    
+    
+     override func defaultPercentageKey() -> String?  {
+        return DefaultValueRegistry.defaultValue(for: (String?).self)
+    }
+    
+    
+    
+    
+    
+    public override func enabled(_ key: String) -> Bool  {
+        return DefaultValueRegistry.defaultValue(for: (Bool).self)
+    }
+    
+    
+    
+    
+    
+    public override func hasValue(_ key: String) -> Bool  {
+        return DefaultValueRegistry.defaultValue(for: (Bool).self)
+    }
+    
+    
+    
+    
+    
+    public override func number(_ key: String) -> Double?  {
+        return DefaultValueRegistry.defaultValue(for: (Double?).self)
+    }
+    
+    
+    
+    
+    
+    public override func string(_ key: String) -> String?  {
+        return DefaultValueRegistry.defaultValue(for: (String?).self)
+    }
+    
+    
+    
+    
+    
+    public override func json(_ key: String) -> String?  {
+        return DefaultValueRegistry.defaultValue(for: (String?).self)
+    }
+    
+    
+    
+    
+    
+    public override func flag(_ key: String) -> Bool?  {
+        return DefaultValueRegistry.defaultValue(for: (Bool?).self)
+    }
+    
+    
+    
+    
+    
+    public override func exists(_ key: String) -> Bool?  {
+        return DefaultValueRegistry.defaultValue(for: (Bool?).self)
+    }
+    
+    
+}
+
+
+
+
+
+// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/internal/internal_repository.swift at 2023-03-18 05:08:11 +0000
 
 
 import Cuckoo
@@ -2419,11 +8399,11 @@ import Foundation
     
     
     
-     func feat(_ key: String) -> FeatureStateHolder? {
+     func feat(_ key: String) -> FeatureStateHolder {
         
     return cuckoo_manager.call(
     """
-    feat(_: String) -> FeatureStateHolder?
+    feat(_: String) -> FeatureStateHolder
     """,
             parameters: (key),
             escapingParameters: (key),
@@ -2645,11 +8625,11 @@ import Foundation
         
         
         
-        func feat<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ProtocolStubFunction<(String), FeatureStateHolder?> where M1.MatchedType == String {
+        func feat<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ProtocolStubFunction<(String), FeatureStateHolder> where M1.MatchedType == String {
             let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
             return .init(stub: cuckoo_manager.createStub(for: MockInternalFeatureRepository.self, method:
     """
-    feat(_: String) -> FeatureStateHolder?
+    feat(_: String) -> FeatureStateHolder
     """, parameterMatchers: matchers))
         }
         
@@ -2791,11 +8771,11 @@ import Foundation
         
         
         @discardableResult
-        func feat<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), FeatureStateHolder?> where M1.MatchedType == String {
+        func feat<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), FeatureStateHolder> where M1.MatchedType == String {
             let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
             return cuckoo_manager.verify(
     """
-    feat(_: String) -> FeatureStateHolder?
+    feat(_: String) -> FeatureStateHolder
     """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
         }
         
@@ -2940,8 +8920,8 @@ import Foundation
     
     
     
-     func feat(_ key: String) -> FeatureStateHolder?  {
-        return DefaultValueRegistry.defaultValue(for: (FeatureStateHolder?).self)
+     func feat(_ key: String) -> FeatureStateHolder  {
+        return DefaultValueRegistry.defaultValue(for: (FeatureStateHolder).self)
     }
     
     
@@ -3279,11 +9259,11 @@ public class FeatureValueInterceptorStub: FeatureValueInterceptor {
     
     
     
-     override func feat(_ key: String) -> FeatureStateHolder? {
+     override func feat(_ key: String) -> FeatureStateHolder {
         
     return cuckoo_manager.call(
     """
-    feat(_: String) -> FeatureStateHolder?
+    feat(_: String) -> FeatureStateHolder
     """,
             parameters: (key),
             escapingParameters: (key),
@@ -3505,11 +9485,11 @@ public class FeatureValueInterceptorStub: FeatureValueInterceptor {
         
         
         
-        func feat<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), FeatureStateHolder?> where M1.MatchedType == String {
+        func feat<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.ClassStubFunction<(String), FeatureStateHolder> where M1.MatchedType == String {
             let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
             return .init(stub: cuckoo_manager.createStub(for: MockRepository.self, method:
     """
-    feat(_: String) -> FeatureStateHolder?
+    feat(_: String) -> FeatureStateHolder
     """, parameterMatchers: matchers))
         }
         
@@ -3651,11 +9631,11 @@ public class FeatureValueInterceptorStub: FeatureValueInterceptor {
         
         
         @discardableResult
-        func feat<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), FeatureStateHolder?> where M1.MatchedType == String {
+        func feat<M1: Cuckoo.Matchable>(_ key: M1) -> Cuckoo.__DoNotUse<(String), FeatureStateHolder> where M1.MatchedType == String {
             let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: key) { $0 }]
             return cuckoo_manager.verify(
     """
-    feat(_: String) -> FeatureStateHolder?
+    feat(_: String) -> FeatureStateHolder
     """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
         }
         
@@ -3800,8 +9780,8 @@ public class FeatureValueInterceptorStub: FeatureValueInterceptor {
     
     
     
-     override func feat(_ key: String) -> FeatureStateHolder?  {
-        return DefaultValueRegistry.defaultValue(for: (FeatureStateHolder?).self)
+     override func feat(_ key: String) -> FeatureStateHolder  {
+        return DefaultValueRegistry.defaultValue(for: (FeatureStateHolder).self)
     }
     
     
@@ -3883,7 +9863,7 @@ public class FeatureValueInterceptorStub: FeatureValueInterceptor {
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/internal/internal_usebase_edge.swift at 2023-03-17 07:08:48 +0000
+// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/internal/internal_usebase_edge.swift at 2023-03-18 05:08:11 +0000
 
 ///
 /// FeatureHub: Usage based edge. This service holds an update interval
