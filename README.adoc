@@ -1,7 +1,5 @@
 = featurehub-swift-sdk
 
-NOTE: This SDK is in Beta
-
 
 This is an App friendly FeatureHub SDK for Swift. It is designed
 to allow for the use of Server Evaluated Keys, and focuses on
