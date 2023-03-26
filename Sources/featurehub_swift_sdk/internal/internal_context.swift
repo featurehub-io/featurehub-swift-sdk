@@ -18,6 +18,7 @@ internal class ClientEvalFeatureContext: BaseClientContext, InternalContext {
     super.init(repo)
   }
 
+  @discardableResult
   override func build() async -> ClientContext {
     self
   }
@@ -38,6 +39,7 @@ internal class ServerEvalFeatureContext: BaseClientContext, InternalContext {
     super.init(repo)
   }
 
+  @discardableResult
   override func build() async -> ClientContext {
     let newHeader = attributes.keys
             .sorted()
@@ -45,7 +47,7 @@ internal class ServerEvalFeatureContext: BaseClientContext, InternalContext {
               encodePair($0, attributes[$0])
             }
             .compactMap({ $0 })
-            .joined(separator: "&")
+            .joined(separator: ",")
 
 
     if (newHeader != oldHeader) || (oldHeader == nil) {
@@ -63,10 +65,14 @@ internal class ServerEvalFeatureContext: BaseClientContext, InternalContext {
       return nil
     }
 
-    let k = key.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)!
-    let v = value?.compactMap({ $0 }).map({ $0.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) }).compactMap({ $0 }).joined(separator: ",") ?? ""
+    let k = encodeVal(key)
+    let v = value?.compactMap({ $0 }).map({ encodeVal($0) }).compactMap({ $0 }).joined(separator: "%2C") ?? ""
 
     return "\(k)=\(v)"
+  }
+
+  private func encodeVal(_ val: String) -> String {
+    val.replacingOccurrences(of: ",", with: "%2C" ).replacingOccurrences(of: "=", with: "%3D")
   }
 
   override func used(_ key: String, _ id: UUID?, _ val: Any?, _ valueType: FeatureValueType) async {

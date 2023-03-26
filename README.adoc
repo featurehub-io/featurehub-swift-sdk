@@ -40,14 +40,30 @@ values given that set of attributes.
 
 [source,swift]
 ----
-await context.userKey("user@email.com").attribute("warehouseId", [warehouseId]).build()
+await context.userKey("user@email.com").attribute("warehouseId", warehouseId).build()
 ----
+
+There are several well known ids, such as userKey, session, country, platform, device and
+version. You can also set any arbitrary single or multi-valued attribute for evaluation
+
+==== A note on percentage based rollouts
+
+A percentage based rollout is based on the session key or user key (in that order). For
+a given session or user key, the chance a feature matches the percentage rollout is the same
+across all platforms. If you configure a percentage rollout of 20% for instance, you must
+set session or user to enable client to match against that percentage and stay consistent.
+For example, if you indicated that 20% of your users had a new shopping category, then
+used the userKey as their user-id, then the user would see the same experience across
+all your delivery platforms, web, mobile, etc.
+
+The userKey is combined with several other
+things so being in the 20% for one feature may not mean 20% threshold on another feature.
 
 === Caching
 
 The Swift SDK works by implicit caching. What this means if that you set a timeout for the cache (i.e. not 0), and
 if you evaluate a feature past that timeout, the SDK will go and get an update to the cached set of features
-in the background. Your code does not need to do anything other that set your desired timeout (or
+in the background. Your code does not need to do anything other than set your desired timeout (or
 go with the default 300 seconds), and keep evaluating features.
 
 The SDK does not have a background automatic polling system as that is usually undesirable on Mobile.
@@ -77,4 +93,6 @@ timeout at any time.
 - Ability to extract feature state and reload it so it can be cached ready for reload
 - Modification of API to allow it to compile on Linux
 - Addition of Streaming API for server support.
+- Addition of support for client side keys
+
 

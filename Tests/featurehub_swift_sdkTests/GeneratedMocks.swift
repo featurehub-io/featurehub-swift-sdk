@@ -1,4 +1,4 @@
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/config.swift at 2023-03-18 05:08:11 +0000
+// MARK: - Mocks generated from file: Sources/featurehub_swift_sdk/config.swift at 2023-03-18 05:08:11 +0000
 
 
 import Cuckoo
@@ -1333,7 +1333,7 @@ public class EdgeFeatureHubConfigStub: EdgeFeatureHubConfig {
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/context.swift at 2023-03-18 05:08:11 +0000
+// MARK: - Mocks generated from file: Sources/featurehub_swift_sdk/context.swift at 2023-03-18 05:08:11 +0000
 
 
 import Cuckoo
@@ -3654,7 +3654,7 @@ public class BaseClientContextStub: BaseClientContext {
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/featurehub_swift_sdk.swift at 2023-03-18 05:08:11 +0000
+// MARK: - Mocks generated from file: Sources/featurehub_swift_sdk/featurehub_swift_sdk.swift at 2023-03-18 05:08:11 +0000
 
 
 import Cuckoo
@@ -4096,7 +4096,7 @@ public class FeatureRepositoryStub: FeatureRepository {
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/features.swift at 2023-03-18 05:08:11 +0000
+// MARK: - Mocks generated from file: Sources/featurehub_swift_sdk/features.swift at 2023-03-18 05:08:11 +0000
 
 
 import Cuckoo
@@ -4665,7 +4665,7 @@ public class RepositoryFeatureStateStub: RepositoryFeatureState {
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/internal/internal_context.swift at 2023-03-18 05:08:11 +0000
+// MARK: - Mocks generated from file: Sources/featurehub_swift_sdk/internal/internal_context.swift at 2023-03-18 05:08:11 +0000
 
 
 import Cuckoo
@@ -8324,7 +8324,7 @@ import Foundation
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/internal/internal_repository.swift at 2023-03-18 05:08:11 +0000
+// MARK: - Mocks generated from file: Sources/featurehub_swift_sdk/internal/internal_repository.swift at 2023-03-18 05:08:11 +0000
 
 
 import Cuckoo
@@ -9863,7 +9863,7 @@ public class FeatureValueInterceptorStub: FeatureValueInterceptor {
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub-swift-sdk/internal/internal_usebase_edge.swift at 2023-03-18 05:08:11 +0000
+// MARK: - Mocks generated from file: Sources/featurehub_swift_sdk/internal/internal_usebase_edge.swift at 2023-03-18 05:08:11 +0000
 
 ///
 /// FeatureHub: Usage based edge. This service holds an update interval
