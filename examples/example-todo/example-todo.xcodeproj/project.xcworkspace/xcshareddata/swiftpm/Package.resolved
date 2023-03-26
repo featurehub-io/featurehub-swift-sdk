@@ -1,0 +1,41 @@
+{
+  "pins" : [
+    {
+      "identity" : "anycodable",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Flight-School/AnyCodable",
+      "state" : {
+        "revision" : "862808b2070cd908cb04f9aafe7de83d35f81b05",
+        "version" : "0.6.7"
+      }
+    },
+    {
+      "identity" : "featurehub-swift-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/featurehub-io/featurehub-swift-sdk",
+      "state" : {
+        "branch" : "main",
+        "revision" : "1ab36a4006a58f054a69db92c790a849e6a31d9e"
+      }
+    },
+    {
+      "identity" : "swift-log",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-log.git",
+      "state" : {
+        "revision" : "32e8d724467f8fe623624570367e3d50c5638e46",
+        "version" : "1.5.2"
+      }
+    },
+    {
+      "identity" : "swift-log-oslog",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/chrisaljoudi/swift-log-oslog.git",
+      "state" : {
+        "revision" : "176d41d46429e79c806333025b226e0c50a0c602",
+        "version" : "0.2.2"
+      }
+    }
+  ],
+  "version" : 2
+}
