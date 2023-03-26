@@ -95,11 +95,11 @@ Set up a feature in your FeatureHub instance called `FEATURE_TITLE_TO_UPPERCASE`
 it a flag type, and unlock it, edit it and add a strategy called `factory`. Set the
 custom field to `factoryId`, String, not-equals, and the value `10`.
 
-image::docs/targeting-rule.png[Targeting rule, 500, 300]
+image::docs/targeting-rule.png[Targeting rule]
 
 Set the default value to ON and the targeted rule to OFF.
 
-image::docs/feature-values.png[Feature values, 500, 300]
+image::docs/feature-values.png[Feature values]
 
 It makes the decision to set the cache timeout to
 10 seconds, it uses a server evaluated key and then it creates a new context. It does
