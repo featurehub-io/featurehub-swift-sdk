@@ -12,7 +12,7 @@ let package = Package(
             .watchOS(.v4),
         ],
         products: [
-            .library(name: "featurehub_swift_sdk", targets: ["featurehub-swift-sdk"]),
+            .library(name: "featurehub_swift_sdk", targets: ["featurehub_swift_sdk"]),
         ],
         dependencies: [
             .package(url: "https://github.com/Flight-School/AnyCodable", .upToNextMajor(from: "0.6.7")),
@@ -26,12 +26,12 @@ let package = Package(
             // Targets are the basic building blocks of a package. A target can define a module or a test suite.
             // Targets can depend on other targets in this package, and on products in packages which this package depends on.
             .target(
-                    name: "featurehub-swift-sdk",
+                    name: "featurehub_swift_sdk",
                     dependencies: ["AnyCodable", .product(name: "Logging", package: "swift-log") ],
                     exclude: ["pom.xml", "swift-api/Cartfile", "swift-api/README.md"]
             ),
             .testTarget(
-                    name: "featurehub-swift-sdkTests",
-                    dependencies: ["featurehub-swift-sdk", "Nimble", "Cuckoo", "Quick"]),
+                    name: "featurehub_swift_sdkTests",
+                    dependencies: ["featurehub_swift_sdk", "Nimble", "Cuckoo", "Quick"]),
         ]
 )

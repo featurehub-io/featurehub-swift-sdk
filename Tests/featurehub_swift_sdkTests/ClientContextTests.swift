@@ -22,12 +22,12 @@ final class ClientContextTests: QuickSpec {
 
       beforeEach {
         repo = MockFeatureRepository()
-        ctx = ClientContext(repo)
+        ctx = BaseClientContext(repo)
       }
 
       it("support all well known types") {
         ctx.user("me")
-        expect(ctx.attributes["userKey"]).to(beNil())
+        expect(ctx.attr("userKey")).to(beNil())
         known(.userKey, "me")
         ctx.session("sample")
         known(.session, "sample")
@@ -66,7 +66,7 @@ final class ClientContextTests: QuickSpec {
       }
 
       func known(_ key: ContextKeys, _ val: String) {
-        expect(ctx[key.rawValue]).to(equal([val]))
+        expect(ctx.attr(key.rawValue)).to(equal([val]))
       }
     }
   }

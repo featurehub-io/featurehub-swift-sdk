@@ -1,7 +1,43 @@
 import Foundation
 
 
-public class ClientContext {
+public protocol ClientContext {
+  @discardableResult
+  func user(_ value: String) -> ClientContext
+  @discardableResult
+  func session(_ value: String) -> ClientContext
+  @discardableResult
+  func country(_ value: StrategyAttributeCountryName) -> ClientContext
+  @discardableResult
+  func device(_ value: StrategyAttributeDeviceName) -> ClientContext
+  @discardableResult
+  func platform(_ value: StrategyAttributePlatformName) -> ClientContext
+  @discardableResult
+  func version(_ value: String) -> ClientContext
+  @discardableResult
+  func attribute(_ key: String, _ value: String) -> ClientContext
+  @discardableResult
+  func attributes(_ key: String, _ value: [String]) -> ClientContext
+  @discardableResult
+  func clear() -> ClientContext
+
+  func attr(_ key: String) -> [String]?
+
+  func feature(_ key: String) -> RepositoryFeatureState
+  func enabled(_ key: String) -> Bool
+  func hasValue(_ key: String) -> Bool
+  func number(_ key: String) -> Double?
+  func string(_ key: String) -> String?
+  func json(_ key: String) -> String?
+  func flag(_ key: String) -> Bool?
+  func exists(_ key: String) -> Bool?
+  var readiness: Readiness { get }
+
+  @discardableResult
+  func build() async -> ClientContext
+}
+
+public class BaseClientContext : ClientContext {
   let repo: FeatureRepository
   internal var attributes: [String: [String]] = [:]
 
@@ -65,14 +101,8 @@ public class ClientContext {
     return self
   }
 
-  /// allows you to access the attribute values as a subscript
-  public subscript(_ key: String) -> [String]? {
-    get {
-      attributes[key]
-    }
-    set(newValue) {
-      attributes[key] = newValue
-    }
+  public func attr(_ key: String) -> [String]? {
+    attributes[key]
   }
 
   func defaultPercentageKey() -> String? {
@@ -85,36 +115,36 @@ public class ClientContext {
     return value![0]
   }
 
-  public func feature(_ key: String) -> RepositoryFeatureState? {
+  public func feature(_ key: String) -> RepositoryFeatureState {
     repo.feature(key)
   }
 
   public func enabled(_ key: String) -> Bool {
-    feature(key)?.enabled ?? false
+    feature(key).enabled
   }
 
   public func hasValue(_ key: String) -> Bool {
-    feature(key)?.hasValue ?? false
+    feature(key).hasValue
   }
 
   public func number(_ key: String) -> Double? {
-    feature(key)?.number
+    feature(key).number
   }
 
   public func string(_ key: String) -> String? {
-    feature(key)?.string
+    feature(key).string
   }
 
   public func json(_ key: String) -> String? {
-    feature(key)?.json
+    feature(key).json
   }
 
   public func flag(_ key: String) -> Bool? {
-    feature(key)?.flag
+    feature(key).flag
   }
 
   public func exists(_ key: String) -> Bool? {
-    feature(key)?.exists
+    feature(key).exists
   }
 
   public var readiness: Readiness { get { repo.readiness }}
@@ -126,6 +156,6 @@ public class ClientContext {
 
   /// used: interval function for use by features to indicate they are  being evaluated
   /// so theh cache can expire. Also to be used for analytics.
-  func used(_ key: String, _ id: UUID?, _ val: Any?) async {
+  func used(_ key: String, _ id: UUID?, _ val: Any?, _ valueType: FeatureValueType) async {
   }
 }

@@ -8,4 +8,6 @@ ID="Sources/featurehub-swift-sdk"
     "${ID}/featurehub_swift_sdk.swift" \
     "${ID}/config.swift"\
     "${ID}/features.swift"\
+    "${ID}/context.swift"\
+    "${ID}/internal/internal_context.swift"\
    "${ID}/internal/internal_usebase_edge.swift" "${ID}/internal/internal_repository.swift"

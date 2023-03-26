@@ -4,9 +4,8 @@ internal protocol InternalFeatureRepository: FeatureRepository {
   // there are no features, but the keys were valid
   func empty() -> Void
 
-  func feat(_ key: String) -> FeatureStateHolder?
+  func feat(_ key: String) -> FeatureStateHolder
   func findInterceptor(_ key: String) -> InterceptorValue?
-
 
   func notReady()
 
@@ -49,8 +48,17 @@ internal class Repository: InternalFeatureRepository {
       valueInterceptor: interceptor))
   }
 
-  func feat(_ key: String) -> FeatureStateHolder? {
-    features[key];
+  // used to expose the internal API
+  func feat(_ key: String) -> FeatureStateHolder {
+    var f = features[key]
+
+    if f == nil {
+      logger.trace("feature \(key) doesnt exist, creating")
+      f = FeatureStateHolder(key: key, repo: self)
+      features[key] = f
+    }
+
+    return f!
   }
 
   func findInterceptor(_ key: String) -> InterceptorValue? {
@@ -133,16 +141,9 @@ internal class Repository: InternalFeatureRepository {
     updateFeature(FeatureState(id: feature.id, key: feature.key, l: nil, version: feature.version, value: nil))
   }
 
+  // used to expose the external API
   func feature(_ key: String) -> RepositoryFeatureState {
-    var f = features[key]
-
-    if f == nil {
-      logger.trace("feature \(key) doesnt exist, creating")
-      f = FeatureStateHolder(key: key, repo: self)
-      features[key] = f
-    }
-
-    return f!
+    feat(key)
   }
 
   // there are no features, not the repository can be used
