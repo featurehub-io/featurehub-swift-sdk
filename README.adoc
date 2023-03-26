@@ -87,6 +87,63 @@ let context =
 for example - this would set it to 30 seconds. The FeatureHub server is able to override the cache
 timeout at any time.
 
+== Using the Example
+
+The example is a simple to-do list.
+
+Set up a feature in your FeatureHub instance called `FEATURE_TITLE_TO_UPPERCASE`, make
+it a flag type, and unlock it, edit it and add a strategy called `factory`. Set the
+custom field to `factoryId`, String, not-equals, and the value `10`.
+
+image::docs/targeting-rule.png[Targeting rule, 300, 1500]
+
+Set the default value to ON and the targeted rule to OFF.
+
+image::docs/feature-values.png[Feature values, 300, 1500]
+
+It makes the decision to set the cache timeout to
+10 seconds, it uses a server evaluated key and then it creates a new context. It does
+this in the global initializer because you cannot create a background task in the global
+initializer and we decided to set some configuration in the context before we ask for
+our first set of features.
+
+
+[source,swift]
+----
+var context =
+try! EdgeFeatureHubConfig("http://localhost:8085",
+                     ["8c5d3253-4974-4455-a684-954ce6a6110d/EWddcsNnNza60FVIocq62ApdrzKlr9qxCfSlo323"])
+    .cacheTimeout(10).newContext()
+----
+
+In the init section, we set the user key and a factoryId ("10"), and then ask the context
+to "build" - which will cause the features to get grabbed and put in the repository for using.
+
+[source,swift]
+----
+context.user("me@me.com").attribute("factoryId", "10")
+
+Task.detached(operation: { // background this update
+  await context.build()
+})
+----
+
+Over in the view, we use the feature. Remember we can use it even if it isn't received yet,
+the SDK will simply create a proxy for it and fill it in when it gets it.
+
+[source,swift]
+----
+if context.feature("FEATURE_TITLE_TO_UPPERCASE").enabled {
+    tasks.append(newTask.uppercased())
+} else {
+    tasks.append(newTask)
+}
+----
+
+Add a task - because your `factoryId` is 10, it will use the default value which is On.
+If you switch it to off and its been 10 seconds, add another task, this should also be
+upper case, but immediately add another and it will be mixed case. You can try the
+same scenario if you change your factoryId in your code to something other than 10.
 
 == Future enhancements
 
@@ -94,5 +151,5 @@ timeout at any time.
 - Modification of API to allow it to compile on Linux
 - Addition of Streaming API for server support.
 - Addition of support for client side keys
-
+- Add support for interceptors
 
