@@ -34,6 +34,9 @@ internal class ValueInterceptor {
 }
 
 internal class Repository: InternalFeatureRepository {
+  // the edge service updates us from its own task while the application reads features
+  // from whatever thread it likes, so every access to the state below has to be serialised
+  private let lock = NSRecursiveLock()
   // these are the features (by key) and the features that we may pretend
   // exist (until they do, but they may never do)
   private var features: [String: FeatureStateHolder] = [:]
@@ -43,26 +46,37 @@ internal class Repository: InternalFeatureRepository {
   private var interceptors: [ValueInterceptor] = []
   private var _hadInitialFeatures: Bool = false
 
+  private func withLock<T>(_ block: () -> T) -> T {
+    lock.lock()
+    defer { lock.unlock() }
+    return block()
+  }
+
   func registerFeatureValueInterceptor(allowOverrideLock: Bool, interceptor: FeatureValueInterceptor) {
-    interceptors.append(ValueInterceptor(allowOverrideLock: allowOverrideLock,
-      valueInterceptor: interceptor))
+    withLock {
+      interceptors.append(ValueInterceptor(allowOverrideLock: allowOverrideLock,
+        valueInterceptor: interceptor))
+    }
   }
 
   // used to expose the internal API
   func feat(_ key: String) -> FeatureStateHolder {
-    var f = features[key]
+    withLock {
+      if let existing = features[key] {
+        return existing
+      }
 
-    if f == nil {
       logger.trace("feature \(key) doesnt exist, creating")
-      f = FeatureStateHolder(key: key, repo: self)
+      let f = FeatureStateHolder(key: key, repo: self)
       features[key] = f
-    }
 
-    return f!
+      return f
+    }
   }
 
   func findInterceptor(_ key: String) -> InterceptorValue? {
-    for interceptor in interceptors {
+    // interceptors are application code, so don't hold the lock while calling them
+    for interceptor in withLock({ interceptors }) {
       let val = interceptor.valueInterceptor.match(key)
 
       if val != nil {
@@ -75,12 +89,16 @@ internal class Repository: InternalFeatureRepository {
 
   var readiness: Readiness {
     get {
-      _ready;
+      withLock {
+        _ready
+      }
     }
   }
 
   func notReady() {
-    _ready = Readiness.notReady;
+    withLock {
+      _ready = Readiness.notReady
+    }
   }
 
   func apply(strategies: [FeatureRolloutStrategy], key: String, featureId: UUID, context: ClientContext?) -> AppliedValue {
@@ -89,30 +107,41 @@ internal class Repository: InternalFeatureRepository {
 
 
   func notify(status: SSEResultState?) {
-    switch (status) {
-    case .ack, .bye, .none, .config:
-      break
-    case .failure:
-      _ready = Readiness.failed
-    case .error:
-      _ready = Readiness.failed
-    case .some(.features), .some(.feature), .some(.deleteFeature):
-      break
+    withLock {
+      switch (status) {
+      case .ack, .bye, .none, .config:
+        break
+      case .failure:
+        _ready = Readiness.failed
+      case .error:
+        _ready = Readiness.failed
+      case .some(.features), .some(.feature), .some(.deleteFeature):
+        break
+      }
     }
   }
 
   func updateFeatures(_ features: [FeatureState]) {
     logger.trace("received features \(features)")
 
-    for feature in features {
-      updateFeature(feature)
-    }
+    withLock {
+      for feature in features {
+        update(feature)
+      }
 
-    _hadInitialFeatures = true
-    _ready = Readiness.ready
+      _hadInitialFeatures = true
+      _ready = Readiness.ready
+    }
   }
 
   func updateFeature(_ state: FeatureState) {
+    withLock {
+      update(state)
+    }
+  }
+
+  // callers must hold the lock
+  private func update(_ state: FeatureState) {
     var holder = ids[state.id] ?? features[state.key]
     if holder?.key == nil {
       holder = FeatureStateHolder(key: state.key, repo: self, featureState: state)
@@ -148,6 +177,8 @@ internal class Repository: InternalFeatureRepository {
 
   // there are no features, not the repository can be used
   func empty() {
-    _ready = .ready
+    withLock {
+      _ready = .ready
+    }
   }
 }
