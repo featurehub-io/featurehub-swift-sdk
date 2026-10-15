@@ -146,6 +146,7 @@ internal class Repository: InternalFeatureRepository {
     if holder?.key == nil {
       holder = FeatureStateHolder(key: state.key, repo: self, featureState: state)
       features[holder!.key] = holder
+      ids[state.id] = holder // so we can find it again if its key is renamed
     } else if (holder?.featureState != nil) {
       let existingVersion = holder!.featureState?.version ?? -1
       let newVersion = state.version ?? 0
@@ -158,8 +159,9 @@ internal class Repository: InternalFeatureRepository {
     }
 
     // if the key has changed, deal with it
-    if holder!.key != state.key {
-      features.removeValue(forKey: state.key)
+    let oldKey = holder!.key
+    if oldKey != state.key {
+      features.removeValue(forKey: oldKey)
       features[state.key] = holder!
     }
 

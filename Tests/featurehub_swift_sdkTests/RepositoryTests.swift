@@ -40,6 +40,22 @@ final class RepositoryTests: QuickSpec {
         repo.updateFeature(f2)
         expect(feat.key) == "swift2"
         expect(feat.id) == f1.id
+        expect(repo.feature("swift2").id) == f1.id
+        expect(repo.feature("swift").exists) == false // the old key no longer maps to the renamed feature
+      }
+    }
+
+    describe("renaming a feature that arrived from the server") {
+      it("should move the feature to its new key") {
+        let f1 = FeatureState(id: UUID(), key: "old", l: false, version: 1, type: .boolean, value: true)
+        repo.updateFeatures([f1])
+        let feat = repo.feature("old")
+        expect(feat.exists) == true
+
+        repo.updateFeature(FeatureState(id: f1.id, key: "new", l: false, version: 2, type: .boolean, value: true))
+        expect(feat.key) == "new"
+        expect(repo.feature("new").id) == f1.id
+        expect(repo.feature("old").exists) == false
       }
     }
 
