@@ -9910,19 +9910,19 @@ import Foundation
     
     
     
-     func getFeatureStates(apiKeys: [String], contextSha: String?, etag: String?) async -> Response<[FeatureEnvironmentCollection]>? {
+     func getFeatureStates(apiKeys: [String], contextSha: String?, etag: String?, header: String?) async -> Response<[FeatureEnvironmentCollection]>? {
         
     return await cuckoo_manager.call(
     """
-    getFeatureStates(apiKeys: [String], contextSha: String?, etag: String?) async -> Response<[FeatureEnvironmentCollection]>?
+    getFeatureStates(apiKeys: [String], contextSha: String?, etag: String?, header: String?) async -> Response<[FeatureEnvironmentCollection]>?
     """,
-            parameters: (apiKeys, contextSha, etag),
-            escapingParameters: (apiKeys, contextSha, etag),
+            parameters: (apiKeys, contextSha, etag, header),
+            escapingParameters: (apiKeys, contextSha, etag, header),
             superclassCall:
                 
                 Cuckoo.MockManager.crashOnProtocolSuperclassCall()
                 ,
-            defaultCall: await __defaultImplStub!.getFeatureStates(apiKeys: apiKeys, contextSha: contextSha, etag: etag))
+            defaultCall: await __defaultImplStub!.getFeatureStates(apiKeys: apiKeys, contextSha: contextSha, etag: etag, header: header))
         
     }
     
@@ -9938,11 +9938,11 @@ import Foundation
         
         
         
-        func getFeatureStates<M1: Cuckoo.Matchable, M2: Cuckoo.OptionalMatchable, M3: Cuckoo.OptionalMatchable>(apiKeys: M1, contextSha: M2, etag: M3) -> Cuckoo.ProtocolStubFunction<([String], String?, String?), Response<[FeatureEnvironmentCollection]>?> where M1.MatchedType == [String], M2.OptionalMatchedType == String, M3.OptionalMatchedType == String {
-            let matchers: [Cuckoo.ParameterMatcher<([String], String?, String?)>] = [wrap(matchable: apiKeys) { $0.0 }, wrap(matchable: contextSha) { $0.1 }, wrap(matchable: etag) { $0.2 }]
+        func getFeatureStates<M1: Cuckoo.Matchable, M2: Cuckoo.OptionalMatchable, M3: Cuckoo.OptionalMatchable, M4: Cuckoo.OptionalMatchable>(apiKeys: M1, contextSha: M2, etag: M3, header: M4) -> Cuckoo.ProtocolStubFunction<([String], String?, String?, String?), Response<[FeatureEnvironmentCollection]>?> where M1.MatchedType == [String], M2.OptionalMatchedType == String, M3.OptionalMatchedType == String, M4.OptionalMatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<([String], String?, String?, String?)>] = [wrap(matchable: apiKeys) { $0.0 }, wrap(matchable: contextSha) { $0.1 }, wrap(matchable: etag) { $0.2 }, wrap(matchable: header) { $0.3 }]
             return .init(stub: cuckoo_manager.createStub(for: MockFeatureRequestor.self, method:
     """
-    getFeatureStates(apiKeys: [String], contextSha: String?, etag: String?) async -> Response<[FeatureEnvironmentCollection]>?
+    getFeatureStates(apiKeys: [String], contextSha: String?, etag: String?, header: String?) async -> Response<[FeatureEnvironmentCollection]>?
     """, parameterMatchers: matchers))
         }
         
@@ -9966,11 +9966,11 @@ import Foundation
         
         
         @discardableResult
-        func getFeatureStates<M1: Cuckoo.Matchable, M2: Cuckoo.OptionalMatchable, M3: Cuckoo.OptionalMatchable>(apiKeys: M1, contextSha: M2, etag: M3) -> Cuckoo.__DoNotUse<([String], String?, String?), Response<[FeatureEnvironmentCollection]>?> where M1.MatchedType == [String], M2.OptionalMatchedType == String, M3.OptionalMatchedType == String {
-            let matchers: [Cuckoo.ParameterMatcher<([String], String?, String?)>] = [wrap(matchable: apiKeys) { $0.0 }, wrap(matchable: contextSha) { $0.1 }, wrap(matchable: etag) { $0.2 }]
+        func getFeatureStates<M1: Cuckoo.Matchable, M2: Cuckoo.OptionalMatchable, M3: Cuckoo.OptionalMatchable, M4: Cuckoo.OptionalMatchable>(apiKeys: M1, contextSha: M2, etag: M3, header: M4) -> Cuckoo.__DoNotUse<([String], String?, String?, String?), Response<[FeatureEnvironmentCollection]>?> where M1.MatchedType == [String], M2.OptionalMatchedType == String, M3.OptionalMatchedType == String, M4.OptionalMatchedType == String {
+            let matchers: [Cuckoo.ParameterMatcher<([String], String?, String?, String?)>] = [wrap(matchable: apiKeys) { $0.0 }, wrap(matchable: contextSha) { $0.1 }, wrap(matchable: etag) { $0.2 }, wrap(matchable: header) { $0.3 }]
             return cuckoo_manager.verify(
     """
-    getFeatureStates(apiKeys: [String], contextSha: String?, etag: String?) async -> Response<[FeatureEnvironmentCollection]>?
+    getFeatureStates(apiKeys: [String], contextSha: String?, etag: String?, header: String?) async -> Response<[FeatureEnvironmentCollection]>?
     """, callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
         }
         
@@ -9988,7 +9988,7 @@ import Foundation
     
     
     
-     func getFeatureStates(apiKeys: [String], contextSha: String?, etag: String?) async -> Response<[FeatureEnvironmentCollection]>?  {
+     func getFeatureStates(apiKeys: [String], contextSha: String?, etag: String?, header: String?) async -> Response<[FeatureEnvironmentCollection]>?  {
         return DefaultValueRegistry.defaultValue(for: (Response<[FeatureEnvironmentCollection]>?).self)
     }
     

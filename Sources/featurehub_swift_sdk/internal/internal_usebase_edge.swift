@@ -10,7 +10,7 @@ import Foundation
 import CryptoKit
 
 internal protocol FeatureRequestor {
-  func getFeatureStates(apiKeys: [String], contextSha: String?, etag: String?) async -> Response<[FeatureEnvironmentCollection]>?
+  func getFeatureStates(apiKeys: [String], contextSha: String?, etag: String?, header: String?) async -> Response<[FeatureEnvironmentCollection]>?
 }
 
 // Swift's substring handling is an absolute travesty, this from Stack Overflow makes it palatable
@@ -25,10 +25,6 @@ extension String {
   }
 }
 
-// OpenAPIClientAPI.customHeaders is a global dictionary that every request builder reads from as it
-// is created, so writes to it and the creation of requests have to be serialised
-internal let apiHeadersLock = NSLock()
-
 internal struct DefaultFeatureRequestor: FeatureRequestor {
   let _apiService = FeatureServiceAPI()
 
@@ -36,14 +32,17 @@ internal struct DefaultFeatureRequestor: FeatureRequestor {
     OpenAPIClientAPI.basePath = baseUrl
   }
 
-  func getFeatureStates(apiKeys: [String], contextSha: String?, etag: String?) async -> Response<[FeatureEnvironmentCollection]>? {
-    apiHeadersLock.lock()
+  func getFeatureStates(apiKeys: [String], contextSha: String?, etag: String?, header: String?) async -> Response<[FeatureEnvironmentCollection]>? {
     let reqBuilder = FeatureServiceAPI.getFeatureStatesWithRequestBuilder(apiKey: apiKeys, contextSha: contextSha)
-    apiHeadersLock.unlock()
 
-    // the etag belongs to this request only, so don't put it in the shared headers
+    // these belong to this request (and this edge) only, so they don't go in the global
+    // OpenAPIClientAPI.customHeaders, which is shared by every config in the app
     if let etag = etag {
       reqBuilder.addHeaders(["if-none-match": etag])
+    }
+
+    if let header = header {
+      reqBuilder.addHeaders(["x-featurehub": header])
     }
 
     return try? await reqBuilder.execute()
@@ -121,7 +120,7 @@ internal class UseBasedEdge: EdgeService {
   }
 
   // decides whether we should make a request and if so claims it, returning what to send
-  private func startPoll() -> (contextSha: String, etag: String?, generation: Int)? {
+  private func startPoll() -> (contextSha: String, etag: String?, header: String?, generation: Int)? {
     withLock {
       // they set the timeout to zero, so we don't ask again
       if (_initialized && _timeoutInSeconds == 0) {
@@ -136,7 +135,7 @@ internal class UseBasedEdge: EdgeService {
       _initialized = true
       _callActive = true
 
-      return (_contextSha, _etag, _contextGeneration)
+      return (_contextSha, _etag, _header, _contextGeneration)
     }
   }
 
@@ -147,7 +146,8 @@ internal class UseBasedEdge: EdgeService {
 
     logger.trace("Starting REST request for \(_config.baseUrl) - contextSha is \(request.contextSha), etag \(String(describing: request.etag))")
 
-    let response = await _requestor.getFeatureStates(apiKeys: _config.apiKeys, contextSha: request.contextSha, etag: request.etag)
+    let response = await _requestor.getFeatureStates(apiKeys: _config.apiKeys, contextSha: request.contextSha,
+      etag: request.etag, header: request.header)
 
     let result: ProcessedResult? = withLock {
       // the context changed while we were waiting, so these features are for the old context and
@@ -269,16 +269,12 @@ internal class UseBasedEdge: EdgeService {
   func context_change(_ newHeader: String) async {
     let changed: Bool = withLock {
       if (newHeader != _header && !_stopped) {
+        // the header is sent with each request by poll()
         if !newHeader.isEmpty {
           _header = newHeader
           _contextSha = SHA256.hash(data: Data(newHeader.utf8)).compactMap { String(format: "%02x", $0) }.joined()
-          apiHeadersLock.lock()
-          OpenAPIClientAPI.customHeaders["x-featurehub"] = newHeader
-          apiHeadersLock.unlock()
         } else {
-          apiHeadersLock.lock()
-          OpenAPIClientAPI.customHeaders.removeValue(forKey: "x-featurehub")
-          apiHeadersLock.unlock()
+          _header = nil
           _contextSha = "0"
         }
 
