@@ -25,6 +25,10 @@ extension String {
   }
 }
 
+// OpenAPIClientAPI.customHeaders is a global dictionary that every request builder reads from as it
+// is created, so writes to it and the creation of requests have to be serialised
+internal let apiHeadersLock = NSLock()
+
 internal struct DefaultFeatureRequestor: FeatureRequestor {
   let _apiService = FeatureServiceAPI()
 
@@ -33,19 +37,24 @@ internal struct DefaultFeatureRequestor: FeatureRequestor {
   }
 
   func getFeatureStates(apiKeys: [String], contextSha: String?, etag: String?) async -> Response<[FeatureEnvironmentCollection]>? {
-    if etag == nil {
-      OpenAPIClientAPI.customHeaders.removeValue(forKey: "if-none-match")
-    } else {
-      OpenAPIClientAPI.customHeaders["if-none-match"] = etag!
-    }
-
+    apiHeadersLock.lock()
     let reqBuilder = FeatureServiceAPI.getFeatureStatesWithRequestBuilder(apiKey: apiKeys, contextSha: contextSha)
+    apiHeadersLock.unlock()
+
+    // the etag belongs to this request only, so don't put it in the shared headers
+    if let etag = etag {
+      reqBuilder.addHeaders(["if-none-match": etag])
+    }
 
     return try? await reqBuilder.execute()
   }
 }
 
 internal class UseBasedEdge: EdgeService {
+  // poll() can be called from several tasks at once (the config, each context's used() and
+  // context_change), so every access to the state below is serialised. The lock is never held
+  // across an await or while calling into the repository.
+  private let lock = NSRecursiveLock()
   let _repo: InternalFeatureRepository
   let _config: FeatureHubConfig
   let _requestor: FeatureRequestor
@@ -57,6 +66,8 @@ internal class UseBasedEdge: EdgeService {
   var _contextSha: String = "0"
   var _callActive: Bool = false
   var _etag: String? = nil
+  // bumped on every context change so we can tell when a response is for an old context
+  private var _contextGeneration: Int = 0
 
   public init(_ repo: InternalFeatureRepository, _ config: FeatureHubConfig, _ timeoutInSeconds: Int?,
               requestor: FeatureRequestor? = nil) {
@@ -67,69 +78,111 @@ internal class UseBasedEdge: EdgeService {
     _requestor = requestor ?? DefaultFeatureRequestor(config.baseUrl)
   }
 
+  private func withLock<T>(_ block: () -> T) -> T {
+    lock.lock()
+    defer { lock.unlock() }
+    return block()
+  }
+
   var canStart: Bool {
     get {
-      !_stopped
+      withLock { !_stopped }
     }
   }
 
   internal func ensureCacheExpired() {
-    _initialized = true
-    _cacheTimeout = Date() - _timeoutInSeconds - 1
+    withLock {
+      _initialized = true
+      _cacheTimeout = Date() - _timeoutInSeconds - 1
+    }
   }
 
   internal func ensureCacheNotExpired() {
-    _initialized = true
-    _cacheTimeout = Date() + (_timeoutInSeconds/2)
+    withLock {
+      _initialized = true
+      _cacheTimeout = Date() + (_timeoutInSeconds/2)
+    }
   }
 
   internal var timeoutInSeconds: Double {
     get {
-      _timeoutInSeconds
+      withLock { _timeoutInSeconds }
     }
   }
 
   internal var etag: String? {
     get  {
-      _etag
+      withLock { _etag }
     }
 
     set {
-      _etag = newValue
+      withLock { _etag = newValue }
+    }
+  }
+
+  // decides whether we should make a request and if so claims it, returning what to send
+  private func startPoll() -> (contextSha: String, etag: String?, generation: Int)? {
+    withLock {
+      // they set the timeout to zero, so we don't ask again
+      if (_initialized && _timeoutInSeconds == 0) {
+        return nil
+      }
+
+      // if the cache timeout < current date, then it will be order ascending and we should poll
+      if _stopped || _callActive || (_initialized && (_cacheTimeout.compare(Date()) != ComparisonResult.orderedAscending)) {
+        return nil
+      }
+
+      _initialized = true
+      _callActive = true
+
+      return (_contextSha, _etag, _contextGeneration)
     }
   }
 
   func poll() async {
-    // they set the timeout to zero, so we don't ask again
-    if (_initialized && _timeoutInSeconds == 0) {
+    guard let request = startPoll() else {
       return
     }
 
-    // if the cache timeout < current date, then it will be order ascending and we should poll
-    if _stopped || _callActive || (_initialized && (_cacheTimeout.compare(Date()) != ComparisonResult.orderedAscending)) {
-      return
-    }
+    logger.trace("Starting REST request for \(_config.baseUrl) - contextSha is \(request.contextSha), etag \(String(describing: request.etag))")
 
-    _initialized = true
+    let response = await _requestor.getFeatureStates(apiKeys: _config.apiKeys, contextSha: request.contextSha, etag: request.etag)
 
-    defer {
-      _callActive = false
-
-      if !_stopped {
-        calculateNextTimerPeriod()
+    let result: ProcessedResult? = withLock {
+      // the context changed while we were waiting, so these features are for the old context and
+      // the request made for the new one (which now owns _callActive) will bring the right ones
+      if request.generation != _contextGeneration {
+        logger.trace("context changed during REST request, ignoring result")
+        return nil
       }
+
+      defer {
+        _callActive = false
+
+        if !_stopped {
+          calculateNextTimerPeriod()
+        }
+      }
+
+      return response.map { process($0) }
     }
 
-    _callActive = true
-
-    logger.trace("Starting REST request for \(_config.baseUrl) - contextSha is \(_contextSha), etag \(String(describing: _etag))")
-
-    if let response = await _requestor.getFeatureStates(apiKeys: _config.apiKeys, contextSha: _contextSha, etag: _etag) {
-      process(response)
+    if let result = result {
+      apply(result)
     }
   }
 
-  private func process(_ val: Response<[FeatureEnvironmentCollection]>) {
+  // what the repository needs to be told about the result of a request
+  private enum ProcessedResult {
+    case nothing
+    case failure
+    case features([FeatureState])
+    case empty
+  }
+
+  // callers must hold the lock
+  private func process(_ val: Response<[FeatureEnvironmentCollection]>) -> ProcessedResult {
     logger.trace("REST status is \(val.statusCode)")
 
     if (val.statusCode == 200) || (val.statusCode == 236) {
@@ -141,15 +194,30 @@ internal class UseBasedEdge: EdgeService {
         determineAlternativeTimeoutInterval(cacheControl)
       }
 
-      processResult(val.body)
-
       if (val.statusCode == 236) {
         _stopped = true
       }
 
+      return processResult(val.body)
     } else if (val.statusCode == 400 || val.statusCode == 404) {
       _stopped = true
+      return .failure
+    }
+
+    return .nothing
+  }
+
+  // called without the lock as the repository has its own
+  private func apply(_ result: ProcessedResult) {
+    switch result {
+    case .nothing:
+      break
+    case .failure:
       _repo.notify(status: SSEResultState.failure)
+    case .features(let features):
+      _repo.updateFeatures(features)
+    case .empty:
+      _repo.empty()
     }
   }
 
@@ -184,40 +252,57 @@ internal class UseBasedEdge: EdgeService {
     _cacheTimeout = Date() + _timeoutInSeconds
   }
 
-  private func processResult(_ environments: [FeatureEnvironmentCollection]?) -> Void {
+  private func processResult(_ environments: [FeatureEnvironmentCollection]?) -> ProcessedResult {
     if environments != nil {
       let allFeatures: [FeatureState] = environments!.map({ $0.features }).compactMap({ $0 }).flatMap({ $0 })
 
       if allFeatures.count > 0 {
-        _repo.updateFeatures(allFeatures)
+        return .features(allFeatures)
       } else {
-        _repo.empty()
+        return .empty
       }
     }
+
+    return .nothing
   }
 
   func context_change(_ newHeader: String) async {
-    if (newHeader != _header && canStart) {
-      if !newHeader.isEmpty {
-        _header = newHeader
-        _contextSha = SHA256.hash(data: Data(newHeader.utf8)).compactMap { String(format: "%02x", $0) }.joined()
-        OpenAPIClientAPI.customHeaders["x-featurehub"] = newHeader
-      } else {
-        OpenAPIClientAPI.customHeaders.removeValue(forKey: "x-featurehub")
-        _contextSha = "0"
+    let changed: Bool = withLock {
+      if (newHeader != _header && !_stopped) {
+        if !newHeader.isEmpty {
+          _header = newHeader
+          _contextSha = SHA256.hash(data: Data(newHeader.utf8)).compactMap { String(format: "%02x", $0) }.joined()
+          apiHeadersLock.lock()
+          OpenAPIClientAPI.customHeaders["x-featurehub"] = newHeader
+          apiHeadersLock.unlock()
+        } else {
+          apiHeadersLock.lock()
+          OpenAPIClientAPI.customHeaders.removeValue(forKey: "x-featurehub")
+          apiHeadersLock.unlock()
+          _contextSha = "0"
+        }
+
+        // override  the  call active to allow for a second inflight request
+        _callActive = false
+        _contextGeneration += 1
+        _initialized = true
+        // force a poll to happen as the header changed so the state will have changed
+        _cacheTimeout = Date() - _timeoutInSeconds - 1
+
+        return true
       }
 
-      // override  the  call active to allow for a second inflight request
-      _callActive = false
-      _initialized = true
-      // force a poll to happen as the header changed so the state will have changed
-      _cacheTimeout = Date() - _timeoutInSeconds - 1
+      return false
+    }
 
+    if changed {
       await poll()
     }
   }
 
   func close() {
-    _stopped = true
+    withLock {
+      _stopped = true
+    }
   }
 }
