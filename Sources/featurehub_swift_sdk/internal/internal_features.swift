@@ -52,11 +52,12 @@ internal class FeatureStateHolder: RepositoryFeatureState {
   }
 
   // the state can be replaced by the repository at any time, so each getter below takes a
-  // single snapshot of it rather than reading it more than once
+  // single snapshot of it rather than reading it more than once. A holder made by withContext
+  // has no state of its own, so it is always the state of the top of the tree.
   private var existingState: FeatureState? {
     get {
       // we don't check used() here even though it might be logical as it creates a stack overflow
-      if let fs = internalState, fs.l != nil {
+      if let fs = topFeatureState().internalState, fs.l != nil {
         return fs
       }
 
