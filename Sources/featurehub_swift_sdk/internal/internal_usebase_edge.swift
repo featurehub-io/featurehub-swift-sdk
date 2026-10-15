@@ -26,14 +26,32 @@ extension String {
 }
 
 internal struct DefaultFeatureRequestor: FeatureRequestor {
-  let _apiService = FeatureServiceAPI()
+  // kept here rather than in the global OpenAPIClientAPI.basePath, which is shared by every
+  // config in the app
+  let _baseUrl: String
 
   public init(_ baseUrl: String) {
-    OpenAPIClientAPI.basePath = baseUrl
+    _baseUrl = baseUrl
+  }
+
+  // the same request FeatureServiceAPI.getFeatureStatesWithRequestBuilder makes, but against our base url
+  private func requestBuilder(apiKeys: [String], contextSha: String?) -> RequestBuilder<[FeatureEnvironmentCollection]> {
+    let urlString = _baseUrl + "/features/"
+
+    var urlComponents = URLComponents(string: urlString)
+    urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+      "apiKey": (wrappedValue: apiKeys.encodeToJSON(), isExplode: true),
+      "contextSha": (wrappedValue: contextSha?.encodeToJSON(), isExplode: true),
+    ])
+
+    let builder: RequestBuilder<[FeatureEnvironmentCollection]>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
+
+    return builder.init(method: "GET", URLString: (urlComponents?.string ?? urlString),
+      parameters: nil, headers: [:], requiresAuthentication: false)
   }
 
   func getFeatureStates(apiKeys: [String], contextSha: String?, etag: String?, header: String?) async -> Response<[FeatureEnvironmentCollection]>? {
-    let reqBuilder = FeatureServiceAPI.getFeatureStatesWithRequestBuilder(apiKey: apiKeys, contextSha: contextSha)
+    let reqBuilder = requestBuilder(apiKeys: apiKeys, contextSha: contextSha)
 
     // these belong to this request (and this edge) only, so they don't go in the global
     // OpenAPIClientAPI.customHeaders, which is shared by every config in the app
