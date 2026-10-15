@@ -116,10 +116,14 @@ internal class Repository: InternalFeatureRepository {
     }
   }
 
+  // these are all of the features there are (for this context), so any we have that aren't
+  // among them no longer exist
   func updateFeatures(_ features: [FeatureState]) {
     logger.trace("received features \(features)")
 
     lock.synchronized {
+      removeFeatures(except: Set(features.map { $0.id }))
+
       for feature in features {
         update(feature)
       }
@@ -163,6 +167,14 @@ internal class Repository: InternalFeatureRepository {
     holder!.setFeatureState(state)
   }
 
+  // callers must hold the lock. The holders are kept, as the application may still have them
+  // and the features may come back
+  private func removeFeatures(except keep: Set<UUID>) {
+    for (id, holder) in ids where !keep.contains(id) && holder.internalState != nil {
+      holder.setFeatureState(nil)
+    }
+  }
+
   func deleteFeature(_ feature: FeatureState) {
     updateFeature(FeatureState(id: feature.id, key: feature.key, l: nil, version: feature.version, value: nil))
   }
@@ -172,9 +184,10 @@ internal class Repository: InternalFeatureRepository {
     feat(key)
   }
 
-  // there are no features, not the repository can be used
+  // there are no features, but the repository can be used
   func empty() {
     lock.synchronized {
+      removeFeatures(except: [])
       _ready = .ready
     }
   }

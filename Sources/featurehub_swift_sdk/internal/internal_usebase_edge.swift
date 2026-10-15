@@ -272,13 +272,18 @@ internal class UseBasedEdge: EdgeService, ContextChangeAware {
   private func process(_ val: Response<[FeatureEnvironmentCollection]>) -> ProcessedResult {
     logger.trace("REST status is \(val.statusCode)")
 
-    if (val.statusCode == 200) || (val.statusCode == 236) {
+    if (val.statusCode == 200) || (val.statusCode == 236) || (val.statusCode == 304) {
       if let etagHeader = header("etag", in: val) {
         _etag = etagHeader
       }
 
       if let cacheControl = header("cache-control", in: val) {
         determineAlternativeTimeoutInterval(cacheControl)
+      }
+
+      // not modified, so the features we have are still right
+      if (val.statusCode == 304) {
+        return .nothing
       }
 
       if (val.statusCode == 236) {
@@ -365,7 +370,9 @@ internal class UseBasedEdge: EdgeService, ContextChangeAware {
         _pendingContextChanges -= 1
       }
 
-      if (newHeader == _header || _stopped) {
+      // even when the header is the one we already have, the change was queued and so anything in
+      // flight has been discarded and the repository told it isn't ready, so we still ask again
+      if _stopped {
         return nil
       }
 

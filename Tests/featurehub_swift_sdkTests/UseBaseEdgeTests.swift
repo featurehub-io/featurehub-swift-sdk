@@ -152,6 +152,15 @@ final class UseBasedEdgeTests : QuickSpec {
           await emptyDataCall(code: 502)
           expect(edge._stopped).to(beFalse())
         }
+
+        it("should keep the etag and cache-control from a 304 but leave the features alone") {
+          await emptyDataCall(code: 304, ["Etag": "rotated-etag", "Cache-Control": "private, max-age=120"])
+          expect(edge.etag) == "rotated-etag"
+          expect(edge.timeoutInSeconds) == 120
+          expect(edge._stopped).to(beFalse())
+          verify(repository, never()).empty()
+          verify(repository, never()).updateFeatures(any())
+        }
       }
     }
 

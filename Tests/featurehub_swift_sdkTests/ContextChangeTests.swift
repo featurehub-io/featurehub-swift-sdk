@@ -117,6 +117,49 @@ final class ContextChangeTests: QuickSpec {
         await edge.context_change("userkey=c")
         expect(requestor.calls.map { $0.header }) == ["userkey=c"]
       }
+
+      it("still makes a request when the header is the one the edge already has") {
+        requestor.respond = { _ in ScriptedRequestor.features("f", etag: "etag-for-a") }
+        await edge.context_change("userkey=a")
+
+        // a poll for the same context is in flight when the change is queued, so its answer is discarded
+        edge.ensureCacheExpired()
+        requestor.hold = true
+        let inflight = Task { await edge.poll() }
+        await eventually { requestor.waiting == 1 }
+
+        edge.contextChangeQueued()
+        repo.notReady()
+        requestor.release()
+        await inflight.value
+        expect(repo.readiness) == .notReady
+
+        requestor.hold = false
+        await edge.context_change("userkey=a")
+        expect(requestor.calls.count) == 3
+        // without the etag, so we get the features back rather than a 304
+        expect(requestor.calls.last?.etag).to(beNil())
+        expect(repo.readiness) == .ready
+      }
+    }
+
+    describe("a server evaluated context") {
+      it("no longer has the features the previous context had that the new one doesn't") {
+        let ctx = ServerEvalFeatureContext(repo, edge)
+        requestor.respond = { call in
+          call.header == "userkey=a" ? ScriptedRequestor.features("x", "y") : ScriptedRequestor.features("y")
+        }
+
+        ctx.user("a")
+        await ctx.build()
+        expect(ctx.feature("x").enabled) == true
+
+        ctx.user("b")
+        await ctx.build()
+        expect(ctx.feature("x").exists) == false
+        expect(ctx.feature("x").enabled) == false
+        expect(ctx.feature("y").enabled) == true
+      }
     }
 
     describe("a context change") {

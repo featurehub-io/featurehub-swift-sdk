@@ -98,6 +98,43 @@ final class RepositoryTests: QuickSpec {
       expect(repo.readiness).to(equal(.ready))
     }
 
+    describe("a new set of features") {
+      it("removes the features that aren't in it") {
+        let f1 = FeatureState(id: UUID(), key: "x", l: false, version: 1, type: .boolean, value: true)
+        let f2 = FeatureState(id: UUID(), key: "y", l: false, version: 1, type: .boolean, value: true)
+        repo.updateFeatures([f1, f2])
+        let x = repo.feature("x")
+        expect(x.enabled) == true
+
+        repo.updateFeatures([f2])
+        expect(x.exists) == false
+        expect(x.enabled) == false
+        expect(repo.feature("x").exists) == false
+        expect(repo.feature("y").enabled) == true
+        expect(repo.readiness) == .ready
+      }
+
+      it("brings a removed feature back when it returns") {
+        let f1 = FeatureState(id: UUID(), key: "x", l: false, version: 1, type: .boolean, value: true)
+        let f2 = FeatureState(id: UUID(), key: "y", l: false, version: 1, type: .boolean, value: true)
+        repo.updateFeatures([f1, f2])
+        let x = repo.feature("x")
+        repo.updateFeatures([f2])
+
+        repo.updateFeatures([f1, f2])
+        expect(x.exists) == true
+        expect(x.enabled) == true
+      }
+
+      it("removes all of the features when there are none") {
+        repo.updateFeatures([FeatureState(id: UUID(), key: "x", l: false, version: 1, type: .boolean, value: true)])
+
+        repo.empty()
+        expect(repo.feature("x").exists) == false
+        expect(repo.readiness) == .ready
+      }
+    }
+
     describe("update a feature able it has been loaded") {
       var f1: FeatureState!
       var feat: RepositoryFeatureState!
