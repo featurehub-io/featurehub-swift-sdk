@@ -42,6 +42,10 @@ public class EdgeFeatureHubConfig: FeatureHubConfig {
   var _repo: Repository?
   var _serverContext: ClientContext?
   var _edge: EdgeService?
+  // the application may ask for contexts from several threads at once, so the lazily created
+  // repository, edge and server context are guarded to make sure only one of each is ever made
+  private let lock = NSRecursiveLock()
+
 
   public init(_ featurehubUrl: String, _ apiKey: [String]) throws {
     _apiKeys = apiKey
@@ -87,26 +91,32 @@ public class EdgeFeatureHubConfig: FeatureHubConfig {
   }
 
   public func cacheTimeout(_ timeoutInSeconds: Int) -> FeatureHubConfig {
-    edgeProvider = { (repo, config) in
-      UseBasedEdge(repo, config, timeoutInSeconds)
+    lock.synchronized {
+      edgeProvider = { (repo, config) in
+        UseBasedEdge(repo, config, timeoutInSeconds)
+      }
     }
 
     return self
   }
 
   internal func useRest(_ timeoutInSeconds: Int, requestor: FeatureRequestor) {
-    edgeProvider = { (repo, config) in
-      UseBasedEdge(repo, config, timeoutInSeconds, requestor: requestor)
+    lock.synchronized {
+      edgeProvider = { (repo, config) in
+        UseBasedEdge(repo, config, timeoutInSeconds, requestor: requestor)
+      }
     }
   }
 
   private var repo: Repository {
     get {
-      if _repo == nil {
-        _repo = Repository()
-      }
+      lock.synchronized {
+        if _repo == nil {
+          _repo = Repository()
+        }
 
-      return _repo!
+        return _repo!
+      }
     }
   }
 
@@ -117,18 +127,23 @@ public class EdgeFeatureHubConfig: FeatureHubConfig {
   }
 
   private func getEdge() -> EdgeService {
-    if _edge == nil {
-      _edge = edgeProvider(repo, self)
+    lock.synchronized {
+      if let edge = _edge {
+        return edge
+      }
+
+      let edge = edgeProvider(repo, self)
+      _edge = edge
 
       // we only poll if we are doing streaming
       if clientEval {
         Task.detached(operation: { // background this update
-          await self._edge!.poll()
+          await edge.poll()
         })
       }
-    }
 
-    return _edge!
+      return edge
+    }
   }
 
   public func newContext() -> ClientContext {
@@ -136,11 +151,13 @@ public class EdgeFeatureHubConfig: FeatureHubConfig {
       return ClientEvalFeatureContext(repo, getEdge())
     }
 
-    if (_serverContext == nil) {
-      _serverContext = ServerEvalFeatureContext(repo, getEdge())
-    }
+    return lock.synchronized {
+      if (_serverContext == nil) {
+        _serverContext = ServerEvalFeatureContext(repo, getEdge())
+      }
 
-    return _serverContext!
+      return _serverContext!
+    }
   }
 
   public func start() -> ClientContext {

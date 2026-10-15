@@ -39,65 +39,78 @@ public protocol ClientContext {
 
 public class BaseClientContext : ClientContext {
   let repo: FeatureRepository
-  internal var attributes: [String: [String]] = [:]
+  // the application sets attributes from whatever thread it likes while they are read when the
+  // context is built (often from the background task start() kicks off), so they are guarded
+  private let attributesLock = NSRecursiveLock()
+  private var _attributes: [String: [String]] = [:]
 
   public init(_ repo: FeatureRepository) {
     self.repo = repo
   }
 
+  /// a snapshot of the attributes as they are now
+  internal var attributes: [String: [String]] {
+    get {
+      attributesLock.lock()
+      defer { attributesLock.unlock() }
+      return _attributes
+    }
+  }
+
+  private func setAttribute(_ key: String, _ value: [String]) -> ClientContext {
+    attributesLock.lock()
+    defer { attributesLock.unlock() }
+    _attributes[key] = value
+    return self
+  }
+
   @discardableResult
   public func user(_ value: String) -> ClientContext {
-    attributes[ContextKeys.userKey.rawValue] = [value]
-    return self
+    setAttribute(ContextKeys.userKey.rawValue, [value])
   }
 
   @discardableResult
   public func session(_ value: String) -> ClientContext {
-    attributes[ContextKeys.session.rawValue] = [value]
-    return self
+    setAttribute(ContextKeys.session.rawValue, [value])
   }
 
   @discardableResult
   public func country(_ value: StrategyAttributeCountryName) -> ClientContext {
-    attributes[ContextKeys.country.rawValue] = [value.rawValue]
-    return self
+    setAttribute(ContextKeys.country.rawValue, [value.rawValue])
   }
 
   @discardableResult
   public func device(_ value: StrategyAttributeDeviceName) -> ClientContext {
-    attributes[ContextKeys.device.rawValue] = [value.rawValue]
-    return self
+    setAttribute(ContextKeys.device.rawValue, [value.rawValue])
   }
 
   @discardableResult
   public func platform(_ value: StrategyAttributePlatformName) -> ClientContext {
-    attributes[ContextKeys.platform.rawValue] = [value.rawValue]
-    return self
+    setAttribute(ContextKeys.platform.rawValue, [value.rawValue])
   }
 
   @discardableResult
   public func version(_ value: String) -> ClientContext {
-    attributes[ContextKeys.version.rawValue] = [value]
-    return self
+    setAttribute(ContextKeys.version.rawValue, [value])
   }
 
   /// lets you easily set a single value for an attribute
   @discardableResult
   public func attribute(_ key: String, _ value: String) -> ClientContext {
-    attributes[key] = [value]
-    return self
+    setAttribute(key, [value])
   }
 
   /// lets you set an array of values for an attribute
   @discardableResult
   public func attributes(_ key: String, _ value: [String]) -> ClientContext {
-    attributes[key] = value
-    return self
+    setAttribute(key, value)
   }
 
   @discardableResult
   public func clear() -> ClientContext {
-    attributes.removeAll()
+    attributesLock.lock()
+    defer { attributesLock.unlock() }
+    _attributes.removeAll()
     return self
   }
 
@@ -106,7 +119,8 @@ public class BaseClientContext : ClientContext {
   }
 
   func defaultPercentageKey() -> String? {
-    let value = attributes["session"] ?? attributes["userkey"]
+    let attrs = attributes
+    let value = attrs["session"] ?? attrs["userkey"]
 
     if value == nil || value!.isEmpty {
       return nil

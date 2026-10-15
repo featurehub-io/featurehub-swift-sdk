@@ -27,6 +27,7 @@ final class UseBasedEdgeTests : QuickSpec {
     var config: MockFeatureHubConfig!
     var etag: String? = nil
     var contextSha = "0"
+    var header: String? = nil
 
     beforeEach {
       requestor = MockFeatureRequestor()
@@ -44,6 +45,7 @@ final class UseBasedEdgeTests : QuickSpec {
     afterEach {
       etag = nil
       contextSha = "0"
+      header = nil
 //      verifyNoMoreInteractions(requestor)
 //      verifyNoMoreInteractions(repository)
 //      verifyNoMoreInteractions(config)
@@ -51,7 +53,7 @@ final class UseBasedEdgeTests : QuickSpec {
 
     func stubResp(_ resp: Response<[FeatureEnvironmentCollection]>) {
       stub(requestor) { r in
-        r.getFeatureStates(apiKeys: ["x"], contextSha: contextSha, etag: etag).thenReturn(resp)
+        r.getFeatureStates(apiKeys: ["x"], contextSha: contextSha, etag: etag, header: header).thenReturn(resp)
       }
     }
 
@@ -82,7 +84,7 @@ final class UseBasedEdgeTests : QuickSpec {
     describe("the api is called") {
       afterEach {
         verify(config).apiKeys.get()
-        verify(requestor).getFeatureStates(apiKeys: ["x"], contextSha: contextSha, etag: etag)
+        verify(requestor).getFeatureStates(apiKeys: ["x"], contextSha: contextSha, etag: etag, header: header)
       }
 
 
@@ -150,6 +152,15 @@ final class UseBasedEdgeTests : QuickSpec {
           await emptyDataCall(code: 502)
           expect(edge._stopped).to(beFalse())
         }
+
+        it("should keep the etag and cache-control from a 304 but leave the features alone") {
+          await emptyDataCall(code: 304, ["Etag": "rotated-etag", "Cache-Control": "private, max-age=120"])
+          expect(edge.etag) == "rotated-etag"
+          expect(edge.timeoutInSeconds) == 120
+          expect(edge._stopped).to(beFalse())
+          verify(repository, never()).empty()
+          verify(repository, never()).updateFeatures(any())
+        }
       }
     }
 
@@ -176,6 +187,7 @@ final class UseBasedEdgeTests : QuickSpec {
 
       it("should poll immediately if the context has changed and update the x-featurehub header") {
         contextSha = "42144f3939c3ffbbf0bf8b1f12affb5c23a4c5bd41e0ff672d54a5754f062058"
+        header = "a=b"
         await emptyDataCall(code: 200, [:], doPoll: false)
         await edge.context_change("a=b")
       }
@@ -184,13 +196,14 @@ final class UseBasedEdgeTests : QuickSpec {
     describe("poll timeout works as expected") {
       it("should poll again after the start") {
         contextSha = "629d7f91c9b2dacda7232e77dbe8874736eaf74589a15d2a23befbc880b6cb5c"
+        header = "zoot=riot"
         edge = UseBasedEdge(repository, config, 1, requestor: requestor)
         await emptyDataCall(code: 200, nil, doPoll: false)
         await edge.context_change("zoot=riot")
         try await Task.sleep(nanoseconds: UInt64(2 * Double(NSEC_PER_SEC)))
         await edge.poll()
         verify(config, times(2)).apiKeys.get()
-        verify(requestor, times(2)).getFeatureStates(apiKeys: ["x"], contextSha: contextSha, etag: etag)
+        verify(requestor, times(2)).getFeatureStates(apiKeys: ["x"], contextSha: contextSha, etag: etag, header: header)
       }
     }
   }

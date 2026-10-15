@@ -46,14 +46,9 @@ internal class Repository: InternalFeatureRepository {
   private var interceptors: [ValueInterceptor] = []
   private var _hadInitialFeatures: Bool = false
 
-  private func withLock<T>(_ block: () -> T) -> T {
-    lock.lock()
-    defer { lock.unlock() }
-    return block()
-  }
 
   func registerFeatureValueInterceptor(allowOverrideLock: Bool, interceptor: FeatureValueInterceptor) {
-    withLock {
+    lock.synchronized {
       interceptors.append(ValueInterceptor(allowOverrideLock: allowOverrideLock,
         valueInterceptor: interceptor))
     }
@@ -61,7 +56,7 @@ internal class Repository: InternalFeatureRepository {
 
   // used to expose the internal API
   func feat(_ key: String) -> FeatureStateHolder {
-    withLock {
+    lock.synchronized {
       if let existing = features[key] {
         return existing
       }
@@ -76,7 +71,7 @@ internal class Repository: InternalFeatureRepository {
 
   func findInterceptor(_ key: String) -> InterceptorValue? {
     // interceptors are application code, so don't hold the lock while calling them
-    for interceptor in withLock({ interceptors }) {
+    for interceptor in lock.synchronized({ interceptors }) {
       let val = interceptor.valueInterceptor.match(key)
 
       if val != nil {
@@ -89,14 +84,14 @@ internal class Repository: InternalFeatureRepository {
 
   var readiness: Readiness {
     get {
-      withLock {
+      lock.synchronized {
         _ready
       }
     }
   }
 
   func notReady() {
-    withLock {
+    lock.synchronized {
       _ready = Readiness.notReady
     }
   }
@@ -107,7 +102,7 @@ internal class Repository: InternalFeatureRepository {
 
 
   func notify(status: SSEResultState?) {
-    withLock {
+    lock.synchronized {
       switch (status) {
       case .ack, .bye, .none, .config:
         break
@@ -121,10 +116,14 @@ internal class Repository: InternalFeatureRepository {
     }
   }
 
+  // these are all of the features there are (for this context), so any we have that aren't
+  // among them no longer exist
   func updateFeatures(_ features: [FeatureState]) {
     logger.trace("received features \(features)")
 
-    withLock {
+    lock.synchronized {
+      removeFeatures(except: Set(features.map { $0.id }))
+
       for feature in features {
         update(feature)
       }
@@ -135,7 +134,7 @@ internal class Repository: InternalFeatureRepository {
   }
 
   func updateFeature(_ state: FeatureState) {
-    withLock {
+    lock.synchronized {
       update(state)
     }
   }
@@ -146,6 +145,7 @@ internal class Repository: InternalFeatureRepository {
     if holder?.key == nil {
       holder = FeatureStateHolder(key: state.key, repo: self, featureState: state)
       features[holder!.key] = holder
+      ids[state.id] = holder // so we can find it again if its key is renamed
     } else if (holder?.featureState != nil) {
       let existingVersion = holder!.featureState?.version ?? -1
       let newVersion = state.version ?? 0
@@ -158,12 +158,21 @@ internal class Repository: InternalFeatureRepository {
     }
 
     // if the key has changed, deal with it
-    if holder!.key != state.key {
-      features.removeValue(forKey: state.key)
+    let oldKey = holder!.key
+    if oldKey != state.key {
+      features.removeValue(forKey: oldKey)
       features[state.key] = holder!
     }
 
     holder!.setFeatureState(state)
+  }
+
+  // callers must hold the lock. The holders are kept, as the application may still have them
+  // and the features may come back
+  private func removeFeatures(except keep: Set<UUID>) {
+    for (id, holder) in ids where !keep.contains(id) && holder.internalState != nil {
+      holder.setFeatureState(nil)
+    }
   }
 
   func deleteFeature(_ feature: FeatureState) {
@@ -175,9 +184,10 @@ internal class Repository: InternalFeatureRepository {
     feat(key)
   }
 
-  // there are no features, not the repository can be used
+  // there are no features, but the repository can be used
   func empty() {
-    withLock {
+    lock.synchronized {
+      removeFeatures(except: [])
       _ready = .ready
     }
   }

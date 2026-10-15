@@ -1,10 +1,10 @@
 #!/bin/sh
-OUTPUT_FILE=Tests/featurehub-swift-sdkTests/GeneratedMocks.swift
+OUTPUT_FILE=Tests/featurehub_swift_sdkTests/GeneratedMocks.swift
 echo "Generated mocks into $OUTPUT_FILE"
 
-ID="Sources/featurehub-swift-sdk"
+ID="Sources/featurehub_swift_sdk"
 
-./cuckoo_run generate --testable "featurehub-swift-sdk" --output "$OUTPUT_FILE" \
+./cuckoo_run generate --testable "featurehub_swift_sdk" --output "$OUTPUT_FILE" \
     "${ID}/featurehub_swift_sdk.swift" \
     "${ID}/config.swift"\
     "${ID}/features.swift"\
