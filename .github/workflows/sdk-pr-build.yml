@@ -21,7 +21,7 @@ jobs:
     runs-on: macos-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       - name: Get swift version
         run: swift --version
       - name: Run tests
