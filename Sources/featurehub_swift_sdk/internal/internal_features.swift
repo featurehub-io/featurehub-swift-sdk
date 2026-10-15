@@ -1,11 +1,14 @@
 import Foundation
 
 internal class FeatureStateHolder: RepositoryFeatureState {
-  var _key: String
+  // the repository writes the state from the edge service's task while the application
+  // reads it from its own threads, so the mutable state below is guarded
+  private let stateLock = NSRecursiveLock()
+  private var _key: String
+  private var _internalState: FeatureState?
   let repo: InternalFeatureRepository
-  var internalState: FeatureState?
-  var parentState: FeatureStateHolder?
-  var clientContext: InternalContext?
+  let parentState: FeatureStateHolder?
+  let clientContext: InternalContext?
 
   public init(key: String, repo: InternalFeatureRepository,
               featureState: FeatureState? = nil,
@@ -15,11 +18,19 @@ internal class FeatureStateHolder: RepositoryFeatureState {
     self.repo = repo
     self.parentState = parentState
     self.clientContext = clientContext
+    _internalState = nil
 
     if featureState != nil {
       setFeatureState(featureState)
-    } else {
-      internalState = nil
+    }
+  }
+
+  // the state as it was last set by the repository
+  var internalState: FeatureState? {
+    get {
+      stateLock.lock()
+      defer { stateLock.unlock() }
+      return _internalState
     }
   }
 
@@ -30,7 +41,13 @@ internal class FeatureStateHolder: RepositoryFeatureState {
 
   var key: String {
     get { // we always walk up the tree to get the key in case it changed
-      return parentState?.key ?? _key
+      if let ps = parentState { // don't hold our lock while we walk the tree
+        return ps.key
+      }
+
+      stateLock.lock()
+      defer { stateLock.unlock() }
+      return _key
     }
   }
 
@@ -140,11 +157,14 @@ internal class FeatureStateHolder: RepositoryFeatureState {
   }
 
   func withContext(ctx: InternalContext) -> FeatureStateHolder {
-    FeatureStateHolder(key: _key, repo: repo, featureState: nil, parentState: self, clientContext: ctx)
+    FeatureStateHolder(key: key, repo: repo, featureState: nil, parentState: self, clientContext: ctx)
   }
 
   func setFeatureState(_ state: FeatureState?) {
-    internalState = state
+    stateLock.lock()
+    defer { stateLock.unlock() }
+
+    _internalState = state
     if let k = state?.key {
       _key = k
     }
