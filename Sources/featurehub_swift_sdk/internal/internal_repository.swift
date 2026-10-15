@@ -46,14 +46,9 @@ internal class Repository: InternalFeatureRepository {
   private var interceptors: [ValueInterceptor] = []
   private var _hadInitialFeatures: Bool = false
 
-  private func withLock<T>(_ block: () -> T) -> T {
-    lock.lock()
-    defer { lock.unlock() }
-    return block()
-  }
 
   func registerFeatureValueInterceptor(allowOverrideLock: Bool, interceptor: FeatureValueInterceptor) {
-    withLock {
+    lock.synchronized {
       interceptors.append(ValueInterceptor(allowOverrideLock: allowOverrideLock,
         valueInterceptor: interceptor))
     }
@@ -61,7 +56,7 @@ internal class Repository: InternalFeatureRepository {
 
   // used to expose the internal API
   func feat(_ key: String) -> FeatureStateHolder {
-    withLock {
+    lock.synchronized {
       if let existing = features[key] {
         return existing
       }
@@ -76,7 +71,7 @@ internal class Repository: InternalFeatureRepository {
 
   func findInterceptor(_ key: String) -> InterceptorValue? {
     // interceptors are application code, so don't hold the lock while calling them
-    for interceptor in withLock({ interceptors }) {
+    for interceptor in lock.synchronized({ interceptors }) {
       let val = interceptor.valueInterceptor.match(key)
 
       if val != nil {
@@ -89,14 +84,14 @@ internal class Repository: InternalFeatureRepository {
 
   var readiness: Readiness {
     get {
-      withLock {
+      lock.synchronized {
         _ready
       }
     }
   }
 
   func notReady() {
-    withLock {
+    lock.synchronized {
       _ready = Readiness.notReady
     }
   }
@@ -107,7 +102,7 @@ internal class Repository: InternalFeatureRepository {
 
 
   func notify(status: SSEResultState?) {
-    withLock {
+    lock.synchronized {
       switch (status) {
       case .ack, .bye, .none, .config:
         break
@@ -124,7 +119,7 @@ internal class Repository: InternalFeatureRepository {
   func updateFeatures(_ features: [FeatureState]) {
     logger.trace("received features \(features)")
 
-    withLock {
+    lock.synchronized {
       for feature in features {
         update(feature)
       }
@@ -135,7 +130,7 @@ internal class Repository: InternalFeatureRepository {
   }
 
   func updateFeature(_ state: FeatureState) {
-    withLock {
+    lock.synchronized {
       update(state)
     }
   }
@@ -179,7 +174,7 @@ internal class Repository: InternalFeatureRepository {
 
   // there are no features, not the repository can be used
   func empty() {
-    withLock {
+    lock.synchronized {
       _ready = .ready
     }
   }

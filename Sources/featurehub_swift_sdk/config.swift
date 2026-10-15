@@ -46,11 +46,6 @@ public class EdgeFeatureHubConfig: FeatureHubConfig {
   // repository, edge and server context are guarded to make sure only one of each is ever made
   private let lock = NSRecursiveLock()
 
-  private func withLock<T>(_ block: () -> T) -> T {
-    lock.lock()
-    defer { lock.unlock() }
-    return block()
-  }
 
   public init(_ featurehubUrl: String, _ apiKey: [String]) throws {
     _apiKeys = apiKey
@@ -96,7 +91,7 @@ public class EdgeFeatureHubConfig: FeatureHubConfig {
   }
 
   public func cacheTimeout(_ timeoutInSeconds: Int) -> FeatureHubConfig {
-    withLock {
+    lock.synchronized {
       edgeProvider = { (repo, config) in
         UseBasedEdge(repo, config, timeoutInSeconds)
       }
@@ -106,7 +101,7 @@ public class EdgeFeatureHubConfig: FeatureHubConfig {
   }
 
   internal func useRest(_ timeoutInSeconds: Int, requestor: FeatureRequestor) {
-    withLock {
+    lock.synchronized {
       edgeProvider = { (repo, config) in
         UseBasedEdge(repo, config, timeoutInSeconds, requestor: requestor)
       }
@@ -115,7 +110,7 @@ public class EdgeFeatureHubConfig: FeatureHubConfig {
 
   private var repo: Repository {
     get {
-      withLock {
+      lock.synchronized {
         if _repo == nil {
           _repo = Repository()
         }
@@ -132,7 +127,7 @@ public class EdgeFeatureHubConfig: FeatureHubConfig {
   }
 
   private func getEdge() -> EdgeService {
-    withLock {
+    lock.synchronized {
       if let edge = _edge {
         return edge
       }
@@ -156,7 +151,7 @@ public class EdgeFeatureHubConfig: FeatureHubConfig {
       return ClientEvalFeatureContext(repo, getEdge())
     }
 
-    return withLock {
+    return lock.synchronized {
       if (_serverContext == nil) {
         _serverContext = ServerEvalFeatureContext(repo, getEdge())
       }
