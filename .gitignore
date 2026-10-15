@@ -8,4 +8,5 @@ DerivedData/
 .swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
 .netrc
 /cuckoo_generator
+/cuckoo_generator.version
 .idea/
