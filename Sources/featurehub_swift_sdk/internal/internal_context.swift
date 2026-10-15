@@ -47,6 +47,7 @@ internal class ServerEvalFeatureContext: BaseClientContext, InternalContext {
 
   @discardableResult
   override func build() async -> ClientContext {
+    // wait for this context to reach the edge, even if an earlier build queued it
     if let change = queueContextChange() {
       await change.value
     }
@@ -55,7 +56,7 @@ internal class ServerEvalFeatureContext: BaseClientContext, InternalContext {
   }
 
   // works out the header for the attributes as they are now and, if it has changed, queues it to
-  // be sent to the edge after any earlier change
+  // be sent to the edge after any earlier change. Returns the change to wait for.
   private func queueContextChange() -> Task<Void, Never>? {
     buildLock.lock()
     defer { buildLock.unlock() }
@@ -70,11 +71,14 @@ internal class ServerEvalFeatureContext: BaseClientContext, InternalContext {
             .joined(separator: ",")
 
     if (newHeader == oldHeader) && (oldHeader != nil) {
-      return nil
+      // unchanged, but it may not have reached the edge yet
+      return lastContextChange
     }
 
     logger.trace("server eval context, header changed to \(newHeader)")
     oldHeader = newHeader
+    // tell the edge first, so a response for the old context can't make the repository ready again
+    (edge as? ContextChangeAware)?.contextChangeQueued()
     internalRepo.notReady()
 
     let previous = lastContextChange

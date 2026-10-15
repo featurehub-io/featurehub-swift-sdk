@@ -25,36 +25,44 @@ extension String {
   }
 }
 
+// the generated client builds the request against the global OpenAPIClientAPI.basePath and merges
+// the global OpenAPIClientAPI.customHeaders over the request's own headers. Both are shared by every
+// config in the app, so we send the generated request to our own server and let our headers win.
+internal final class FeatureHubRequestBuilder<T: Decodable>: URLSessionDecodableRequestBuilder<T> {
+  override func buildHeaders() -> [String: String] {
+    var httpHeaders = super.buildHeaders()
+    for (key, value) in headers {
+      httpHeaders[key] = value
+    }
+    return httpHeaders
+  }
+}
+
 internal struct DefaultFeatureRequestor: FeatureRequestor {
-  // kept here rather than in the global OpenAPIClientAPI.basePath, which is shared by every
-  // config in the app
+  // the server root, without any trailing slash
   let _baseUrl: String
 
   public init(_ baseUrl: String) {
-    _baseUrl = baseUrl
+    var url = baseUrl
+    while url.hasSuffix("/") {
+      url.removeLast()
+    }
+    _baseUrl = url
   }
 
-  // the same request FeatureServiceAPI.getFeatureStatesWithRequestBuilder makes, but against our base url
-  private func requestBuilder(apiKeys: [String], contextSha: String?) -> RequestBuilder<[FeatureEnvironmentCollection]> {
-    let urlString = _baseUrl + "/features/"
+  internal func requestBuilder(apiKeys: [String], contextSha: String?, etag: String?, header: String?) -> RequestBuilder<[FeatureEnvironmentCollection]> {
+    // let the generated client work out the path and query, so we follow it when it is regenerated
+    let generated = FeatureServiceAPI.getFeatureStatesWithRequestBuilder(apiKey: apiKeys, contextSha: contextSha)
 
-    var urlComponents = URLComponents(string: urlString)
-    urlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
-      "apiKey": (wrappedValue: apiKeys.encodeToJSON(), isExplode: true),
-      "contextSha": (wrappedValue: contextSha?.encodeToJSON(), isExplode: true),
-    ])
+    var urlString = generated.URLString
+    if urlString.hasPrefix(OpenAPIClientAPI.basePath) {
+      urlString = _baseUrl + urlString.dropFirst(OpenAPIClientAPI.basePath.count)
+    }
 
-    let builder: RequestBuilder<[FeatureEnvironmentCollection]>.Type = OpenAPIClientAPI.requestBuilderFactory.getBuilder()
+    let reqBuilder = FeatureHubRequestBuilder<[FeatureEnvironmentCollection]>(method: generated.method, URLString: urlString,
+      parameters: generated.parameters, headers: generated.headers, requiresAuthentication: generated.requiresAuthentication)
 
-    return builder.init(method: "GET", URLString: (urlComponents?.string ?? urlString),
-      parameters: nil, headers: [:], requiresAuthentication: false)
-  }
-
-  func getFeatureStates(apiKeys: [String], contextSha: String?, etag: String?, header: String?) async -> Response<[FeatureEnvironmentCollection]>? {
-    let reqBuilder = requestBuilder(apiKeys: apiKeys, contextSha: contextSha)
-
-    // these belong to this request (and this edge) only, so they don't go in the global
-    // OpenAPIClientAPI.customHeaders, which is shared by every config in the app
+    // these belong to this request (and this edge) only
     if let etag = etag {
       reqBuilder.addHeaders(["if-none-match": etag])
     }
@@ -63,14 +71,44 @@ internal struct DefaultFeatureRequestor: FeatureRequestor {
       reqBuilder.addHeaders(["x-featurehub": header])
     }
 
-    return try? await reqBuilder.execute()
+    return reqBuilder
+  }
+
+  func getFeatureStates(apiKeys: [String], contextSha: String?, etag: String?, header: String?) async -> Response<[FeatureEnvironmentCollection]>? {
+    let reqBuilder = requestBuilder(apiKeys: apiKeys, contextSha: contextSha, etag: etag, header: header)
+
+    do {
+      return try await reqBuilder.execute()
+    } catch {
+      return DefaultFeatureRequestor.response(from: error)
+    }
+  }
+
+  // the generated client throws for anything other than a 2xx, but the edge needs to see a 304 (not
+  // modified) or a 400/404 (bad api keys) so it can act on them. Anything without a status, such as
+  // the network being unavailable, has no response.
+  internal static func response(from error: Error) -> Response<[FeatureEnvironmentCollection]>? {
+    guard case ErrorResponse.error(let statusCode, let data, let response, _) = error, statusCode > 0 else {
+      return nil
+    }
+
+    if let httpResponse = response as? HTTPURLResponse {
+      return Response(response: httpResponse, body: [], bodyData: data)
+    }
+
+    return Response(statusCode: statusCode, header: [:], body: [], bodyData: data)
   }
 }
 
-internal class UseBasedEdge: EdgeService {
+// an edge that wants to know as soon as a context change is on its way, before it is sent
+internal protocol ContextChangeAware {
+  func contextChangeQueued()
+}
+
+internal class UseBasedEdge: EdgeService, ContextChangeAware {
   // poll() can be called from several tasks at once (the config, each context's used() and
   // context_change), so every access to the state below is serialised. The lock is never held
-  // across an await or while calling into the repository.
+  // across an await.
   private let lock = NSRecursiveLock()
   let _repo: InternalFeatureRepository
   let _config: FeatureHubConfig
@@ -83,8 +121,13 @@ internal class UseBasedEdge: EdgeService {
   var _contextSha: String = "0"
   var _callActive: Bool = false
   var _etag: String? = nil
-  // bumped on every context change so we can tell when a response is for an old context
+  // bumped whenever the context is changing, so we can tell when a response is for an old context
   private var _contextGeneration: Int = 0
+  // context changes that have been queued but haven't reached context_change yet
+  private var _pendingContextChanges: Int = 0
+  // the request that currently owns _callActive
+  private var _requestCount: Int = 0
+  private var _activeRequest: Int?
 
   public init(_ repo: InternalFeatureRepository, _ config: FeatureHubConfig, _ timeoutInSeconds: Int?,
               requestor: FeatureRequestor? = nil) {
@@ -95,27 +138,21 @@ internal class UseBasedEdge: EdgeService {
     _requestor = requestor ?? DefaultFeatureRequestor(config.baseUrl)
   }
 
-  private func withLock<T>(_ block: () -> T) -> T {
-    lock.lock()
-    defer { lock.unlock() }
-    return block()
-  }
-
   var canStart: Bool {
     get {
-      withLock { !_stopped }
+      lock.synchronized { !_stopped }
     }
   }
 
   internal func ensureCacheExpired() {
-    withLock {
+    lock.synchronized {
       _initialized = true
       _cacheTimeout = Date() - _timeoutInSeconds - 1
     }
   }
 
   internal func ensureCacheNotExpired() {
-    withLock {
+    lock.synchronized {
       _initialized = true
       _cacheTimeout = Date() + (_timeoutInSeconds/2)
     }
@@ -123,25 +160,48 @@ internal class UseBasedEdge: EdgeService {
 
   internal var timeoutInSeconds: Double {
     get {
-      withLock { _timeoutInSeconds }
+      lock.synchronized { _timeoutInSeconds }
     }
   }
 
   internal var etag: String? {
     get  {
-      withLock { _etag }
+      lock.synchronized { _etag }
     }
 
     set {
-      withLock { _etag = newValue }
+      lock.synchronized { _etag = newValue }
     }
   }
 
-  // decides whether we should make a request and if so claims it, returning what to send
-  private func startPoll() -> (contextSha: String, etag: String?, header: String?, generation: Int)? {
-    withLock {
+  private struct PollRequest {
+    let id: Int
+    let generation: Int
+    let contextSha: String
+    let etag: String?
+    let header: String?
+  }
+
+  // callers must hold the lock
+  private func claimRequest() -> PollRequest {
+    _initialized = true
+    _callActive = true
+    _requestCount += 1
+    _activeRequest = _requestCount
+
+    return PollRequest(id: _requestCount, generation: _contextGeneration, contextSha: _contextSha, etag: _etag, header: _header)
+  }
+
+  // decides whether we should make a request and if so claims it
+  private func startPoll() -> PollRequest? {
+    lock.synchronized {
       // they set the timeout to zero, so we don't ask again
       if (_initialized && _timeoutInSeconds == 0) {
+        return nil
+      }
+
+      // the context is about to change, so its request is the one worth making
+      if _pendingContextChanges > 0 {
         return nil
       }
 
@@ -150,44 +210,53 @@ internal class UseBasedEdge: EdgeService {
         return nil
       }
 
-      _initialized = true
-      _callActive = true
-
-      return (_contextSha, _etag, _header, _contextGeneration)
+      return claimRequest()
     }
   }
 
   func poll() async {
-    guard let request = startPoll() else {
-      return
+    if let request = startPoll() {
+      await perform(request)
     }
+  }
 
+  private func perform(_ request: PollRequest) async {
     logger.trace("Starting REST request for \(_config.baseUrl) - contextSha is \(request.contextSha), etag \(String(describing: request.etag))")
 
     let response = await _requestor.getFeatureStates(apiKeys: _config.apiKeys, contextSha: request.contextSha,
       etag: request.etag, header: request.header)
 
-    let result: ProcessedResult? = withLock {
-      // the context changed while we were waiting, so these features are for the old context and
-      // the request made for the new one (which now owns _callActive) will bring the right ones
-      if request.generation != _contextGeneration {
-        logger.trace("context changed during REST request, ignoring result")
-        return nil
-      }
-
+    lock.synchronized {
       defer {
-        _callActive = false
+        // a context change may have handed _callActive to a newer request, in which case it isn't ours to release
+        if _activeRequest == request.id {
+          _activeRequest = nil
+          _callActive = false
 
-        if !_stopped {
-          calculateNextTimerPeriod()
+          if !_stopped {
+            calculateNextTimerPeriod()
+          }
         }
       }
 
-      return response.map { process($0) }
-    }
+      // the context changed while we were waiting, so these features are for the old context and
+      // the request made for the new one will bring the right ones
+      if request.generation != _contextGeneration {
+        logger.trace("context changed during REST request, ignoring result")
+        return
+      }
 
-    if let result = result {
-      apply(result)
+      if let response = response {
+        apply(process(response))
+      }
+    }
+  }
+
+  func contextChangeQueued() {
+    lock.synchronized {
+      _pendingContextChanges += 1
+      // anything in flight is now for a context on its way out
+      _contextGeneration += 1
     }
   }
 
@@ -204,11 +273,11 @@ internal class UseBasedEdge: EdgeService {
     logger.trace("REST status is \(val.statusCode)")
 
     if (val.statusCode == 200) || (val.statusCode == 236) {
-      if let etagHeader = val.header["etag"] {
+      if let etagHeader = header("etag", in: val) {
         _etag = etagHeader
       }
 
-      if let cacheControl = val.header["cache-control"] {
+      if let cacheControl = header("cache-control", in: val) {
         determineAlternativeTimeoutInterval(cacheControl)
       }
 
@@ -225,7 +294,13 @@ internal class UseBasedEdge: EdgeService {
     return .nothing
   }
 
-  // called without the lock as the repository has its own
+  // header names are case insensitive, and HTTPURLResponse hands them back as e.g. "Etag"
+  private func header(_ name: String, in response: Response<[FeatureEnvironmentCollection]>) -> String? {
+    response.header.first(where: { $0.key.caseInsensitiveCompare(name) == .orderedSame })?.value
+  }
+
+  // callers must hold the lock. The repository has its own lock and never calls back into the
+  // edge, so applying the result under ours keeps it in order with context changes
   private func apply(_ result: ProcessedResult) {
     switch result {
     case .nothing:
@@ -285,37 +360,50 @@ internal class UseBasedEdge: EdgeService {
   }
 
   func context_change(_ newHeader: String) async {
-    let changed: Bool = withLock {
-      if (newHeader != _header && !_stopped) {
-        // the header is sent with each request by poll()
-        if !newHeader.isEmpty {
-          _header = newHeader
-          _contextSha = SHA256.hash(data: Data(newHeader.utf8)).compactMap { String(format: "%02x", $0) }.joined()
-        } else {
-          _header = nil
-          _contextSha = "0"
-        }
-
-        // override  the  call active to allow for a second inflight request
-        _callActive = false
-        _contextGeneration += 1
-        _initialized = true
-        // force a poll to happen as the header changed so the state will have changed
-        _cacheTimeout = Date() - _timeoutInSeconds - 1
-
-        return true
+    let request: PollRequest? = lock.synchronized {
+      if _pendingContextChanges > 0 {
+        _pendingContextChanges -= 1
       }
 
-      return false
+      if (newHeader == _header || _stopped) {
+        return nil
+      }
+
+      // the header is sent with each request
+      if !newHeader.isEmpty {
+        _header = newHeader
+        _contextSha = SHA256.hash(data: Data(newHeader.utf8)).compactMap { String(format: "%02x", $0) }.joined()
+      } else {
+        _header = nil
+        _contextSha = "0"
+      }
+
+      // the etag was for the old context's features
+      _etag = nil
+      _contextGeneration += 1
+      // override  the  call active to allow for a second inflight request
+      _activeRequest = nil
+      _callActive = false
+      _initialized = true
+      // force a poll to happen as the header changed so the state will have changed
+      _cacheTimeout = Date() - _timeoutInSeconds - 1
+
+      // a newer context is already on its way, so let its change make the request
+      if _pendingContextChanges > 0 {
+        return nil
+      }
+
+      // claim the request now so a poll() from elsewhere can't take it before we make it
+      return claimRequest()
     }
 
-    if changed {
-      await poll()
+    if let request = request {
+      await perform(request)
     }
   }
 
   func close() {
-    withLock {
+    lock.synchronized {
       _stopped = true
     }
   }
