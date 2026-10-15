@@ -29,7 +29,13 @@ internal class ClientEvalFeatureContext: BaseClientContext, InternalContext {
 }
 
 internal class ServerEvalFeatureContext: BaseClientContext, InternalContext {
-  var oldHeader: String?
+  // build() can be called from several tasks at once (start() kicks one off in the background),
+  // so the header we last sent and the queue of context changes are guarded
+  private let buildLock = NSLock()
+  private var oldHeader: String?
+  // context changes are sent to the edge one at a time and in the order they were made, so the
+  // edge always ends up with the most recent context
+  private var lastContextChange: Task<Void, Never>?
   let edge: EdgeService
   let internalRepo: InternalFeatureRepository
 
@@ -41,23 +47,45 @@ internal class ServerEvalFeatureContext: BaseClientContext, InternalContext {
 
   @discardableResult
   override func build() async -> ClientContext {
-    let newHeader = attributes.keys
+    if let change = queueContextChange() {
+      await change.value
+    }
+
+    return self
+  }
+
+  // works out the header for the attributes as they are now and, if it has changed, queues it to
+  // be sent to the edge after any earlier change
+  private func queueContextChange() -> Task<Void, Never>? {
+    buildLock.lock()
+    defer { buildLock.unlock() }
+
+    let attrs = attributes
+    let newHeader = attrs.keys
             .sorted()
             .map {
-              encodePair($0, attributes[$0])
+              encodePair($0, attrs[$0])
             }
             .compactMap({ $0 })
             .joined(separator: ",")
 
+    if (newHeader == oldHeader) && (oldHeader != nil) {
+      return nil
+    }
 
-    if (newHeader != oldHeader) || (oldHeader == nil) {
-      logger.trace("server eval context, header changed to \(newHeader)")
-      oldHeader = newHeader
-      internalRepo.notReady()
+    logger.trace("server eval context, header changed to \(newHeader)")
+    oldHeader = newHeader
+    internalRepo.notReady()
+
+    let previous = lastContextChange
+    let edge = self.edge
+    let change = Task {
+      await previous?.value
       await edge.context_change(newHeader)
     }
 
-    return self
+    lastContextChange = change
+    return change
   }
 
   private func encodePair(_ key: String, _ value: [String]?) -> String? {

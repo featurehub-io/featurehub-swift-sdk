@@ -1,4 +1,4 @@
-// MARK: - Mocks generated from file: Sources/featurehub_swift_sdk/config.swift at 2026-10-15 03:13:51 +0000
+// MARK: - Mocks generated from file: Sources/featurehub_swift_sdk/config.swift at 2026-10-15 03:39:04 +0000
 
 
 import Cuckoo
@@ -1333,7 +1333,7 @@ public class EdgeFeatureHubConfigStub: EdgeFeatureHubConfig {
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub_swift_sdk/context.swift at 2026-10-15 03:13:51 +0000
+// MARK: - Mocks generated from file: Sources/featurehub_swift_sdk/context.swift at 2026-10-15 03:39:04 +0000
 
 
 import Cuckoo
@@ -2457,16 +2457,6 @@ public class MockBaseClientContext: BaseClientContext, Cuckoo.ClassMock {
                 defaultCall: __defaultImplStub!.attributes)
         }
         
-        set {
-            cuckoo_manager.setter("attributes",
-                value: newValue,
-                superclassCall:
-                    
-                    super.attributes = newValue
-                    ,
-                defaultCall: __defaultImplStub!.attributes = newValue)
-        }
-        
     }
     
     
@@ -2920,7 +2910,7 @@ public class MockBaseClientContext: BaseClientContext, Cuckoo.ClassMock {
         
         
         
-        var attributes: Cuckoo.ClassToBeStubbedProperty<MockBaseClientContext, [String: [String]]> {
+        var attributes: Cuckoo.ClassToBeStubbedReadOnlyProperty<MockBaseClientContext, [String: [String]]> {
             return .init(manager: cuckoo_manager, name: "attributes")
         }
         
@@ -3180,7 +3170,7 @@ public class MockBaseClientContext: BaseClientContext, Cuckoo.ClassMock {
         
         
         
-        var attributes: Cuckoo.VerifyProperty<[String: [String]]> {
+        var attributes: Cuckoo.VerifyReadOnlyProperty<[String: [String]]> {
             return .init(manager: cuckoo_manager, name: "attributes", callMatcher: callMatcher, sourceLocation: sourceLocation)
         }
         
@@ -3460,8 +3450,6 @@ public class BaseClientContextStub: BaseClientContext {
             return DefaultValueRegistry.defaultValue(for: ([String: [String]]).self)
         }
         
-        set { }
-        
     }
     
     
@@ -3654,7 +3642,7 @@ public class BaseClientContextStub: BaseClientContext {
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub_swift_sdk/featurehub_swift_sdk.swift at 2026-10-15 03:13:51 +0000
+// MARK: - Mocks generated from file: Sources/featurehub_swift_sdk/featurehub_swift_sdk.swift at 2026-10-15 03:39:04 +0000
 
 
 import Cuckoo
@@ -4096,7 +4084,7 @@ public class FeatureRepositoryStub: FeatureRepository {
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub_swift_sdk/features.swift at 2026-10-15 03:13:51 +0000
+// MARK: - Mocks generated from file: Sources/featurehub_swift_sdk/features.swift at 2026-10-15 03:39:04 +0000
 
 
 import Cuckoo
@@ -4665,7 +4653,7 @@ public class RepositoryFeatureStateStub: RepositoryFeatureState {
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub_swift_sdk/internal/internal_context.swift at 2026-10-15 03:13:51 +0000
+// MARK: - Mocks generated from file: Sources/featurehub_swift_sdk/internal/internal_context.swift at 2026-10-15 03:39:04 +0000
 
 
 import Cuckoo
@@ -5840,16 +5828,6 @@ import Foundation
                 defaultCall: __defaultImplStub!.attributes)
         }
         
-        set {
-            cuckoo_manager.setter("attributes",
-                value: newValue,
-                superclassCall:
-                    
-                    super.attributes = newValue
-                    ,
-                defaultCall: __defaultImplStub!.attributes = newValue)
-        }
-        
     }
     
     
@@ -6303,7 +6281,7 @@ import Foundation
         
         
         
-        var attributes: Cuckoo.ClassToBeStubbedProperty<MockClientEvalFeatureContext, [String: [String]]> {
+        var attributes: Cuckoo.ClassToBeStubbedReadOnlyProperty<MockClientEvalFeatureContext, [String: [String]]> {
             return .init(manager: cuckoo_manager, name: "attributes")
         }
         
@@ -6563,7 +6541,7 @@ import Foundation
         
         
         
-        var attributes: Cuckoo.VerifyProperty<[String: [String]]> {
+        var attributes: Cuckoo.VerifyReadOnlyProperty<[String: [String]]> {
             return .init(manager: cuckoo_manager, name: "attributes", callMatcher: callMatcher, sourceLocation: sourceLocation)
         }
         
@@ -6843,8 +6821,6 @@ import Foundation
             return DefaultValueRegistry.defaultValue(for: ([String: [String]]).self)
         }
         
-        set { }
-        
     }
     
     
@@ -7064,32 +7040,6 @@ import Foundation
     
     
     
-     override var oldHeader: String? {
-        get {
-            return cuckoo_manager.getter("oldHeader",
-                superclassCall:
-                    
-                    super.oldHeader
-                    ,
-                defaultCall: __defaultImplStub!.oldHeader)
-        }
-        
-        set {
-            cuckoo_manager.setter("oldHeader",
-                value: newValue,
-                superclassCall:
-                    
-                    super.oldHeader = newValue
-                    ,
-                defaultCall: __defaultImplStub!.oldHeader = newValue)
-        }
-        
-    }
-    
-    
-    
-    
-    
      override var attributes: [String: [String]] {
         get {
             return cuckoo_manager.getter("attributes",
@@ -7098,16 +7048,6 @@ import Foundation
                     super.attributes
                     ,
                 defaultCall: __defaultImplStub!.attributes)
-        }
-        
-        set {
-            cuckoo_manager.setter("attributes",
-                value: newValue,
-                superclassCall:
-                    
-                    super.attributes = newValue
-                    ,
-                defaultCall: __defaultImplStub!.attributes = newValue)
         }
         
     }
@@ -7563,14 +7503,7 @@ import Foundation
         
         
         
-        var oldHeader: Cuckoo.ClassToBeStubbedOptionalProperty<MockServerEvalFeatureContext, String> {
-            return .init(manager: cuckoo_manager, name: "oldHeader")
-        }
-        
-        
-        
-        
-        var attributes: Cuckoo.ClassToBeStubbedProperty<MockServerEvalFeatureContext, [String: [String]]> {
+        var attributes: Cuckoo.ClassToBeStubbedReadOnlyProperty<MockServerEvalFeatureContext, [String: [String]]> {
             return .init(manager: cuckoo_manager, name: "attributes")
         }
         
@@ -7830,14 +7763,7 @@ import Foundation
         
         
         
-        var oldHeader: Cuckoo.VerifyOptionalProperty<String> {
-            return .init(manager: cuckoo_manager, name: "oldHeader", callMatcher: callMatcher, sourceLocation: sourceLocation)
-        }
-        
-        
-        
-        
-        var attributes: Cuckoo.VerifyProperty<[String: [String]]> {
+        var attributes: Cuckoo.VerifyReadOnlyProperty<[String: [String]]> {
             return .init(manager: cuckoo_manager, name: "attributes", callMatcher: callMatcher, sourceLocation: sourceLocation)
         }
         
@@ -8112,25 +8038,10 @@ import Foundation
     
     
     
-     override var oldHeader: String? {
-        get {
-            return DefaultValueRegistry.defaultValue(for: (String?).self)
-        }
-        
-        set { }
-        
-    }
-    
-    
-    
-    
-    
      override var attributes: [String: [String]] {
         get {
             return DefaultValueRegistry.defaultValue(for: ([String: [String]]).self)
         }
-        
-        set { }
         
     }
     
@@ -8324,7 +8235,7 @@ import Foundation
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub_swift_sdk/internal/internal_repository.swift at 2026-10-15 03:13:51 +0000
+// MARK: - Mocks generated from file: Sources/featurehub_swift_sdk/internal/internal_repository.swift at 2026-10-15 03:39:04 +0000
 
 
 import Cuckoo
@@ -9863,7 +9774,7 @@ public class FeatureValueInterceptorStub: FeatureValueInterceptor {
 
 
 
-// MARK: - Mocks generated from file: Sources/featurehub_swift_sdk/internal/internal_usebase_edge.swift at 2026-10-15 03:13:51 +0000
+// MARK: - Mocks generated from file: Sources/featurehub_swift_sdk/internal/internal_usebase_edge.swift at 2026-10-15 03:39:04 +0000
 
 ///
 /// FeatureHub: Usage based edge. This service holds an update interval
