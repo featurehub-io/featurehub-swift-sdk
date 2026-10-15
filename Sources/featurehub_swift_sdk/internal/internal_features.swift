@@ -51,47 +51,47 @@ internal class FeatureStateHolder: RepositoryFeatureState {
     }
   }
 
-  var exists: Bool {
+  // the state can be replaced by the repository at any time, so each getter below takes a
+  // single snapshot of it rather than reading it more than once
+  private var existingState: FeatureState? {
     get {
       // we don't check used() here even though it might be logical as it creates a stack overflow
-      internalState?.l != nil
+      if let fs = internalState, fs.l != nil {
+        return fs
+      }
+
+      return nil
+    }
+  }
+
+  var exists: Bool {
+    get {
+      existingState != nil
     }
   }
 
   var locked: Bool {
     get {
-      if (exists) {
-        return internalState?.l ?? false
-      }
-
-      return false
+      existingState?.l ?? false
     }
   }
 
   var id: UUID? {
     get {
-      if exists {
-        return internalState?.id ?? nil
-      }
-
-      return nil
+      existingState?.id
     }
   }
 
   var featureType: FeatureValueType? {
     get {
-      if exists {
-        return internalState?.type
-      }
-
-      return nil
+      existingState?.type
     }
   }
 
   var version: Int64 {
     get {
-      if exists {
-        return internalState!.version!
+      if let fs = existingState {
+        return fs.version ?? -1
       }
 
       return -1
@@ -142,8 +142,8 @@ internal class FeatureStateHolder: RepositoryFeatureState {
 
   var hasValue: Bool {
     get {
-      if (exists) {
-        return getValue(internalState?.type) != nil
+      if let fs = existingState {
+        return getValue(fs.type) != nil
       }
 
       return false
@@ -189,28 +189,22 @@ internal class FeatureStateHolder: RepositoryFeatureState {
 
     let fs = topFeatureState()
 
-    let state = fs.internalState
-    if state == nil {
+    guard let state = fs.existingState, state.type == type else {
       return nil
     }
 
-    if fs.featureType != type {
-      return nil
-    }
-
-    if clientContext != nil && fs.internalState?.strategies != nil {
-      let featureState = fs.internalState!
-      let matched = repo.apply(strategies: featureState.strategies!,
-        key: key, featureId: featureState.id, context: clientContext)
+    if clientContext != nil, let strategies = state.strategies {
+      let matched = repo.apply(strategies: strategies,
+        key: key, featureId: state.id, context: clientContext)
       if matched.matched {
         let val = InterceptorValue(matched.value).cast(type!)
-        used(fs.key, fs.id, val, type!)
+        used(state.key, state.id, val, type!)
         return val
       }
     }
 
-    let val = state?.value?.value
-    used(fs.key, fs.id, val, type!)
+    let val = state.value?.value
+    used(state.key, state.id, val, type!)
     return val
   }
 
