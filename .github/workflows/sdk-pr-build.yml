@@ -1,8 +1,8 @@
-name: Build featurehub-javascript-client-sdk
+name: Build featurehub-swift-sdk
 
 # Controls when the action will run.
 on:
-  # Triggers the workflow on push request events but only for the master branch
+  # Triggers the workflow on pull requests, but only for the main branch
   pull_request:
     branches: [ main ]
     paths:
@@ -10,18 +10,26 @@ on:
     - 'Tests/**'
     - '*.swift'
 
-  # Allows you to run this workflow manually from the Actions tab
+  # Allows you to run this workflow manually from the Actions tab (requires write access)
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
   build:
+    # only run for pull requests opened by people with access to the repository. To build anyone
+    # else's, a collaborator pushes their branch to this repository and runs it via workflow_dispatch
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.pull_request.author_association)
     # The type of runner that the job will run on
     runs-on: macos-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       - name: Get swift version
         run: swift --version
       - name: Run tests
